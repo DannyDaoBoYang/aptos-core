@@ -22,3 +22,4 @@ pub mod spec_instrumentation;
 pub mod verification_analysis;
 pub mod verification_analysis_v2;
 pub mod well_formed_instrumentation;
+pub mod prophecy_variables;

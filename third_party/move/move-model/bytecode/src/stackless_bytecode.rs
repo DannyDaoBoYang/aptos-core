@@ -171,6 +171,7 @@ pub enum Operation {
     // Borrow
     BorrowLoc,
     BorrowField(ModuleId, StructId, Vec<Type>, usize),
+    BorrowFieldProphecy(ModuleId, StructId, Vec<Type>, usize, TempIndex),
     BorrowGlobal(ModuleId, StructId, Vec<Type>),
 
     // Builtins
@@ -270,6 +271,7 @@ impl Operation {
             Operation::Exists(_, _, _) => false,
             Operation::BorrowLoc => false,
             Operation::BorrowField(_, _, _, _) => false,
+            Operation::BorrowFieldProphecy(_, _, _, _, _) => false,
             Operation::BorrowGlobal(_, _, _) => true,
             Operation::GetField(_, _, _, _) => false,
             Operation::GetGlobal(_, _, _) => true,
@@ -765,6 +767,9 @@ impl Bytecode {
                     BorrowField(mid, sid, tys, field_num) => {
                         BorrowField(*mid, *sid, Type::instantiate_slice(tys, params), *field_num)
                     },
+                    BorrowFieldProphecy(mid, sid, tys, field_num, tindex) => {
+                        BorrowFieldProphecy(*mid, *sid, Type::instantiate_slice(tys, params), *field_num, *tindex)
+                    },
                     GetField(mid, sid, tys, field_num) => {
                         GetField(*mid, *sid, Type::instantiate_slice(tys, params), *field_num)
                     },
@@ -1146,6 +1151,20 @@ impl<'env> fmt::Display for OperationDisplay<'env> {
                 write!(f, "borrow_local")?;
             },
             BorrowField(mid, sid, targs, offset) => {
+                write!(f, "borrow_field<{}>", self.struct_str(*mid, *sid, targs))?;
+                let struct_env = self
+                    .func_target
+                    .global_env()
+                    .get_module(*mid)
+                    .into_struct(*sid);
+                let field_env = struct_env.get_field_by_offset(*offset);
+                write!(
+                    f,
+                    ".{}",
+                    field_env.get_name().display(struct_env.symbol_pool())
+                )?;
+            },
+            BorrowFieldProphecy(mid, sid, targs, offset, tindex) => {
                 write!(f, "borrow_field<{}>", self.struct_str(*mid, *sid, targs))?;
                 let struct_env = self
                     .func_target

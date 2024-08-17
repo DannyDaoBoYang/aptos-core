@@ -185,6 +185,7 @@ impl<'a> TransferFunctions for ReachingDefAnalysis<'a> {
         use BorrowNode::*;
         use Bytecode::*;
         use Operation::*;
+        print!("{}\n", _offset);
         match instr {
             Assign(_, dest, src, _) => {
                 state.kill(*dest);
@@ -209,6 +210,7 @@ impl<'a> TransferFunctions for ReachingDefAnalysis<'a> {
                         state.kill(*local_root);
                     },
                     Havoc(_) => {
+                        print!("{}\n reaching", dests[0]);
                         state.havoc(dests[0]);
                     },
                     _ => (),

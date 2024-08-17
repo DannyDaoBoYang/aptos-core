@@ -15,6 +15,7 @@ use crate::{
     spec_instrumentation::SpecInstrumentationProcessor,
     verification_analysis::VerificationAnalysisProcessor,
     well_formed_instrumentation::WellFormedInstrumentationProcessor,
+    prophecy_variables::FutureWriteBackProcessor,
 };
 use move_stackless_bytecode::{
     borrow_analysis::BorrowAnalysisProcessor,
@@ -32,6 +33,7 @@ pub fn default_pipeline_with_options(options: &ProverOptions) -> FunctionTargetP
         // transformation and analysis
         EliminateImmRefsProcessor::new(),
         MutRefInstrumenter::new(),
+        FutureWriteBackProcessor::new(),
         ReachingDefProcessor::new(),
         LiveVarAnalysisProcessor::new(),
         BorrowAnalysisProcessor::new_borrow_natives(options.borrow_natives.clone()),

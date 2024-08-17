@@ -1183,12 +1183,21 @@ impl<'env> FunctionTranslator<'env> {
                     BorrowLoc => {
                         let src = srcs[0];
                         let dest = dests[0];
+                        //get temp havoc
+                        let ty = &self.get_local_type(dests[0]);
+                        let num_oper = global_state
+                            .get_temp_index_oper(mid, fid, dests[0], baseline_flag)
+                            .unwrap();
+                        let bv_flag = self.bv_flag(num_oper);
+                        let temp_str = boogie_temp(env, ty.skip_reference(), 0, bv_flag);
+                        emitln!(writer, "havoc {};", temp_str);
                         emitln!(
                             writer,
-                            "{} := $Mutation($Local({}), EmptyVec(), {});",
+                            "{} := $Mutation($Local({}), EmptyVec(), {}, {});",
                             str_local(dest),
                             src,
-                            str_local(src)
+                            str_local(src),
+                            temp_str
                         );
                     },
                     ReadRef => {
@@ -1482,14 +1491,39 @@ impl<'env> FunctionTranslator<'env> {
                         self.check_intrinsic_select(attr_id, &struct_env);
                         let field_env = &struct_env.get_field_by_offset(*field_offset);
                         let field_sel = boogie_field_sel(field_env);
+                        //get temp havoc
+                        let ty = &self.get_local_type(dests[0]);
+                        let mid = self.fun_target.func_env.module_env.get_id();
+                        let temp_str = boogie_temp(env, ty.skip_reference(), 0, false);
+                        emitln!(writer, "havoc {};", temp_str);
                         emitln!(
                             writer,
-                            "{} := $ChildMutation({}, {}, $Dereference({})->{});",
+                            "{} := $ChildMutation({}, {}, $Dereference({})->{}, {});",
                             dest_str,
                             src_str,
                             field_offset,
                             src_str,
                             field_sel,
+                            temp_str
+                        );
+                    },
+                    BorrowFieldProphecy(mid, sid, _, field_offset, tindex) => {
+                        let src_str = str_local(srcs[0]);
+                        let dest_str = str_local(dests[0]);
+                        let struct_env = env.get_module(*mid).into_struct(*sid);
+                        self.check_intrinsic_select(attr_id, &struct_env);
+                        let field_env = &struct_env.get_field_by_offset(*field_offset);
+                        let field_sel = boogie_field_sel(field_env);
+
+                        emitln!(
+                            writer,
+                            "{} := $ChildMutation({}, {}, $Dereference({})->{}, {});",
+                            dest_str,
+                            src_str,
+                            field_offset,
+                            src_str,
+                            field_sel,
+                            str_local(*tindex)
                         );
                     },
                     GetField(mid, sid, _, field_offset) => {
@@ -1534,14 +1568,24 @@ impl<'env> FunctionTranslator<'env> {
                         emitln!(writer, "if (!$ResourceExists({}, {})) {{", memory, addr_str);
                         writer.with_indent(|| emitln!(writer, "call $ExecFailureAbort();"));
                         emitln!(writer, "} else {");
+                        //get temp havoc
+                        let ty = &self.get_local_type(dests[0]);
+                        let mid = self.fun_target.func_env.module_env.get_id();
+                        let num_oper = global_state
+                            .get_temp_index_oper(mid, fid, dests[0], baseline_flag)
+                            .unwrap();
+                        let bv_flag = self.bv_flag(num_oper);
+                        let temp_str = boogie_temp(env, ty.skip_reference(), 0, bv_flag);
+                        emitln!(writer, "havoc {};", temp_str);
                         writer.with_indent(|| {
                             emitln!(
                                 writer,
-                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}));",
+                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}), {});",
                                 dest_str,
                                 addr_str,
                                 memory,
-                                addr_str
+                                addr_str,
+                                temp_str
                             );
                         });
                         emitln!(writer, "}");
@@ -2286,10 +2330,12 @@ impl<'env> FunctionTranslator<'env> {
                 );
             },
             LocalRoot(idx) => {
+                emitln!(writer, "assume {}.v == {}.v_final", src_str, src_str);
                 assert!(matches!(edge, BorrowEdge::Direct));
                 emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
+                //bookmarkD
                 let dst_value = format!("$Dereference($t{})", idx);
                 let src_value = format!("$Dereference({})", src_str);
                 let get_path_index = |offset: usize| {

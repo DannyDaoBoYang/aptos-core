@@ -502,6 +502,17 @@ impl<'a> FunctionGenerator<'a> {
                     source,
                 );
             },
+            Operation::BorrowFieldProphecy(mid, sid, inst, offset, tindex) => {
+                self.gen_borrow_field(
+                    ctx,
+                    dest,
+                    mid.qualified(*sid),
+                    inst.clone(),
+                    None,
+                    *offset,
+                    source,
+                );
+            },
             Operation::BorrowVariantField(mid, sid, variants, inst, offset) => {
                 self.gen_borrow_field(
                     ctx,
