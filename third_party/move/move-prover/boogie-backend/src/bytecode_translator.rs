@@ -2326,14 +2326,14 @@ impl<'env> FunctionTranslator<'env> {
                 );
             },
             LocalRoot(idx) => {
-                //emitln!(writer, "assume {}.v == {}.v_final", src_str, src_str);
+
                 //assert!(matches!(edge, BorrowEdge::Direct));
                 emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
                 //bookmarkD
                 let dst_value = format!("$Dereference($t{})", idx);
-                let src_value = format!("$Dereference({})", src_str);
+
                 let get_path_index = |offset: usize| {
                     if offset == 0 {
                         format!("ReadVec({}->p, LenVec($t{}->p))", src_str, idx)
@@ -2345,17 +2345,19 @@ impl<'env> FunctionTranslator<'env> {
                     self.translate_write_back_update(
                         &mut || dst_value.clone(),
                         &get_path_index,
-                        src_value,
+                        src_str.clone(),
                         edges,
                         0,
+                        writer
                     )
                 } else {
                     self.translate_write_back_update(
                         &mut || dst_value.clone(),
                         &get_path_index,
-                        src_value,
+                        src_str.clone(),
                         &[edge.to_owned()],
                         0,
+                        writer
                     )
                 };
                 emitln!(
@@ -2399,13 +2401,14 @@ impl<'env> FunctionTranslator<'env> {
         src: String,
         edges: &[BorrowEdge],
         at: usize,
+        writer: &CodeWriter
     ) -> String {
         if at >= edges.len() {
-            src
+            format!("$Dereference({})", src)
         } else {
             match &edges[at] {
                 BorrowEdge::Direct => {
-                    self.translate_write_back_update(mk_dest, get_path_index, src, edges, at + 1)
+                    self.translate_write_back_update(mk_dest, get_path_index, src, edges, at + 1, writer)
                 },
                 BorrowEdge::Field(memory, variant, offset) => {
                     let memory = memory.to_owned().instantiate(self.type_inst);
@@ -2421,10 +2424,12 @@ impl<'env> FunctionTranslator<'env> {
                             format!("$$sel{}", at)
                         },
                         get_path_index,
-                        src,
+                        src.clone(),
                         edges,
                         at + 1,
+                        writer
                     );
+                    emitln!(writer, "assume $Fulfilled({});", src.clone());
                     let update_fun = boogie_field_update(field_env, &memory.inst);
                     if new_dest_needed {
                         format!(
@@ -2470,6 +2475,7 @@ impl<'env> FunctionTranslator<'env> {
                         src,
                         edges,
                         at + 1,
+                        writer
                     );
                     if new_dest_needed {
                         format!(

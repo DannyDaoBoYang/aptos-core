@@ -299,6 +299,10 @@ function {:inline} $Dereference<T>(ref: $Mutation T): T {
     ref->v
 }
 
+function {:inline} $Fulfilled<T>(ref: $Mutation T): bool {
+    ref->v == ref->v_final
+}
+
 // Update the value of a mutation.
 function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
     $Mutation(m->l, m->p, v, m->v_final)

@@ -306,7 +306,6 @@ impl<'a> Instrumenter<'a> {
                         });
                     }
 
-                    // emit the write-back
                     self.builder.emit_with(|id| {
                         Bytecode::Call(
                             id,
