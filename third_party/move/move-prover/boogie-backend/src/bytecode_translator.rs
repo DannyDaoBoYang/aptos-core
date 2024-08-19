@@ -1491,20 +1491,16 @@ impl<'env> FunctionTranslator<'env> {
                         self.check_intrinsic_select(attr_id, &struct_env);
                         let field_env = &struct_env.get_field_by_offset(*field_offset);
                         let field_sel = boogie_field_sel(field_env);
-                        //get temp havoc
-                        let ty = &self.get_local_type(dests[0]);
-                        let mid = self.fun_target.func_env.module_env.get_id();
-                        let temp_str = boogie_temp(env, ty.skip_reference(), 0, false);
-                        emitln!(writer, "havoc {};", temp_str);
                         emitln!(
                             writer,
-                            "{} := $ChildMutation({}, {}, $Dereference({})->{}, {});",
+                            "{} := $ChildMutation({}, {}, $Dereference({})->{}, $Dereference({})->{});",
                             dest_str,
                             src_str,
                             field_offset,
                             src_str,
                             field_sel,
-                            temp_str
+                            src_str,
+                            field_sel
                         );
                     },
                     BorrowFieldProphecy(mid, sid, _, field_offset, tindex) => {
@@ -1517,13 +1513,13 @@ impl<'env> FunctionTranslator<'env> {
 
                         emitln!(
                             writer,
-                            "{} := $ChildMutation({}, {}, $Dereference({})->{}, {});",
+                            "{} := $ChildMutation({}, {}, $Dereference({})->{}, $Dereference({}));",
                             dest_str,
                             src_str,
                             field_offset,
                             src_str,
                             field_sel,
-                            str_local(*tindex)
+                            str_local(srcs[1])
                         );
                     },
                     GetField(mid, sid, _, field_offset) => {
@@ -2330,8 +2326,8 @@ impl<'env> FunctionTranslator<'env> {
                 );
             },
             LocalRoot(idx) => {
-                emitln!(writer, "assume {}.v == {}.v_final", src_str, src_str);
-                assert!(matches!(edge, BorrowEdge::Direct));
+                //emitln!(writer, "assume {}.v == {}.v_final", src_str, src_str);
+                //assert!(matches!(edge, BorrowEdge::Direct));
                 emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {

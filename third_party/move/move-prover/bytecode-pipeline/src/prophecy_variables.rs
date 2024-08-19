@@ -2,16 +2,16 @@
 // Copyright (c) The Move Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use std::any::Any;
+use std::{any::Any, io::Read};
 
-use move_model::{model::FunctionEnv};
+use move_model::{model::FunctionEnv, ty::Type};
 use move_stackless_bytecode::{
     function_data_builder::FunctionDataBuilder,
     function_target::FunctionData,
     function_target_pipeline::{FunctionTargetProcessor, FunctionTargetsHolder},
     stackless_bytecode::{Bytecode, Operation},
 };
-
+use move_model::exp_generator::ExpGenerator;
 pub struct FutureWriteBackProcessor {}
 //update
 impl FutureWriteBackProcessor {
@@ -41,6 +41,12 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
             match bc {
                 Call(attr_id, dests, op, srcs, aa) => match op {
                 BorrowField(mid, sid, type_actuals, offset) => {
+
+                    //idea
+                    //1. read the value
+                    //2. have a temp variable borrows this field, writes to it, then dies
+                    //3. the actual borrowprophecy happens
+
                     //havoc a temp
                     //type should be the subfield being borrowed.
                     let (temp_i, tempexp) = builder.emit_let_havoc(builder.data
@@ -48,36 +54,75 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
                         .get(dests[0])
                         .expect("local variable")
                         .clone());
-                    print!("{}\n",temp_i.to_string());
+                    let mutsrc = &mut srcs.clone();
+                    mutsrc.push(temp_i);
+                    let type1 = builder.data
+                    .local_types
+                    .get(dests[0]).expect("local variable")
+                    .clone();
 
-                    //borrowField
+                    let new_dests1 = builder.add_local(type1.clone());
+                    let (new_dests2, tempexp2) = builder.emit_let_skip_reference(tempexp.clone()); //original val
+                    let (new_dests3, tempexp3) = builder.emit_let_skip_reference(tempexp.clone()); //original val
                     builder.emit(Call(
                         attr_id,
-                        dests,
-                        BorrowFieldProphecy(mid, sid, type_actuals, offset, temp_i),
-                        srcs,
-                        aa,
+                        [new_dests1].to_vec(),
+                        BorrowField(mid, sid, type_actuals.clone(), offset),
+                        srcs.clone(),
+                        aa.clone(),
                     ));
-                    /*
-                    //write back temp
+                    //save orignal to temp2
                     builder.emit(Call(
                         attr_id,
-                        dests,
-                        WriteBack(srcs[0], ),
-                        srcs,
-                        aa
-                    ));*/
+                        [new_dests2].to_vec(),//temp dest
+                        ReadRef,
+                        [new_dests1].to_vec(),
+                        aa.clone(),
+                    ));
+                    //write dereference havoc to temp1
+                    builder.emit(Call(
+                        attr_id,
+                        [new_dests3].to_vec(),//temp dest
+                        ReadRef,
+                        [temp_i].to_vec(),
+                        aa.clone(),
+                    ));
+
+                    builder.emit(Call(
+                        attr_id,
+                        [].to_vec(),//temp dest
+                        WriteRef,
+                        [new_dests1,new_dests3].to_vec(),
+                        aa.clone(),
+                    ));
+
+                    //release
+                    builder.emit(Call(
+                        attr_id,
+                        [].to_vec(),
+                        Release,
+                        [new_dests1].to_vec(),
+                        aa.clone(),
+                    ));
+                    //borrowFieldProphecy
+
+                    builder.emit(Call(
+                        attr_id,
+                        dests.clone(),
+                        BorrowFieldProphecy(mid, sid, type_actuals.clone(), offset, temp_i),
+                        [srcs[0], temp_i].to_vec(),
+                        aa.clone(),
+                    ));
+
+                    //update value to the saved original value
+                    builder.emit(Call(
+                        attr_id,
+                        [].to_vec(),
+                        WriteRef,
+                        [dests[0], new_dests2].to_vec(),
+                        aa.clone(),
+                    ));
                 },
-                /*WriteBack(node, edge) => {
-                    self.builder.emit(Call(
-                        attr_id,
-                        dests,
-                        fullfilled(node, edge),
-                        srcs,
-                        aa,
-                    ));
-                    WriteBack(node.instantiate(params), edge.instantiate(params))
-                },*/
                  _ => builder.emit(Call(attr_id, dests, op, srcs, aa))
                 },
 
@@ -92,7 +137,7 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
             match bc {
                 Call(attr_id, dests, op, srcs, aa) => match op {
                 Havoc(..) => {
-                    print!("{}", dests[0]);
+                    print!("{}prophecy_varaiables builder2\n", dests[0]);
                     builder2.emit(Call(attr_id, dests, op, srcs, aa));
                 }
                  _ => builder2.emit(Call(attr_id, dests, op, srcs, aa))
