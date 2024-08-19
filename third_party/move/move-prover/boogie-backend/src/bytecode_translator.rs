@@ -1564,24 +1564,17 @@ impl<'env> FunctionTranslator<'env> {
                         emitln!(writer, "if (!$ResourceExists({}, {})) {{", memory, addr_str);
                         writer.with_indent(|| emitln!(writer, "call $ExecFailureAbort();"));
                         emitln!(writer, "} else {");
-                        //get temp havoc
-                        let ty = &self.get_local_type(dests[0]);
-                        let mid = self.fun_target.func_env.module_env.get_id();
-                        let num_oper = global_state
-                            .get_temp_index_oper(mid, fid, dests[0], baseline_flag)
-                            .unwrap();
-                        let bv_flag = self.bv_flag(num_oper);
-                        let temp_str = boogie_temp(env, ty.skip_reference(), 0, bv_flag);
-                        emitln!(writer, "havoc {};", temp_str);
+                        //TODO: still have to add mappings for BorrowGlobal and BorrowLocal
                         writer.with_indent(|| {
                             emitln!(
                                 writer,
-                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}), {});",
+                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}), $ResourceValue({}, {}));",
                                 dest_str,
                                 addr_str,
                                 memory,
                                 addr_str,
-                                temp_str
+                                memory,
+                                addr_str
                             );
                         });
                         emitln!(writer, "}");
