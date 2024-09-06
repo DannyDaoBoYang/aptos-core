@@ -43,9 +43,9 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
                 BorrowField(mid, sid, type_actuals, offset) => {
 
                     //idea
-                    //1. read the value
-                    //2. have a temp variable borrows this field, writes to it, then dies
-                    //3. the actual borrowprophecy happens
+                    //1. borrows this field, saves value to temp2
+                    //2  updates the field to a hovoc temp1, them write back
+                    //3. borrow from temp2
 
                     //havoc a temp
                     //type should be the subfield being borrowed.
@@ -64,11 +64,12 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
                     let new_dests1 = builder.add_local(type1.clone());
                     let (new_dests2, tempexp2) = builder.emit_let_skip_reference(tempexp.clone()); //original val
                     let (new_dests3, tempexp3) = builder.emit_let_skip_reference(tempexp.clone()); //original val
+                    //borrow field from original
                     builder.emit(Call(
                         attr_id,
                         [new_dests1].to_vec(),
-                        BorrowField(mid, sid, type_actuals.clone(), offset),
-                        srcs.clone(),
+                        BorrowFieldProphecy(mid, sid, type_actuals.clone(), offset, temp_i),
+                        [srcs[0], temp_i].to_vec(),
                         aa.clone(),
                     ));
                     //save orignal to temp2

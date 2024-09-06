@@ -3499,122 +3499,1726 @@ datatype $TypeParamInfo {
 //==================================
 // Begin Translation
 
+function $TypeName(t: $TypeParamInfo): Vec int;
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamBool ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 98][1 := 111][2 := 111][3 := 108], 4)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 98][1 := 111][2 := 111][3 := 108], 4)) ==> t is $TypeParamBool);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamU8 ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 56], 2)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 56], 2)) ==> t is $TypeParamU8);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamU16 ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 49][2 := 54], 3)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 49][2 := 54], 3)) ==> t is $TypeParamU16);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamU32 ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 51][2 := 50], 3)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 51][2 := 50], 3)) ==> t is $TypeParamU32);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamU64 ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 54][2 := 52], 3)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 54][2 := 52], 3)) ==> t is $TypeParamU64);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamU128 ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 49][2 := 50][3 := 56], 4)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 49][2 := 50][3 := 56], 4)) ==> t is $TypeParamU128);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamU256 ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 50][2 := 53][3 := 54], 4)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 117][1 := 50][2 := 53][3 := 54], 4)) ==> t is $TypeParamU256);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamAddress ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 97][1 := 100][2 := 100][3 := 114][4 := 101][5 := 115][6 := 115], 7)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 97][1 := 100][2 := 100][3 := 114][4 := 101][5 := 115][6 := 115], 7)) ==> t is $TypeParamAddress);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamSigner ==> $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 115][1 := 105][2 := 103][3 := 110][4 := 101][5 := 114], 6)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsEqual'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 115][1 := 105][2 := 103][3 := 110][4 := 101][5 := 114], 6)) ==> t is $TypeParamSigner);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamVector ==> $IsEqual'vec'u8''($TypeName(t), ConcatVec(ConcatVec(Vec(DefaultVecMap()[0 := 118][1 := 101][2 := 99][3 := 116][4 := 111][5 := 114][6 := 60], 7), $TypeName(t->e)), Vec(DefaultVecMap()[0 := 62], 1))));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} ($IsPrefix'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 118][1 := 101][2 := 99][3 := 116][4 := 111][5 := 114][6 := 60], 7)) && $IsSuffix'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 62], 1))) ==> t is $TypeParamVector);
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} t is $TypeParamStruct ==> $IsEqual'vec'u8''($TypeName(t), ConcatVec(ConcatVec(ConcatVec(ConcatVec(ConcatVec(Vec(DefaultVecMap()[0 := 48][1 := 120], 2), MakeVec1(t->a)), Vec(DefaultVecMap()[0 := 58][1 := 58], 2)), t->m), Vec(DefaultVecMap()[0 := 58][1 := 58], 2)), t->s)));
+axiom (forall t: $TypeParamInfo :: {$TypeName(t)} $IsPrefix'vec'u8''($TypeName(t), Vec(DefaultVecMap()[0 := 48][1 := 120], 2)) ==> t is $TypeParamVector);
 
 
 // Given Types for Type Parameters
 
+type #0;
+function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
+function {:inline} $IsValid'#0'(x: #0): bool { true }
+var #0_info: $TypeParamInfo;
+var #0_$memory: $Memory #0;
 
-// struct BasicCoin::R at ./sources/FirstModule.move:5:5+48
-datatype $cafe_BasicCoin_R {
-    $cafe_BasicCoin_R($f1: int, $f2: int)
-}
-function {:inline} $Update'$cafe_BasicCoin_R'_f1(s: $cafe_BasicCoin_R, x: int): $cafe_BasicCoin_R {
-    $cafe_BasicCoin_R(x, s->$f2)
-}
-function {:inline} $Update'$cafe_BasicCoin_R'_f2(s: $cafe_BasicCoin_R, x: int): $cafe_BasicCoin_R {
-    $cafe_BasicCoin_R(s->$f1, x)
-}
-function $IsValid'$cafe_BasicCoin_R'(s: $cafe_BasicCoin_R): bool {
-    $IsValid'u64'(s->$f1)
-      && $IsValid'u64'(s->$f2)
-}
-function {:inline} $IsEqual'$cafe_BasicCoin_R'(s1: $cafe_BasicCoin_R, s2: $cafe_BasicCoin_R): bool {
-    s1 == s2
+// spec fun at ./../../../../move-stdlib/sources/signer.move:12:5+77
+function {:inline} $1_signer_$address_of(s: $signer): int {
+    $1_signer_$borrow_address(s)
 }
 
-// fun BasicCoin::mint [verification] at ./sources/FirstModule.move:10:5+52
-procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_BasicCoin_R)) returns ($ret0: $Mutation ($cafe_BasicCoin_R))
+// fun signer::address_of [baseline] at ./../../../../move-stdlib/sources/signer.move:12:5+77
+procedure {:inline 1} $1_signer_address_of(_$t0: $signer) returns ($ret0: int)
 {
     // declare local variables
     var $t1: int;
-    var $t2: $Mutation (int);
-    var $t3: int;
+    var $t2: int;
+    var $t0: $signer;
+    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[s]($t0) at ./../../../../move-stdlib/sources/signer.move:12:5+1
+    assume {:print "$at(10,389,390)"} true;
+    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
+
+    // $t1 := signer::borrow_address($t0) on_abort goto L2 with $t2 at ./../../../../move-stdlib/sources/signer.move:13:10+17
+    assume {:print "$at(10,443,460)"} true;
+    call $t1 := $1_signer_borrow_address($t0);
+    if ($abort_flag) {
+        assume {:print "$at(10,443,460)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // trace_return[0]($t1) at ./../../../../move-stdlib/sources/signer.move:13:9+18
+    assume {:print "$track_return(1,0,0):", $t1} $t1 == $t1;
+
+    // label L1 at ./../../../../move-stdlib/sources/signer.move:14:5+1
+    assume {:print "$at(10,465,466)"} true;
+L1:
+
+    // return $t1 at ./../../../../move-stdlib/sources/signer.move:14:5+1
+    assume {:print "$at(10,465,466)"} true;
+    $ret0 := $t1;
+    return;
+
+    // label L2 at ./../../../../move-stdlib/sources/signer.move:14:5+1
+L2:
+
+    // abort($t2) at ./../../../../move-stdlib/sources/signer.move:14:5+1
+    assume {:print "$at(10,465,466)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// struct BasicCoin::Balance<#0> at ./sources/BasicCoin.move:16:5+77
+datatype $deadbeef_BasicCoin_Balance'#0' {
+    $deadbeef_BasicCoin_Balance'#0'($coin: $deadbeef_BasicCoin_Coin'#0')
+}
+function {:inline} $Update'$deadbeef_BasicCoin_Balance'#0''_coin(s: $deadbeef_BasicCoin_Balance'#0', x: $deadbeef_BasicCoin_Coin'#0'): $deadbeef_BasicCoin_Balance'#0' {
+    $deadbeef_BasicCoin_Balance'#0'(x)
+}
+function $IsValid'$deadbeef_BasicCoin_Balance'#0''(s: $deadbeef_BasicCoin_Balance'#0'): bool {
+    $IsValid'$deadbeef_BasicCoin_Coin'#0''(s->$coin)
+}
+function {:inline} $IsEqual'$deadbeef_BasicCoin_Balance'#0''(s1: $deadbeef_BasicCoin_Balance'#0', s2: $deadbeef_BasicCoin_Balance'#0'): bool {
+    s1 == s2
+}
+var $deadbeef_BasicCoin_Balance'#0'_$memory: $Memory $deadbeef_BasicCoin_Balance'#0';
+
+// struct BasicCoin::Coin<#0> at ./sources/BasicCoin.move:12:5+66
+datatype $deadbeef_BasicCoin_Coin'#0' {
+    $deadbeef_BasicCoin_Coin'#0'($value: int)
+}
+function {:inline} $Update'$deadbeef_BasicCoin_Coin'#0''_value(s: $deadbeef_BasicCoin_Coin'#0', x: int): $deadbeef_BasicCoin_Coin'#0' {
+    $deadbeef_BasicCoin_Coin'#0'(x)
+}
+function $IsValid'$deadbeef_BasicCoin_Coin'#0''(s: $deadbeef_BasicCoin_Coin'#0'): bool {
+    $IsValid'u64'(s->$value)
+}
+function {:inline} $IsEqual'$deadbeef_BasicCoin_Coin'#0''(s1: $deadbeef_BasicCoin_Coin'#0', s2: $deadbeef_BasicCoin_Coin'#0'): bool {
+    s1 == s2
+}
+
+// fun BasicCoin::balance_of<#0> [baseline] at ./sources/BasicCoin.move:53:5+136
+procedure {:inline 1} $deadbeef_BasicCoin_balance_of'#0'(_$t0: int) returns ($ret0: int)
+{
+    // declare local variables
+    var $t1: $deadbeef_BasicCoin_Balance'#0';
+    var $t2: int;
+    var $t3: $deadbeef_BasicCoin_Coin'#0';
     var $t4: int;
-    var $t5: $Mutation (int);
-    var $t6: $Mutation (int);
-    var $t0: $Mutation ($cafe_BasicCoin_R);
-    var $temp_0'$cafe_BasicCoin_R': $cafe_BasicCoin_R;
+    var $t0: int;
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[owner]($t0) at ./sources/BasicCoin.move:53:5+1
+    assume {:print "$at(2,1721,1722)"} true;
+    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
+
+    // $t1 := get_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t2 at ./sources/BasicCoin.move:54:9+13
+    assume {:print "$at(2,1801,1814)"} true;
+    if (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t1 := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1801,1814)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t3 := get_field<BasicCoin::Balance<#0>>.coin($t1) at ./sources/BasicCoin.move:54:9+44
+    $t3 := $t1->$coin;
+
+    // $t4 := get_field<BasicCoin::Coin<#0>>.value($t3) at ./sources/BasicCoin.move:54:9+50
+    $t4 := $t3->$value;
+
+    // trace_return[0]($t4) at ./sources/BasicCoin.move:54:9+50
+    assume {:print "$track_return(2,0,0):", $t4} $t4 == $t4;
+
+    // label L1 at ./sources/BasicCoin.move:55:5+1
+    assume {:print "$at(2,1856,1857)"} true;
+L1:
+
+    // return $t4 at ./sources/BasicCoin.move:55:5+1
+    assume {:print "$at(2,1856,1857)"} true;
+    $ret0 := $t4;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:55:5+1
+L2:
+
+    // abort($t2) at ./sources/BasicCoin.move:55:5+1
+    assume {:print "$at(2,1856,1857)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::balance_of [verification] at ./sources/BasicCoin.move:53:5+136
+procedure {:timeLimit 80} $deadbeef_BasicCoin_balance_of$verify(_$t0: int) returns ($ret0: int)
+{
+    // declare local variables
+    var $t1: $deadbeef_BasicCoin_Balance'#0';
+    var $t2: int;
+    var $t3: $deadbeef_BasicCoin_Coin'#0';
+    var $t4: int;
+    var $t0: int;
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    var $deadbeef_BasicCoin_Balance'#0'_$memory#0: $Memory $deadbeef_BasicCoin_Balance'#0';
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
-    assume $t0->l == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at ./sources/FirstModule.move:10:5+1
-    assume {:print "$at(2,137,138)"} true;
-    assume $IsValid'$cafe_BasicCoin_R'($Dereference($t0));
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:53:5+1
+    assume {:print "$at(2,1721,1722)"} true;
+    assume $IsValid'address'($t0);
 
-    // trace_local[a]($t0) at ./sources/FirstModule.move:10:5+1
-    $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
-    assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:53:5+1
+    assume (forall $a_0: int :: {$ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$deadbeef_BasicCoin_Balance'#0''($rsc))));
 
-    // $t1 := 1 at ./sources/FirstModule.move:11:16+1
-    assume {:print "$at(2,181,182)"} true;
-    $t1 := 1;
-    assume $IsValid'u64'($t1);
+    // @0 := save_mem(BasicCoin::Balance<#0>) at ./sources/BasicCoin.move:53:5+1
+    $deadbeef_BasicCoin_Balance'#0'_$memory#0 := $deadbeef_BasicCoin_Balance'#0'_$memory;
 
-    // $t2 := havoc[mut_all]() at ./sources/FirstModule.move:10:5+52
-    assume {:print "$at(2,137,189)"} true;
-    havoc $t2;
+    // trace_local[owner]($t0) at ./sources/BasicCoin.move:53:5+1
+    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
 
-    // assume Identical($t3, $t2) at ./sources/FirstModule.move:10:5+52
-    assume ($t3 == $Dereference($t2));
+    // $t1 := get_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t2 at ./sources/BasicCoin.move:54:9+13
+    assume {:print "$at(2,1801,1814)"} true;
+    if (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t1 := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1801,1814)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
 
-    // assume Identical($t4, $t2) at ./sources/FirstModule.move:10:5+52
-    assume ($t4 == $Dereference($t2));
+    // $t3 := get_field<BasicCoin::Balance<#0>>.coin($t1) at ./sources/BasicCoin.move:54:9+44
+    $t3 := $t1->$coin;
 
-    // $t5 := borrow_field<BasicCoin::R>.f1($t0, $t2) at ./sources/FirstModule.move:11:9+4
-    assume {:print "$at(2,174,178)"} true;
-    $t5 := $ChildMutation($t0, 0, $Dereference($t0)->$f1, $Dereference($t2));
+    // $t4 := get_field<BasicCoin::Coin<#0>>.value($t3) at ./sources/BasicCoin.move:54:9+50
+    $t4 := $t3->$value;
 
-    // $t3 := read_ref($t5) at ./sources/FirstModule.move:11:9+4
-    $t3 := $Dereference($t5);
+    // trace_return[0]($t4) at ./sources/BasicCoin.move:54:9+50
+    assume {:print "$track_return(2,0,0):", $t4} $t4 == $t4;
 
-    // $t4 := read_ref($t2) at ./sources/FirstModule.move:11:9+4
-    $t4 := $Dereference($t2);
-
-    // write_ref($t5, $t4) at ./sources/FirstModule.move:11:9+4
-    $t5 := $UpdateMutation($t5, $t4);
-
-    // release($t5) at ./sources/FirstModule.move:11:9+4
-
-    // write_back[Reference($t0).f1 (u64)]($t5) at ./sources/FirstModule.move:11:9+4
-    assume $Fulfilled($t5);
-    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $Dereference($t5)));
-
-    // trace_local[a]($t0) at ./sources/FirstModule.move:11:9+4
-    $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
-    assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
-
-    // $t6 := borrow_field<BasicCoin::R>.f1($t0, $t2) at ./sources/FirstModule.move:11:9+4
-    $t6 := $ChildMutation($t0, 0, $Dereference($t0)->$f1, $Dereference($t2));
-
-    // write_ref($t6, $t3) at ./sources/FirstModule.move:11:9+4
-    $t6 := $UpdateMutation($t6, $t3);
-
-    // write_ref($t6, $t1) at ./sources/FirstModule.move:11:9+8
-    $t6 := $UpdateMutation($t6, $t1);
-
-    // write_back[Reference($t0).f1 (u64)]($t6) at ./sources/FirstModule.move:11:9+8
-    assume $Fulfilled($t6);
-    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $Dereference($t6)));
-
-    // trace_local[a]($t0) at ./sources/FirstModule.move:11:9+8
-    $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
-    assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
-
-    // trace_local[a]($t0) at ./sources/FirstModule.move:11:17+1
-    $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
-    assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
-
-    // label L1 at ./sources/FirstModule.move:12:5+1
-    assume {:print "$at(2,188,189)"} true;
+    // label L1 at ./sources/BasicCoin.move:55:5+1
+    assume {:print "$at(2,1856,1857)"} true;
 L1:
 
-    // return () at ./sources/FirstModule.move:12:5+1
-    assume {:print "$at(2,188,189)"} true;
-    $ret0 := $t0;
+    // assert Not(Not(exists[@0]<BasicCoin::Balance<#0>>($t0))) at ./sources/BasicCoin.move:59:9+44
+    assume {:print "$at(2,1925,1969)"} true;
+    assert {:msg "assert_failed(2,1925,1969): function does not abort under this condition"}
+      !!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#0, $t0);
+
+    // return $t4 at ./sources/BasicCoin.move:59:9+44
+    $ret0 := $t4;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:55:5+1
+    assume {:print "$at(2,1856,1857)"} true;
+L2:
+
+    // assert Not(exists[@0]<BasicCoin::Balance<#0>>($t0)) at ./sources/BasicCoin.move:57:5+112
+    assume {:print "$at(2,1863,1975)"} true;
+    assert {:msg "assert_failed(2,1863,1975): abort not covered by any of the `aborts_if` clauses"}
+      !$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#0, $t0);
+
+    // abort($t2) at ./sources/BasicCoin.move:57:5+112
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::deposit<#0> [baseline] at ./sources/BasicCoin.move:108:5+295
+procedure {:inline 1} $deadbeef_BasicCoin_deposit'#0'(_$t0: int, _$t1: $deadbeef_BasicCoin_Coin'#0') returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: $Mutation ($deadbeef_BasicCoin_Balance'#0');
+    var $t10: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t11: $deadbeef_BasicCoin_Coin'#0';
+    var $t12: $deadbeef_BasicCoin_Coin'#0';
+    var $t13: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t14: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t15: $Mutation (int);
+    var $t16: int;
+    var $t17: int;
+    var $t18: $Mutation (int);
+    var $t19: $Mutation (int);
+    var $t20: int;
+    var $t21: int;
+    var $t0: int;
+    var $t1: $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'$deadbeef_BasicCoin_Coin'#0'': $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // assume Identical($t5, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:116:9+57
+    assume {:print "$at(2,4293,4350)"} true;
+    assume ($t5 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // assume Identical($t6, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>($t1)) at ./sources/BasicCoin.move:117:9+30
+    assume {:print "$at(2,4359,4389)"} true;
+    assume ($t6 == $t1->$value);
+
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:108:5+1
+    assume {:print "$at(2,3969,3970)"} true;
+    assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[check]($t1) at ./sources/BasicCoin.move:108:5+1
+    assume {:print "$track_local(2,1,1):", $t1} $t1 == $t1;
+
+    // $t7 := BasicCoin::balance_of<#0>($t0) on_abort goto L2 with $t8 at ./sources/BasicCoin.move:109:23+26
+    assume {:print "$at(2,4069,4095)"} true;
+    call $t7 := $deadbeef_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,4069,4095)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t8} $t8 == $t8;
+        goto L2;
+    }
+
+    // trace_local[balance]($t7) at ./sources/BasicCoin.move:109:13+7
+    assume {:print "$track_local(2,1,2):", $t7} $t7 == $t7;
+
+    // $t9 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t8 at ./sources/BasicCoin.move:110:32+17
+    assume {:print "$at(2,4128,4145)"} true;
+    if (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+    havoc $temp_0'$deadbeef_BasicCoin_Balance'#0'';
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0), $temp_0'$deadbeef_BasicCoin_Balance'#0'');
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,4128,4145)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t8} $t8 == $t8;
+        goto L2;
+    }
+
+    // $t10 := havoc[mut_all]() at ./sources/BasicCoin.move:108:5+295
+    assume {:print "$at(2,3969,4264)"} true;
+    havoc $t10;
+
+    // assume Identical($t11, $t10) at ./sources/BasicCoin.move:108:5+295
+    assume ($t11 == $Dereference($t10));
+
+    // assume Identical($t12, $t10) at ./sources/BasicCoin.move:108:5+295
+    assume ($t12 == $Dereference($t10));
+
+    // $t13 := borrow_field<BasicCoin::Balance<#0>>.coin($t9) at ./sources/BasicCoin.move:110:32+47
+    assume {:print "$at(2,4128,4175)"} true;
+    $t13 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t9)->$coin);
+
+    // $t11 := read_ref($t13) at ./sources/BasicCoin.move:110:32+47
+    $t11 := $Dereference($t13);
+
+    // $t12 := read_ref($t10) at ./sources/BasicCoin.move:110:32+47
+    $t12 := $Dereference($t10);
+
+    // write_ref($t13, $t12) at ./sources/BasicCoin.move:110:32+47
+    $t13 := $UpdateMutation($t13, $t12);
+
+    // release($t13) at ./sources/BasicCoin.move:110:32+47
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t13) at ./sources/BasicCoin.move:110:32+47
+    assume $Fulfilled($t13);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t13)));
+
+    // $t14 := borrow_field<BasicCoin::Balance<#0>>.coin($t9, $t10) at ./sources/BasicCoin.move:110:32+47
+    $t14 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t10));
+
+    // write_ref($t14, $t11) at ./sources/BasicCoin.move:110:32+47
+    $t14 := $UpdateMutation($t14, $t11);
+
+    // $t15 := havoc[mut_all]() at ./sources/BasicCoin.move:108:5+295
+    assume {:print "$at(2,3969,4264)"} true;
+    havoc $t15;
+
+    // assume Identical($t16, $t15) at ./sources/BasicCoin.move:108:5+295
+    assume ($t16 == $Dereference($t15));
+
+    // assume Identical($t17, $t15) at ./sources/BasicCoin.move:108:5+295
+    assume ($t17 == $Dereference($t15));
+
+    // $t18 := borrow_field<BasicCoin::Coin<#0>>.value($t14) at ./sources/BasicCoin.move:110:27+58
+    assume {:print "$at(2,4123,4181)"} true;
+    $t18 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t14)->$value);
+
+    // $t16 := read_ref($t18) at ./sources/BasicCoin.move:110:27+58
+    $t16 := $Dereference($t18);
+
+    // $t17 := read_ref($t15) at ./sources/BasicCoin.move:110:27+58
+    $t17 := $Dereference($t15);
+
+    // write_ref($t18, $t17) at ./sources/BasicCoin.move:110:27+58
+    $t18 := $UpdateMutation($t18, $t17);
+
+    // release($t18) at ./sources/BasicCoin.move:110:27+58
+
+    // write_back[Reference($t14).value (u64)]($t18) at ./sources/BasicCoin.move:110:27+58
+    assume $Fulfilled($t18);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t18)));
+
+    // $t19 := borrow_field<BasicCoin::Coin<#0>>.value($t14, $t15) at ./sources/BasicCoin.move:110:27+58
+    $t19 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t15));
+
+    // write_ref($t19, $t16) at ./sources/BasicCoin.move:110:27+58
+    $t19 := $UpdateMutation($t19, $t16);
+
+    // trace_local[balance_ref]($t19) at ./sources/BasicCoin.move:110:13+11
+    $temp_0'u64' := $Dereference($t19);
+    assume {:print "$track_local(2,1,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t20 := unpack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:111:13+14
+    assume {:print "$at(2,4195,4209)"} true;
+    $t20 := $t1->$value;
+
+    // trace_local[value]($t20) at ./sources/BasicCoin.move:111:20+5
+    assume {:print "$track_local(2,1,4):", $t20} $t20 == $t20;
+
+    // $t21 := +($t7, $t20) on_abort goto L2 with $t8 at ./sources/BasicCoin.move:112:32+1
+    assume {:print "$at(2,4250,4251)"} true;
+    call $t21 := $AddU64($t7, $t20);
+    if ($abort_flag) {
+        assume {:print "$at(2,4250,4251)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t8} $t8 == $t8;
+        goto L2;
+    }
+
+    // write_ref($t19, $t21) at ./sources/BasicCoin.move:112:9+30
+    $t19 := $UpdateMutation($t19, $t21);
+
+    // write_back[Reference($t14).value (u64)]($t19) at ./sources/BasicCoin.move:112:9+30
+    assume $Fulfilled($t19);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t19)));
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t14) at ./sources/BasicCoin.move:112:9+30
+    assume $Fulfilled($t14);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t14)));
+
+    // write_back[BasicCoin::Balance<#0>@]($t9) at ./sources/BasicCoin.move:112:9+30
+    $deadbeef_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($deadbeef_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
+
+    // label L1 at ./sources/BasicCoin.move:113:5+1
+    assume {:print "$at(2,4263,4264)"} true;
+L1:
+
+    // return () at ./sources/BasicCoin.move:113:5+1
+    assume {:print "$at(2,4263,4264)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:113:5+1
+L2:
+
+    // abort($t8) at ./sources/BasicCoin.move:113:5+1
+    assume {:print "$at(2,4263,4264)"} true;
+    $abort_code := $t8;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::deposit [verification] at ./sources/BasicCoin.move:108:5+295
+procedure {:timeLimit 80} $deadbeef_BasicCoin_deposit$verify(_$t0: int, _$t1: $deadbeef_BasicCoin_Coin'#0') returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: $Mutation ($deadbeef_BasicCoin_Balance'#0');
+    var $t10: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t11: $deadbeef_BasicCoin_Coin'#0';
+    var $t12: $deadbeef_BasicCoin_Coin'#0';
+    var $t13: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t14: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t15: $Mutation (int);
+    var $t16: int;
+    var $t17: int;
+    var $t18: $Mutation (int);
+    var $t19: $Mutation (int);
+    var $t20: int;
+    var $t21: int;
+    var $t22: int;
+    var $t0: int;
+    var $t1: $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'$deadbeef_BasicCoin_Coin'#0'': $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    var $deadbeef_BasicCoin_Balance'#0'_$memory#2: $Memory $deadbeef_BasicCoin_Balance'#0';
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:108:5+1
+    assume {:print "$at(2,3969,3970)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:108:5+1
+    assume $IsValid'$deadbeef_BasicCoin_Coin'#0''($t1);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:108:5+1
+    assume (forall $a_0: int :: {$ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$deadbeef_BasicCoin_Balance'#0''($rsc))));
+
+    // assume Identical($t5, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:116:9+57
+    assume {:print "$at(2,4293,4350)"} true;
+    assume ($t5 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // assume Identical($t6, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>($t1)) at ./sources/BasicCoin.move:117:9+30
+    assume {:print "$at(2,4359,4389)"} true;
+    assume ($t6 == $t1->$value);
+
+    // @2 := save_mem(BasicCoin::Balance<#0>) at ./sources/BasicCoin.move:108:5+1
+    assume {:print "$at(2,3969,3970)"} true;
+    $deadbeef_BasicCoin_Balance'#0'_$memory#2 := $deadbeef_BasicCoin_Balance'#0'_$memory;
+
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:108:5+1
+    assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[check]($t1) at ./sources/BasicCoin.move:108:5+1
+    assume {:print "$track_local(2,1,1):", $t1} $t1 == $t1;
+
+    // $t7 := BasicCoin::balance_of<#0>($t0) on_abort goto L2 with $t8 at ./sources/BasicCoin.move:109:23+26
+    assume {:print "$at(2,4069,4095)"} true;
+    call $t7 := $deadbeef_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,4069,4095)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t8} $t8 == $t8;
+        goto L2;
+    }
+
+    // trace_local[balance]($t7) at ./sources/BasicCoin.move:109:13+7
+    assume {:print "$track_local(2,1,2):", $t7} $t7 == $t7;
+
+    // $t9 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t8 at ./sources/BasicCoin.move:110:32+17
+    assume {:print "$at(2,4128,4145)"} true;
+    if (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+    havoc $temp_0'$deadbeef_BasicCoin_Balance'#0'';
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0), $temp_0'$deadbeef_BasicCoin_Balance'#0'');
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,4128,4145)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t8} $t8 == $t8;
+        goto L2;
+    }
+
+    // $t10 := havoc[mut_all]() at ./sources/BasicCoin.move:108:5+295
+    assume {:print "$at(2,3969,4264)"} true;
+    havoc $t10;
+
+    // assume Identical($t11, $t10) at ./sources/BasicCoin.move:108:5+295
+    assume ($t11 == $Dereference($t10));
+
+    // assume Identical($t12, $t10) at ./sources/BasicCoin.move:108:5+295
+    assume ($t12 == $Dereference($t10));
+
+    // $t13 := borrow_field<BasicCoin::Balance<#0>>.coin($t9) at ./sources/BasicCoin.move:110:32+47
+    assume {:print "$at(2,4128,4175)"} true;
+    $t13 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t9)->$coin);
+
+    // $t11 := read_ref($t13) at ./sources/BasicCoin.move:110:32+47
+    $t11 := $Dereference($t13);
+
+    // $t12 := read_ref($t10) at ./sources/BasicCoin.move:110:32+47
+    $t12 := $Dereference($t10);
+
+    // write_ref($t13, $t12) at ./sources/BasicCoin.move:110:32+47
+    $t13 := $UpdateMutation($t13, $t12);
+
+    // release($t13) at ./sources/BasicCoin.move:110:32+47
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t13) at ./sources/BasicCoin.move:110:32+47
+    assume $Fulfilled($t13);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t13)));
+
+    // $t14 := borrow_field<BasicCoin::Balance<#0>>.coin($t9, $t10) at ./sources/BasicCoin.move:110:32+47
+    $t14 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t10));
+
+    // write_ref($t14, $t11) at ./sources/BasicCoin.move:110:32+47
+    $t14 := $UpdateMutation($t14, $t11);
+
+    // $t15 := havoc[mut_all]() at ./sources/BasicCoin.move:108:5+295
+    assume {:print "$at(2,3969,4264)"} true;
+    havoc $t15;
+
+    // assume Identical($t16, $t15) at ./sources/BasicCoin.move:108:5+295
+    assume ($t16 == $Dereference($t15));
+
+    // assume Identical($t17, $t15) at ./sources/BasicCoin.move:108:5+295
+    assume ($t17 == $Dereference($t15));
+
+    // $t18 := borrow_field<BasicCoin::Coin<#0>>.value($t14) at ./sources/BasicCoin.move:110:27+58
+    assume {:print "$at(2,4123,4181)"} true;
+    $t18 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t14)->$value);
+
+    // $t16 := read_ref($t18) at ./sources/BasicCoin.move:110:27+58
+    $t16 := $Dereference($t18);
+
+    // $t17 := read_ref($t15) at ./sources/BasicCoin.move:110:27+58
+    $t17 := $Dereference($t15);
+
+    // write_ref($t18, $t17) at ./sources/BasicCoin.move:110:27+58
+    $t18 := $UpdateMutation($t18, $t17);
+
+    // release($t18) at ./sources/BasicCoin.move:110:27+58
+
+    // write_back[Reference($t14).value (u64)]($t18) at ./sources/BasicCoin.move:110:27+58
+    assume $Fulfilled($t18);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t18)));
+
+    // $t19 := borrow_field<BasicCoin::Coin<#0>>.value($t14, $t15) at ./sources/BasicCoin.move:110:27+58
+    $t19 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t15));
+
+    // write_ref($t19, $t16) at ./sources/BasicCoin.move:110:27+58
+    $t19 := $UpdateMutation($t19, $t16);
+
+    // trace_local[balance_ref]($t19) at ./sources/BasicCoin.move:110:13+11
+    $temp_0'u64' := $Dereference($t19);
+    assume {:print "$track_local(2,1,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t20 := unpack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:111:13+14
+    assume {:print "$at(2,4195,4209)"} true;
+    $t20 := $t1->$value;
+
+    // trace_local[value]($t20) at ./sources/BasicCoin.move:111:20+5
+    assume {:print "$track_local(2,1,4):", $t20} $t20 == $t20;
+
+    // $t21 := +($t7, $t20) on_abort goto L2 with $t8 at ./sources/BasicCoin.move:112:32+1
+    assume {:print "$at(2,4250,4251)"} true;
+    call $t21 := $AddU64($t7, $t20);
+    if ($abort_flag) {
+        assume {:print "$at(2,4250,4251)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t8} $t8 == $t8;
+        goto L2;
+    }
+
+    // write_ref($t19, $t21) at ./sources/BasicCoin.move:112:9+30
+    $t19 := $UpdateMutation($t19, $t21);
+
+    // write_back[Reference($t14).value (u64)]($t19) at ./sources/BasicCoin.move:112:9+30
+    assume $Fulfilled($t19);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t19)));
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t14) at ./sources/BasicCoin.move:112:9+30
+    assume $Fulfilled($t14);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t14)));
+
+    // write_back[BasicCoin::Balance<#0>@]($t9) at ./sources/BasicCoin.move:112:9+30
+    $deadbeef_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($deadbeef_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
+
+    // label L1 at ./sources/BasicCoin.move:113:5+1
+    assume {:print "$at(2,4263,4264)"} true;
+L1:
+
+    // assume Identical($t22, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:122:9+67
+    assume {:print "$at(2,4503,4570)"} true;
+    assume ($t22 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // assert Not(Not(exists[@2]<BasicCoin::Balance<#0>>($t0))) at ./sources/BasicCoin.move:119:9+43
+    assume {:print "$at(2,4399,4442)"} true;
+    assert {:msg "assert_failed(2,4399,4442): function does not abort under this condition"}
+      !!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#2, $t0);
+
+    // assert Not(Gt(Add($t5, $t6), 18446744073709551615)) at ./sources/BasicCoin.move:120:9+42
+    assume {:print "$at(2,4451,4493)"} true;
+    assert {:msg "assert_failed(2,4451,4493): function does not abort under this condition"}
+      !(($t5 + $t6) > 18446744073709551615);
+
+    // assert Eq<u64>($t22, Add($t5, $t6)) at ./sources/BasicCoin.move:123:9+46
+    assume {:print "$at(2,4579,4625)"} true;
+    assert {:msg "assert_failed(2,4579,4625): post-condition does not hold"}
+      $IsEqual'u64'($t22, ($t5 + $t6));
+
+    // return () at ./sources/BasicCoin.move:123:9+46
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:113:5+1
+    assume {:print "$at(2,4263,4264)"} true;
+L2:
+
+    // assert Or(Not(exists[@2]<BasicCoin::Balance<#0>>($t0)), Gt(Add($t5, $t6), 18446744073709551615)) at ./sources/BasicCoin.move:115:5+361
+    assume {:print "$at(2,4270,4631)"} true;
+    assert {:msg "assert_failed(2,4270,4631): abort not covered by any of the `aborts_if` clauses"}
+      (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#2, $t0) || (($t5 + $t6) > 18446744073709551615));
+
+    // abort($t8) at ./sources/BasicCoin.move:115:5+361
+    $abort_code := $t8;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::mint [verification] at ./sources/BasicCoin.move:44:5+244
+procedure {:timeLimit 80} $deadbeef_BasicCoin_mint$verify(_$t0: int, _$t1: int, _$t2: #0) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: $deadbeef_BasicCoin_Coin'#0';
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t0: int;
+    var $t1: int;
+    var $t2: #0;
+    var $temp_0'#0': #0;
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    var $deadbeef_BasicCoin_Balance'#0'_$memory#4: $Memory $deadbeef_BasicCoin_Balance'#0';
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$at(2,1381,1382)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:44:5+1
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at ./sources/BasicCoin.move:44:5+1
+    assume $IsValid'#0'($t2);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:44:5+1
+    assume (forall $a_0: int :: {$ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$deadbeef_BasicCoin_Balance'#0''($rsc))));
+
+    // assume Identical($t3, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:129:9+57
+    assume {:print "$at(2,4727,4784)"} true;
+    assume ($t3 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // @4 := save_mem(BasicCoin::Balance<#0>) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$at(2,1381,1382)"} true;
+    $deadbeef_BasicCoin_Balance'#0'_$memory#4 := $deadbeef_BasicCoin_Balance'#0'_$memory;
+
+    // trace_local[mint_addr]($t0) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,2,1):", $t1} $t1 == $t1;
+
+    // trace_local[_witness]($t2) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,2,2):", $t2} $t2 == $t2;
+
+    // $t4 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:46:28+32
+    assume {:print "$at(2,1585,1617)"} true;
+    $t4 := $deadbeef_BasicCoin_Coin'#0'($t1);
+
+    // assume Identical($t5, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:116:9+57
+    assume {:print "$at(2,4293,4350)"} true;
+    assume ($t5 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // assume Identical($t6, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>($t4)) at ./sources/BasicCoin.move:117:9+30
+    assume {:print "$at(2,4359,4389)"} true;
+    assume ($t6 == $t4->$value);
+
+    // BasicCoin::deposit<#0>($t0, $t4) on_abort goto L2 with $t7 at ./sources/BasicCoin.move:46:9+52
+    assume {:print "$at(2,1566,1618)"} true;
+    call $deadbeef_BasicCoin_deposit'#0'($t0, $t4);
+    if ($abort_flag) {
+        assume {:print "$at(2,1566,1618)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(2,2):", $t7} $t7 == $t7;
+        goto L2;
+    }
+
+    // label L1 at ./sources/BasicCoin.move:47:5+1
+    assume {:print "$at(2,1624,1625)"} true;
+L1:
+
+    // assume Identical($t8, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:134:9+67
+    assume {:print "$at(2,4893,4960)"} true;
+    assume ($t8 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // assert Not(Not(exists[@4]<BasicCoin::Balance<#0>>($t0))) at ./sources/BasicCoin.move:131:9+43
+    assume {:print "$at(2,4794,4837)"} true;
+    assert {:msg "assert_failed(2,4794,4837): function does not abort under this condition"}
+      !!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#4, $t0);
+
+    // assert Not(Gt(Add($t3, $t1), 18446744073709551615)) at ./sources/BasicCoin.move:132:9+37
+    assume {:print "$at(2,4846,4883)"} true;
+    assert {:msg "assert_failed(2,4846,4883): function does not abort under this condition"}
+      !(($t3 + $t1) > 18446744073709551615);
+
+    // assert Eq<u64>($t8, Add($t3, $t1)) at ./sources/BasicCoin.move:135:9+41
+    assume {:print "$at(2,4969,5010)"} true;
+    assert {:msg "assert_failed(2,4969,5010): post-condition does not hold"}
+      $IsEqual'u64'($t8, ($t3 + $t1));
+
+    // return () at ./sources/BasicCoin.move:135:9+41
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:47:5+1
+    assume {:print "$at(2,1624,1625)"} true;
+L2:
+
+    // assert Or(Not(exists[@4]<BasicCoin::Balance<#0>>($t0)), Gt(Add($t3, $t1), 18446744073709551615)) at ./sources/BasicCoin.move:49:5+84
+    assume {:print "$at(2,1631,1715)"} true;
+    assert {:msg "assert_failed(2,1631,1715): abort not covered by any of the `aborts_if` clauses"}
+      (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#4, $t0) || (($t3 + $t1) > 18446744073709551615));
+
+    // abort($t7) at ./sources/BasicCoin.move:49:5+84
+    $abort_code := $t7;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::publish_balance [verification] at ./sources/BasicCoin.move:20:5+278
+procedure {:timeLimit 80} $deadbeef_BasicCoin_publish_balance$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $deadbeef_BasicCoin_Coin'#0';
+    var $t8: $deadbeef_BasicCoin_Balance'#0';
+    var $t9: int;
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
+    var $deadbeef_BasicCoin_Balance'#0'_$memory#5: $Memory $deadbeef_BasicCoin_Balance'#0';
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:20:5+1
+    assume {:print "$at(2,490,491)"} true;
+    assume $IsValid'signer'($t0) && $1_signer_is_txn_signer($t0) && $1_signer_is_txn_signer_addr($t0->$addr);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:20:5+1
+    assume (forall $a_0: int :: {$ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$deadbeef_BasicCoin_Balance'#0''($rsc))));
+
+    // @5 := save_mem(BasicCoin::Balance<#0>) at ./sources/BasicCoin.move:20:5+1
+    $deadbeef_BasicCoin_Balance'#0'_$memory#5 := $deadbeef_BasicCoin_Balance'#0'_$memory;
+
+    // trace_local[account]($t0) at ./sources/BasicCoin.move:20:5+1
+    assume {:print "$track_local(2,3,0):", $t0} $t0 == $t0;
+
+    // $t1 := signer::address_of($t0) on_abort goto L4 with $t2 at ./sources/BasicCoin.move:22:44+27
+    assume {:print "$at(2,644,671)"} true;
+    call $t1 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,644,671)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t2} $t2 == $t2;
+        goto L4;
+    }
+
+    // $t3 := exists<BasicCoin::Balance<#0>>($t1) at ./sources/BasicCoin.move:22:18+6
+    $t3 := $ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t1);
+
+    // $t4 := !($t3) at ./sources/BasicCoin.move:22:17+1
+    call $t4 := $Not($t3);
+
+    // if ($t4) goto L1 else goto L0 at ./sources/BasicCoin.move:22:9+86
+    if ($t4) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:22:9+86
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:22:9+86
+    assume {:print "$at(2,609,695)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:22:9+86
+L0:
+
+    // $t5 := 2 at ./sources/BasicCoin.move:22:74+20
+    assume {:print "$at(2,674,694)"} true;
+    $t5 := 2;
+    assume $IsValid'u64'($t5);
+
+    // trace_abort($t5) at ./sources/BasicCoin.move:22:9+86
+    assume {:print "$at(2,609,695)"} true;
+    assume {:print "$track_abort(2,3):", $t5} $t5 == $t5;
+
+    // $t2 := move($t5) at ./sources/BasicCoin.move:22:9+86
+    $t2 := $t5;
+
+    // goto L4 at ./sources/BasicCoin.move:22:9+86
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:23:17+7
+    assume {:print "$at(2,713,720)"} true;
+L2:
+
+    // $t6 := 0 at ./sources/BasicCoin.move:21:50+1
+    assume {:print "$at(2,596,597)"} true;
+    $t6 := 0;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := pack BasicCoin::Coin<#0>($t6) at ./sources/BasicCoin.move:21:26+27
+    $t7 := $deadbeef_BasicCoin_Coin'#0'($t6);
+
+    // $t8 := pack BasicCoin::Balance<#0>($t7) at ./sources/BasicCoin.move:23:26+38
+    assume {:print "$at(2,722,760)"} true;
+    $t8 := $deadbeef_BasicCoin_Balance'#0'($t7);
+
+    // move_to<BasicCoin::Balance<#0>>($t8, $t0) on_abort goto L4 with $t2 at ./sources/BasicCoin.move:23:9+7
+    if ($ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0->$addr)) {
+        call $ExecFailureAbort();
+    } else {
+        $deadbeef_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($deadbeef_BasicCoin_Balance'#0'_$memory, $t0->$addr, $t8);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,705,712)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t2} $t2 == $t2;
+        goto L4;
+    }
+
+    // label L3 at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,767,768)"} true;
+L3:
+
+    // assume Identical($t9, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>(signer::$address_of($t0))))) at ./sources/BasicCoin.move:37:9+67
+    assume {:print "$at(2,1090,1157)"} true;
+    assume ($t9 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $1_signer_$address_of($t0))->$coin->$value);
+
+    // assert Not(exists[@5]<BasicCoin::Balance<#0>>(signer::$address_of[]($t0))) at ./sources/BasicCoin.move:34:9+42
+    assume {:print "$at(2,989,1031)"} true;
+    assert {:msg "assert_failed(2,989,1031): function does not abort under this condition"}
+      !$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#5, $1_signer_$address_of($t0));
+
+    // assert exists<BasicCoin::Balance<#0>>(signer::$address_of($t0)) at ./sources/BasicCoin.move:36:9+40
+    assume {:print "$at(2,1041,1081)"} true;
+    assert {:msg "assert_failed(2,1041,1081): post-condition does not hold"}
+      $ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $1_signer_$address_of($t0));
+
+    // assert Eq<u64>($t9, 0) at ./sources/BasicCoin.move:39:9+31
+    assume {:print "$at(2,1167,1198)"} true;
+    assert {:msg "assert_failed(2,1167,1198): post-condition does not hold"}
+      $IsEqual'u64'($t9, 0);
+
+    // return () at ./sources/BasicCoin.move:39:9+31
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,767,768)"} true;
+L4:
+
+    // assert exists[@5]<BasicCoin::Balance<#0>>(signer::$address_of[]($t0)) at ./sources/BasicCoin.move:26:5+117
+    assume {:print "$at(2,774,891)"} true;
+    assert {:msg "assert_failed(2,774,891): abort not covered by any of the `aborts_if` clauses"}
+      $ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#5, $1_signer_$address_of($t0));
+
+    // abort($t2) at ./sources/BasicCoin.move:26:5+117
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::transfer [verification] at ./sources/BasicCoin.move:64:5+315
+procedure {:timeLimit 80} $deadbeef_BasicCoin_transfer$verify(_$t0: $signer, _$t1: int, _$t2: int, _$t3: #0) returns ()
+{
+    // declare local variables
+    var $t4: $deadbeef_BasicCoin_Coin'#0';
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: int;
+    var $t10: int;
+    var $t11: bool;
+    var $t12: int;
+    var $t13: int;
+    var $t14: $deadbeef_BasicCoin_Coin'#0';
+    var $t15: int;
+    var $t16: int;
+    var $t17: int;
+    var $t18: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: int;
+    var $t3: #0;
+    var $temp_0'#0': #0;
+    var $temp_0'$deadbeef_BasicCoin_Coin'#0'': $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $deadbeef_BasicCoin_Balance'#0'_$memory#8: $Memory $deadbeef_BasicCoin_Balance'#0';
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    $t3 := _$t3;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:64:5+1
+    assume {:print "$at(2,2170,2171)"} true;
+    assume $IsValid'signer'($t0) && $1_signer_is_txn_signer($t0) && $1_signer_is_txn_signer_addr($t0->$addr);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:64:5+1
+    assume $IsValid'address'($t1);
+
+    // assume WellFormed($t2) at ./sources/BasicCoin.move:64:5+1
+    assume $IsValid'u64'($t2);
+
+    // assume WellFormed($t3) at ./sources/BasicCoin.move:64:5+1
+    assume $IsValid'#0'($t3);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:64:5+1
+    assume (forall $a_0: int :: {$ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$deadbeef_BasicCoin_Balance'#0''($rsc))));
+
+    // assume Identical($t6, signer::$address_of($t0)) at ./sources/BasicCoin.move:72:9+41
+    assume {:print "$at(2,2515,2556)"} true;
+    assume ($t6 == $1_signer_$address_of($t0));
+
+    // assume Identical($t7, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t6)))) at ./sources/BasicCoin.move:74:9+67
+    assume {:print "$at(2,2566,2633)"} true;
+    assume ($t7 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t6)->$coin->$value);
+
+    // assume Identical($t8, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t1)))) at ./sources/BasicCoin.move:75:9+58
+    assume {:print "$at(2,2642,2700)"} true;
+    assume ($t8 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t1)->$coin->$value);
+
+    // @8 := save_mem(BasicCoin::Balance<#0>) at ./sources/BasicCoin.move:64:5+1
+    assume {:print "$at(2,2170,2171)"} true;
+    $deadbeef_BasicCoin_Balance'#0'_$memory#8 := $deadbeef_BasicCoin_Balance'#0'_$memory;
+
+    // trace_local[from]($t0) at ./sources/BasicCoin.move:64:5+1
+    assume {:print "$track_local(2,4,0):", $t0} $t0 == $t0;
+
+    // trace_local[to]($t1) at ./sources/BasicCoin.move:64:5+1
+    assume {:print "$track_local(2,4,1):", $t1} $t1 == $t1;
+
+    // trace_local[amount]($t2) at ./sources/BasicCoin.move:64:5+1
+    assume {:print "$track_local(2,4,2):", $t2} $t2 == $t2;
+
+    // trace_local[_witness]($t3) at ./sources/BasicCoin.move:64:5+1
+    assume {:print "$track_local(2,4,3):", $t3} $t3 == $t3;
+
+    // $t9 := signer::address_of($t0) on_abort goto L4 with $t10 at ./sources/BasicCoin.move:65:25+24
+    assume {:print "$at(2,2310,2334)"} true;
+    call $t9 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,2310,2334)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t10} $t10 == $t10;
+        goto L4;
+    }
+
+    // trace_local[from_addr]($t9) at ./sources/BasicCoin.move:65:13+9
+    assume {:print "$track_local(2,4,5):", $t9} $t9 == $t9;
+
+    // $t11 := !=($t9, $t1) at ./sources/BasicCoin.move:66:27+2
+    assume {:print "$at(2,2362,2364)"} true;
+    $t11 := !$IsEqual'address'($t9, $t1);
+
+    // if ($t11) goto L1 else goto L0 at ./sources/BasicCoin.move:66:9+37
+    if ($t11) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:66:9+37
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:66:9+37
+    assume {:print "$at(2,2344,2381)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:66:34+11
+L0:
+
+    // $t12 := 4 at ./sources/BasicCoin.move:66:34+11
+    assume {:print "$at(2,2369,2380)"} true;
+    $t12 := 4;
+    assume $IsValid'u64'($t12);
+
+    // trace_abort($t12) at ./sources/BasicCoin.move:66:9+37
+    assume {:print "$at(2,2344,2381)"} true;
+    assume {:print "$track_abort(2,4):", $t12} $t12 == $t12;
+
+    // $t10 := move($t12) at ./sources/BasicCoin.move:66:9+37
+    $t10 := $t12;
+
+    // goto L4 at ./sources/BasicCoin.move:66:9+37
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:67:40+9
+    assume {:print "$at(2,2422,2431)"} true;
+L2:
+
+    // assume Identical($t13, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t9)))) at ./sources/BasicCoin.move:98:9+57
+    assume {:print "$at(2,3624,3681)"} true;
+    assume ($t13 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t9)->$coin->$value);
+
+    // $t14 := BasicCoin::withdraw<#0>($t9, $t2) on_abort goto L4 with $t10 at ./sources/BasicCoin.move:67:21+37
+    assume {:print "$at(2,2403,2440)"} true;
+    call $t14 := $deadbeef_BasicCoin_withdraw'#0'($t9, $t2);
+    if ($abort_flag) {
+        assume {:print "$at(2,2403,2440)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t10} $t10 == $t10;
+        goto L4;
+    }
+
+    // trace_local[check]($t14) at ./sources/BasicCoin.move:67:13+5
+    assume {:print "$track_local(2,4,4):", $t14} $t14 == $t14;
+
+    // assume Identical($t15, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t1)))) at ./sources/BasicCoin.move:116:9+57
+    assume {:print "$at(2,4293,4350)"} true;
+    assume ($t15 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t1)->$coin->$value);
+
+    // assume Identical($t16, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>($t14)) at ./sources/BasicCoin.move:117:9+30
+    assume {:print "$at(2,4359,4389)"} true;
+    assume ($t16 == $t14->$value);
+
+    // BasicCoin::deposit<#0>($t1, $t14) on_abort goto L4 with $t10 at ./sources/BasicCoin.move:68:9+28
+    assume {:print "$at(2,2450,2478)"} true;
+    call $deadbeef_BasicCoin_deposit'#0'($t1, $t14);
+    if ($abort_flag) {
+        assume {:print "$at(2,2450,2478)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t10} $t10 == $t10;
+        goto L4;
+    }
+
+    // label L3 at ./sources/BasicCoin.move:69:5+1
+    assume {:print "$at(2,2484,2485)"} true;
+L3:
+
+    // assume Identical($t17, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t6)))) at ./sources/BasicCoin.move:76:9+77
+    assume {:print "$at(2,2709,2786)"} true;
+    assume ($t17 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t6)->$coin->$value);
+
+    // assume Identical($t18, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t1)))) at ./sources/BasicCoin.move:77:9+68
+    assume {:print "$at(2,2795,2863)"} true;
+    assume ($t18 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t1)->$coin->$value);
+
+    // assert Not(Not(exists[@8]<BasicCoin::Balance<#0>>($t6))) at ./sources/BasicCoin.move:79:9+48
+    assume {:print "$at(2,2873,2921)"} true;
+    assert {:msg "assert_failed(2,2873,2921): function does not abort under this condition"}
+      !!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#8, $t6);
+
+    // assert Not(Not(exists[@8]<BasicCoin::Balance<#0>>($t1))) at ./sources/BasicCoin.move:80:9+41
+    assume {:print "$at(2,2930,2971)"} true;
+    assert {:msg "assert_failed(2,2930,2971): function does not abort under this condition"}
+      !!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#8, $t1);
+
+    // assert Not(Lt($t7, $t2)) at ./sources/BasicCoin.move:81:9+32
+    assume {:print "$at(2,2980,3012)"} true;
+    assert {:msg "assert_failed(2,2980,3012): function does not abort under this condition"}
+      !($t7 < $t2);
+
+    // assert Not(Gt(Add($t8, $t2), 18446744073709551615)) at ./sources/BasicCoin.move:82:9+40
+    assume {:print "$at(2,3021,3061)"} true;
+    assert {:msg "assert_failed(2,3021,3061): function does not abort under this condition"}
+      !(($t8 + $t2) > 18446744073709551615);
+
+    // assert Not(Eq<address>($t6, $t1)) at ./sources/BasicCoin.move:83:9+26
+    assume {:print "$at(2,3070,3096)"} true;
+    assert {:msg "assert_failed(2,3070,3096): function does not abort under this condition"}
+      !$IsEqual'address'($t6, $t1);
+
+    // assert Eq<u64>($t17, Sub($t7, $t2)) at ./sources/BasicCoin.move:85:9+51
+    assume {:print "$at(2,3106,3157)"} true;
+    assert {:msg "assert_failed(2,3106,3157): post-condition does not hold"}
+      $IsEqual'u64'($t17, ($t7 - $t2));
+
+    // assert Eq<u64>($t18, Add($t8, $t2)) at ./sources/BasicCoin.move:86:9+47
+    assume {:print "$at(2,3166,3213)"} true;
+    assert {:msg "assert_failed(2,3166,3213): post-condition does not hold"}
+      $IsEqual'u64'($t18, ($t8 + $t2));
+
+    // return () at ./sources/BasicCoin.move:86:9+47
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:69:5+1
+    assume {:print "$at(2,2484,2485)"} true;
+L4:
+
+    // assert Or(Or(Or(Or(Not(exists[@8]<BasicCoin::Balance<#0>>($t6)), Not(exists[@8]<BasicCoin::Balance<#0>>($t1))), Lt($t7, $t2)), Gt(Add($t8, $t2), 18446744073709551615)), Eq<address>($t6, $t1)) at ./sources/BasicCoin.move:71:5+728
+    assume {:print "$at(2,2491,3219)"} true;
+    assert {:msg "assert_failed(2,2491,3219): abort not covered by any of the `aborts_if` clauses"}
+      ((((!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#8, $t6) || !$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#8, $t1)) || ($t7 < $t2)) || (($t8 + $t2) > 18446744073709551615)) || $IsEqual'address'($t6, $t1));
+
+    // abort($t10) at ./sources/BasicCoin.move:71:5+728
+    $abort_code := $t10;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::withdraw<#0> [baseline] at ./sources/BasicCoin.move:89:5+369
+procedure {:inline 1} $deadbeef_BasicCoin_withdraw'#0'(_$t0: int, _$t1: int) returns ($ret0: $deadbeef_BasicCoin_Coin'#0')
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: bool;
+    var $t8: int;
+    var $t9: $Mutation ($deadbeef_BasicCoin_Balance'#0');
+    var $t10: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t11: $deadbeef_BasicCoin_Coin'#0';
+    var $t12: $deadbeef_BasicCoin_Coin'#0';
+    var $t13: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t14: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t15: $Mutation (int);
+    var $t16: int;
+    var $t17: int;
+    var $t18: $Mutation (int);
+    var $t19: $Mutation (int);
+    var $t20: int;
+    var $t21: $deadbeef_BasicCoin_Coin'#0';
+    var $t0: int;
+    var $t1: int;
+    var $temp_0'$deadbeef_BasicCoin_Coin'#0'': $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // assume Identical($t4, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:98:9+57
+    assume {:print "$at(2,3624,3681)"} true;
+    assume ($t4 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:89:5+1
+    assume {:print "$at(2,3225,3226)"} true;
+    assume {:print "$track_local(2,5,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:89:5+1
+    assume {:print "$track_local(2,5,1):", $t1} $t1 == $t1;
+
+    // $t5 := BasicCoin::balance_of<#0>($t0) on_abort goto L4 with $t6 at ./sources/BasicCoin.move:90:23+26
+    assume {:print "$at(2,3334,3360)"} true;
+    call $t5 := $deadbeef_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,3334,3360)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t6} $t6 == $t6;
+        goto L4;
+    }
+
+    // trace_local[balance]($t5) at ./sources/BasicCoin.move:90:13+7
+    assume {:print "$track_local(2,5,2):", $t5} $t5 == $t5;
+
+    // $t7 := >=($t5, $t1) at ./sources/BasicCoin.move:91:25+2
+    assume {:print "$at(2,3386,3388)"} true;
+    call $t7 := $Ge($t5, $t1);
+
+    // if ($t7) goto L1 else goto L0 at ./sources/BasicCoin.move:91:9+49
+    if ($t7) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:91:9+49
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:91:9+49
+    assume {:print "$at(2,3370,3419)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:91:36+21
+L0:
+
+    // $t8 := 1 at ./sources/BasicCoin.move:91:36+21
+    assume {:print "$at(2,3397,3418)"} true;
+    $t8 := 1;
+    assume $IsValid'u64'($t8);
+
+    // trace_abort($t8) at ./sources/BasicCoin.move:91:9+49
+    assume {:print "$at(2,3370,3419)"} true;
+    assume {:print "$track_abort(2,5):", $t8} $t8 == $t8;
+
+    // $t6 := move($t8) at ./sources/BasicCoin.move:91:9+49
+    $t6 := $t8;
+
+    // goto L4 at ./sources/BasicCoin.move:91:9+49
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:92:69+4
+    assume {:print "$at(2,3489,3493)"} true;
+L2:
+
+    // $t9 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L4 with $t6 at ./sources/BasicCoin.move:92:32+17
+    assume {:print "$at(2,3452,3469)"} true;
+    if (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+    havoc $temp_0'$deadbeef_BasicCoin_Balance'#0'';
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0), $temp_0'$deadbeef_BasicCoin_Balance'#0'');
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,3452,3469)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t6} $t6 == $t6;
+        goto L4;
+    }
+
+    // $t10 := havoc[mut_all]() at ./sources/BasicCoin.move:89:5+369
+    assume {:print "$at(2,3225,3594)"} true;
+    havoc $t10;
+
+    // assume Identical($t11, $t10) at ./sources/BasicCoin.move:89:5+369
+    assume ($t11 == $Dereference($t10));
+
+    // assume Identical($t12, $t10) at ./sources/BasicCoin.move:89:5+369
+    assume ($t12 == $Dereference($t10));
+
+    // $t13 := borrow_field<BasicCoin::Balance<#0>>.coin($t9) at ./sources/BasicCoin.move:92:32+47
+    assume {:print "$at(2,3452,3499)"} true;
+    $t13 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t9)->$coin);
+
+    // $t11 := read_ref($t13) at ./sources/BasicCoin.move:92:32+47
+    $t11 := $Dereference($t13);
+
+    // $t12 := read_ref($t10) at ./sources/BasicCoin.move:92:32+47
+    $t12 := $Dereference($t10);
+
+    // write_ref($t13, $t12) at ./sources/BasicCoin.move:92:32+47
+    $t13 := $UpdateMutation($t13, $t12);
+
+    // release($t13) at ./sources/BasicCoin.move:92:32+47
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t13) at ./sources/BasicCoin.move:92:32+47
+    assume $Fulfilled($t13);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t13)));
+
+    // $t14 := borrow_field<BasicCoin::Balance<#0>>.coin($t9, $t10) at ./sources/BasicCoin.move:92:32+47
+    $t14 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t10));
+
+    // write_ref($t14, $t11) at ./sources/BasicCoin.move:92:32+47
+    $t14 := $UpdateMutation($t14, $t11);
+
+    // $t15 := havoc[mut_all]() at ./sources/BasicCoin.move:89:5+369
+    assume {:print "$at(2,3225,3594)"} true;
+    havoc $t15;
+
+    // assume Identical($t16, $t15) at ./sources/BasicCoin.move:89:5+369
+    assume ($t16 == $Dereference($t15));
+
+    // assume Identical($t17, $t15) at ./sources/BasicCoin.move:89:5+369
+    assume ($t17 == $Dereference($t15));
+
+    // $t18 := borrow_field<BasicCoin::Coin<#0>>.value($t14) at ./sources/BasicCoin.move:92:27+58
+    assume {:print "$at(2,3447,3505)"} true;
+    $t18 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t14)->$value);
+
+    // $t16 := read_ref($t18) at ./sources/BasicCoin.move:92:27+58
+    $t16 := $Dereference($t18);
+
+    // $t17 := read_ref($t15) at ./sources/BasicCoin.move:92:27+58
+    $t17 := $Dereference($t15);
+
+    // write_ref($t18, $t17) at ./sources/BasicCoin.move:92:27+58
+    $t18 := $UpdateMutation($t18, $t17);
+
+    // release($t18) at ./sources/BasicCoin.move:92:27+58
+
+    // write_back[Reference($t14).value (u64)]($t18) at ./sources/BasicCoin.move:92:27+58
+    assume $Fulfilled($t18);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t18)));
+
+    // $t19 := borrow_field<BasicCoin::Coin<#0>>.value($t14, $t15) at ./sources/BasicCoin.move:92:27+58
+    $t19 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t15));
+
+    // write_ref($t19, $t16) at ./sources/BasicCoin.move:92:27+58
+    $t19 := $UpdateMutation($t19, $t16);
+
+    // trace_local[balance_ref]($t19) at ./sources/BasicCoin.move:92:13+11
+    $temp_0'u64' := $Dereference($t19);
+    assume {:print "$track_local(2,5,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t20 := -($t5, $t1) on_abort goto L4 with $t6 at ./sources/BasicCoin.move:93:32+1
+    assume {:print "$at(2,3538,3539)"} true;
+    call $t20 := $Sub($t5, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,3538,3539)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t6} $t6 == $t6;
+        goto L4;
+    }
+
+    // write_ref($t19, $t20) at ./sources/BasicCoin.move:93:9+31
+    $t19 := $UpdateMutation($t19, $t20);
+
+    // write_back[Reference($t14).value (u64)]($t19) at ./sources/BasicCoin.move:93:9+31
+    assume $Fulfilled($t19);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t19)));
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t14) at ./sources/BasicCoin.move:93:9+31
+    assume $Fulfilled($t14);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t14)));
+
+    // write_back[BasicCoin::Balance<#0>@]($t9) at ./sources/BasicCoin.move:93:9+31
+    $deadbeef_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($deadbeef_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
+
+    // $t21 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:94:9+32
+    assume {:print "$at(2,3556,3588)"} true;
+    $t21 := $deadbeef_BasicCoin_Coin'#0'($t1);
+
+    // trace_return[0]($t21) at ./sources/BasicCoin.move:94:9+32
+    assume {:print "$track_return(2,5,0):", $t21} $t21 == $t21;
+
+    // label L3 at ./sources/BasicCoin.move:95:5+1
+    assume {:print "$at(2,3593,3594)"} true;
+L3:
+
+    // return $t21 at ./sources/BasicCoin.move:95:5+1
+    assume {:print "$at(2,3593,3594)"} true;
+    $ret0 := $t21;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:95:5+1
+L4:
+
+    // abort($t6) at ./sources/BasicCoin.move:95:5+1
+    assume {:print "$at(2,3593,3594)"} true;
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::withdraw [verification] at ./sources/BasicCoin.move:89:5+369
+procedure {:timeLimit 80} $deadbeef_BasicCoin_withdraw$verify(_$t0: int, _$t1: int) returns ($ret0: $deadbeef_BasicCoin_Coin'#0')
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: bool;
+    var $t8: int;
+    var $t9: $Mutation ($deadbeef_BasicCoin_Balance'#0');
+    var $t10: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t11: $deadbeef_BasicCoin_Coin'#0';
+    var $t12: $deadbeef_BasicCoin_Coin'#0';
+    var $t13: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t14: $Mutation ($deadbeef_BasicCoin_Coin'#0');
+    var $t15: $Mutation (int);
+    var $t16: int;
+    var $t17: int;
+    var $t18: $Mutation (int);
+    var $t19: $Mutation (int);
+    var $t20: int;
+    var $t21: $deadbeef_BasicCoin_Coin'#0';
+    var $t22: int;
+    var $t0: int;
+    var $t1: int;
+    var $temp_0'$deadbeef_BasicCoin_Coin'#0'': $deadbeef_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    var $deadbeef_BasicCoin_Balance'#0'_$memory#6: $Memory $deadbeef_BasicCoin_Balance'#0';
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:89:5+1
+    assume {:print "$at(2,3225,3226)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:89:5+1
+    assume $IsValid'u64'($t1);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:89:5+1
+    assume (forall $a_0: int :: {$ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$deadbeef_BasicCoin_Balance'#0''($rsc))));
+
+    // assume Identical($t4, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:98:9+57
+    assume {:print "$at(2,3624,3681)"} true;
+    assume ($t4 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // @6 := save_mem(BasicCoin::Balance<#0>) at ./sources/BasicCoin.move:89:5+1
+    assume {:print "$at(2,3225,3226)"} true;
+    $deadbeef_BasicCoin_Balance'#0'_$memory#6 := $deadbeef_BasicCoin_Balance'#0'_$memory;
+
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:89:5+1
+    assume {:print "$track_local(2,5,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:89:5+1
+    assume {:print "$track_local(2,5,1):", $t1} $t1 == $t1;
+
+    // $t5 := BasicCoin::balance_of<#0>($t0) on_abort goto L4 with $t6 at ./sources/BasicCoin.move:90:23+26
+    assume {:print "$at(2,3334,3360)"} true;
+    call $t5 := $deadbeef_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,3334,3360)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t6} $t6 == $t6;
+        goto L4;
+    }
+
+    // trace_local[balance]($t5) at ./sources/BasicCoin.move:90:13+7
+    assume {:print "$track_local(2,5,2):", $t5} $t5 == $t5;
+
+    // $t7 := >=($t5, $t1) at ./sources/BasicCoin.move:91:25+2
+    assume {:print "$at(2,3386,3388)"} true;
+    call $t7 := $Ge($t5, $t1);
+
+    // if ($t7) goto L1 else goto L0 at ./sources/BasicCoin.move:91:9+49
+    if ($t7) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:91:9+49
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:91:9+49
+    assume {:print "$at(2,3370,3419)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:91:36+21
+L0:
+
+    // $t8 := 1 at ./sources/BasicCoin.move:91:36+21
+    assume {:print "$at(2,3397,3418)"} true;
+    $t8 := 1;
+    assume $IsValid'u64'($t8);
+
+    // trace_abort($t8) at ./sources/BasicCoin.move:91:9+49
+    assume {:print "$at(2,3370,3419)"} true;
+    assume {:print "$track_abort(2,5):", $t8} $t8 == $t8;
+
+    // $t6 := move($t8) at ./sources/BasicCoin.move:91:9+49
+    $t6 := $t8;
+
+    // goto L4 at ./sources/BasicCoin.move:91:9+49
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:92:69+4
+    assume {:print "$at(2,3489,3493)"} true;
+L2:
+
+    // $t9 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L4 with $t6 at ./sources/BasicCoin.move:92:32+17
+    assume {:print "$at(2,3452,3469)"} true;
+    if (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+    havoc $temp_0'$deadbeef_BasicCoin_Balance'#0'';
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0), $temp_0'$deadbeef_BasicCoin_Balance'#0'');
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,3452,3469)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t6} $t6 == $t6;
+        goto L4;
+    }
+
+    // $t10 := havoc[mut_all]() at ./sources/BasicCoin.move:89:5+369
+    assume {:print "$at(2,3225,3594)"} true;
+    havoc $t10;
+
+    // assume Identical($t11, $t10) at ./sources/BasicCoin.move:89:5+369
+    assume ($t11 == $Dereference($t10));
+
+    // assume Identical($t12, $t10) at ./sources/BasicCoin.move:89:5+369
+    assume ($t12 == $Dereference($t10));
+
+    // $t13 := borrow_field<BasicCoin::Balance<#0>>.coin($t9) at ./sources/BasicCoin.move:92:32+47
+    assume {:print "$at(2,3452,3499)"} true;
+    $t13 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t9)->$coin);
+
+    // $t11 := read_ref($t13) at ./sources/BasicCoin.move:92:32+47
+    $t11 := $Dereference($t13);
+
+    // $t12 := read_ref($t10) at ./sources/BasicCoin.move:92:32+47
+    $t12 := $Dereference($t10);
+
+    // write_ref($t13, $t12) at ./sources/BasicCoin.move:92:32+47
+    $t13 := $UpdateMutation($t13, $t12);
+
+    // release($t13) at ./sources/BasicCoin.move:92:32+47
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t13) at ./sources/BasicCoin.move:92:32+47
+    assume $Fulfilled($t13);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t13)));
+
+    // $t14 := borrow_field<BasicCoin::Balance<#0>>.coin($t9, $t10) at ./sources/BasicCoin.move:92:32+47
+    $t14 := $ChildMutation($t9, 0, $Dereference($t9)->$coin, $Dereference($t10));
+
+    // write_ref($t14, $t11) at ./sources/BasicCoin.move:92:32+47
+    $t14 := $UpdateMutation($t14, $t11);
+
+    // $t15 := havoc[mut_all]() at ./sources/BasicCoin.move:89:5+369
+    assume {:print "$at(2,3225,3594)"} true;
+    havoc $t15;
+
+    // assume Identical($t16, $t15) at ./sources/BasicCoin.move:89:5+369
+    assume ($t16 == $Dereference($t15));
+
+    // assume Identical($t17, $t15) at ./sources/BasicCoin.move:89:5+369
+    assume ($t17 == $Dereference($t15));
+
+    // $t18 := borrow_field<BasicCoin::Coin<#0>>.value($t14) at ./sources/BasicCoin.move:92:27+58
+    assume {:print "$at(2,3447,3505)"} true;
+    $t18 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t14)->$value);
+
+    // $t16 := read_ref($t18) at ./sources/BasicCoin.move:92:27+58
+    $t16 := $Dereference($t18);
+
+    // $t17 := read_ref($t15) at ./sources/BasicCoin.move:92:27+58
+    $t17 := $Dereference($t15);
+
+    // write_ref($t18, $t17) at ./sources/BasicCoin.move:92:27+58
+    $t18 := $UpdateMutation($t18, $t17);
+
+    // release($t18) at ./sources/BasicCoin.move:92:27+58
+
+    // write_back[Reference($t14).value (u64)]($t18) at ./sources/BasicCoin.move:92:27+58
+    assume $Fulfilled($t18);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t18)));
+
+    // $t19 := borrow_field<BasicCoin::Coin<#0>>.value($t14, $t15) at ./sources/BasicCoin.move:92:27+58
+    $t19 := $ChildMutation($t14, 0, $Dereference($t14)->$value, $Dereference($t15));
+
+    // write_ref($t19, $t16) at ./sources/BasicCoin.move:92:27+58
+    $t19 := $UpdateMutation($t19, $t16);
+
+    // trace_local[balance_ref]($t19) at ./sources/BasicCoin.move:92:13+11
+    $temp_0'u64' := $Dereference($t19);
+    assume {:print "$track_local(2,5,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t20 := -($t5, $t1) on_abort goto L4 with $t6 at ./sources/BasicCoin.move:93:32+1
+    assume {:print "$at(2,3538,3539)"} true;
+    call $t20 := $Sub($t5, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,3538,3539)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t6} $t6 == $t6;
+        goto L4;
+    }
+
+    // write_ref($t19, $t20) at ./sources/BasicCoin.move:93:9+31
+    $t19 := $UpdateMutation($t19, $t20);
+
+    // write_back[Reference($t14).value (u64)]($t19) at ./sources/BasicCoin.move:93:9+31
+    assume $Fulfilled($t19);
+    $t14 := $UpdateMutation($t14, $Update'$deadbeef_BasicCoin_Coin'#0''_value($Dereference($t14), $Dereference($t19)));
+
+    // write_back[Reference($t9).coin (BasicCoin::Coin<#0>)]($t14) at ./sources/BasicCoin.move:93:9+31
+    assume $Fulfilled($t14);
+    $t9 := $UpdateMutation($t9, $Update'$deadbeef_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t14)));
+
+    // write_back[BasicCoin::Balance<#0>@]($t9) at ./sources/BasicCoin.move:93:9+31
+    $deadbeef_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($deadbeef_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
+
+    // $t21 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:94:9+32
+    assume {:print "$at(2,3556,3588)"} true;
+    $t21 := $deadbeef_BasicCoin_Coin'#0'($t1);
+
+    // trace_return[0]($t21) at ./sources/BasicCoin.move:94:9+32
+    assume {:print "$track_return(2,5,0):", $t21} $t21 == $t21;
+
+    // label L3 at ./sources/BasicCoin.move:95:5+1
+    assume {:print "$at(2,3593,3594)"} true;
+L3:
+
+    // assume Identical($t22, select BasicCoin::Coin.value<BasicCoin::Coin<#0>>(select BasicCoin::Balance.coin<BasicCoin::Balance<#0>>(global<BasicCoin::Balance<#0>>($t0)))) at ./sources/BasicCoin.move:103:9+67
+    assume {:print "$at(2,3780,3847)"} true;
+    assume ($t22 == $ResourceValue($deadbeef_BasicCoin_Balance'#0'_$memory, $t0)->$coin->$value);
+
+    // assert Not(Not(exists[@6]<BasicCoin::Balance<#0>>($t0))) at ./sources/BasicCoin.move:100:9+43
+    assume {:print "$at(2,3691,3734)"} true;
+    assert {:msg "assert_failed(2,3691,3734): function does not abort under this condition"}
+      !!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#6, $t0);
+
+    // assert Not(Lt($t4, $t1)) at ./sources/BasicCoin.move:101:9+27
+    assume {:print "$at(2,3743,3770)"} true;
+    assert {:msg "assert_failed(2,3743,3770): function does not abort under this condition"}
+      !($t4 < $t1);
+
+    // assert Eq<BasicCoin::Coin<#0>>($t21, pack BasicCoin::Coin<#0>($t1)) at ./sources/BasicCoin.move:104:9+51
+    assume {:print "$at(2,3856,3907)"} true;
+    assert {:msg "assert_failed(2,3856,3907): post-condition does not hold"}
+      $IsEqual'$deadbeef_BasicCoin_Coin'#0''($t21, $deadbeef_BasicCoin_Coin'#0'($t1));
+
+    // assert Eq<u64>($t22, Sub($t4, $t1)) at ./sources/BasicCoin.move:105:9+41
+    assume {:print "$at(2,3916,3957)"} true;
+    assert {:msg "assert_failed(2,3916,3957): post-condition does not hold"}
+      $IsEqual'u64'($t22, ($t4 - $t1));
+
+    // return $t21 at ./sources/BasicCoin.move:105:9+41
+    $ret0 := $t21;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:95:5+1
+    assume {:print "$at(2,3593,3594)"} true;
+L4:
+
+    // assert Or(Not(exists[@6]<BasicCoin::Balance<#0>>($t0)), Lt($t4, $t1)) at ./sources/BasicCoin.move:97:5+363
+    assume {:print "$at(2,3600,3963)"} true;
+    assert {:msg "assert_failed(2,3600,3963): abort not covered by any of the `aborts_if` clauses"}
+      (!$ResourceExists($deadbeef_BasicCoin_Balance'#0'_$memory#6, $t0) || ($t4 < $t1));
+
+    // abort($t6) at ./sources/BasicCoin.move:97:5+363
+    $abort_code := $t6;
+    $abort_flag := true;
     return;
 
 }
