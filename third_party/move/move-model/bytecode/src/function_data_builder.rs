@@ -251,6 +251,19 @@ impl<'env> FunctionDataBuilder<'env> {
         (temp, temp_exp)
     }
 
+    //Similar to emit_let_skip_reference but without the assume statement
+    pub fn emit_let_skip_reference_without_assume(&mut self, def: Exp) -> (TempIndex, Exp) {
+        let ty = self
+            .global_env()
+            .get_node_type(def.node_id())
+            .skip_reference()
+            .clone();
+        let temp = self.new_temp(ty);
+        let temp_exp = self.mk_temporary(temp);
+        let definition = self.mk_identical(temp_exp.clone(), def);
+        (temp, temp_exp)
+    }
+
     /// Emits a new temporary with a havoced value of given type.
     pub fn emit_let_havoc(&mut self, ty: Type) -> (TempIndex, Exp) {
         let havoc_kind = if ty.is_mutable_reference() {

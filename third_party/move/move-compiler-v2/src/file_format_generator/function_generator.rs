@@ -623,6 +623,7 @@ impl<'a> FunctionGenerator<'a> {
             | Operation::Stop
             | Operation::IsParent(_, _)
             | Operation::WriteBack(_, _)
+            | Operation::Fulfilled(_, _)
             | Operation::UnpackRef
             | Operation::PackRef
             | Operation::UnpackRefDeep

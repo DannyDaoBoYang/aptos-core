@@ -1136,6 +1136,9 @@ impl<'env> FunctionTranslator<'env> {
                     WriteBack(node, edge) => {
                         self.translate_write_back(node, edge, srcs[0]);
                     },
+                    Fulfilled(node, edge) => {
+                        self.translate_fulfilled(node, edge, srcs[0]);
+                    },
                     IsParent(node, edge) => {
                         if let BorrowNode::Reference(parent) = node {
                             let src_str = str_local(srcs[0]);
@@ -2364,6 +2367,26 @@ impl<'env> FunctionTranslator<'env> {
         }
     }
 
+    fn translate_fulfilled(&self, dest: &BorrowNode, edge: &BorrowEdge, src: TempIndex) {
+        use BorrowNode::*;
+        let writer = self.parent.writer;
+        let env = self.parent.env;
+        let src_str = format!("$t{}", src);
+        match dest {
+            ReturnPlaceholder(_) => {
+                unreachable!("unexpected transient borrow node")
+            },
+            GlobalRoot(memory) => {
+                unreachable!("unexpected global borrow node for fulfill")
+            },
+            LocalRoot(idx) => {
+                unreachable!("unexpected local borrow node for fulfill")
+            },
+            Reference(idx) => {
+                emitln!(writer, "assume $Fulfilled($t{});", src.clone());
+            },
+        }
+    }
     fn check_intrinsic_select(&self, attr_id: AttrId, struct_env: &StructEnv) {
         if struct_env.is_intrinsic() && self.fun_target.global_env().generated_by_v2() {
             // There is code in the framework which produces this warning.
@@ -2422,7 +2445,6 @@ impl<'env> FunctionTranslator<'env> {
                         at + 1,
                         writer
                     );
-                    emitln!(writer, "assume $Fulfilled({});", src.clone());
                     let update_fun = boogie_field_update(field_env, &memory.inst);
                     if new_dest_needed {
                         format!(
@@ -2434,6 +2456,7 @@ impl<'env> FunctionTranslator<'env> {
                             new_src
                         )
                     } else {
+                        //can't just remove this since it's recursive
                         format!("{}({}, {})", update_fun, (*mk_dest)(), new_src)
                     }
                 },

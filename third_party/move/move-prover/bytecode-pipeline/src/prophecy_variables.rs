@@ -43,9 +43,9 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
                 BorrowField(mid, sid, type_actuals, offset) => {
 
                     //idea
-                    //1. borrows this field, saves value to temp2
+                    //1. borrow field from parent field, saves value to temp2
                     //2  updates the field to a hovoc temp1, them write back
-                    //3. borrow from temp2
+                    //3. borrow field from parent again, but set value to saved value
 
                     //havoc a temp
                     //type should be the subfield being borrowed.
@@ -62,14 +62,14 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
                     .clone();
 
                     let new_dests1 = builder.add_local(type1.clone());
-                    let (new_dests2, tempexp2) = builder.emit_let_skip_reference(tempexp.clone()); //original val
-                    let (new_dests3, tempexp3) = builder.emit_let_skip_reference(tempexp.clone()); //original val
+                    let (new_dests2, tempexp2) = builder.emit_let_skip_reference_without_assume(tempexp.clone()); //original val
+                    let (new_dests3, tempexp3) = builder.emit_let_skip_reference_without_assume(tempexp.clone()); //original val
                     //borrow field from original
                     builder.emit(Call(
                         attr_id,
                         [new_dests1].to_vec(),
-                        BorrowFieldProphecy(mid, sid, type_actuals.clone(), offset, temp_i),
-                        [srcs[0], temp_i].to_vec(),
+                        BorrowField(mid, sid, type_actuals.clone(), offset),
+                        [srcs[0]].to_vec(),
                         aa.clone(),
                     ));
                     //save orignal to temp2
@@ -105,8 +105,8 @@ impl FunctionTargetProcessor for FutureWriteBackProcessor {
                         [new_dests1].to_vec(),
                         aa.clone(),
                     ));
-                    //borrowFieldProphecy
 
+                    //borrowFieldProphecy
                     builder.emit(Call(
                         attr_id,
                         dests.clone(),

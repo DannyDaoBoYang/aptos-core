@@ -3528,9 +3528,9 @@ procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_Bas
     // declare local variables
     var $t1: int;
     var $t2: $Mutation (int);
-    var $t3: int;
+    var $t3: $Mutation (int);
     var $t4: int;
-    var $t5: $Mutation (int);
+    var $t5: int;
     var $t6: $Mutation (int);
     var $t0: $Mutation ($cafe_BasicCoin_R);
     var $temp_0'$cafe_BasicCoin_R': $cafe_BasicCoin_R;
@@ -3558,30 +3558,23 @@ procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_Bas
     assume {:print "$at(2,137,189)"} true;
     havoc $t2;
 
-    // assume Identical($t3, $t2) at ./sources/FirstModule.move:10:5+52
-    assume ($t3 == $Dereference($t2));
-
-    // assume Identical($t4, $t2) at ./sources/FirstModule.move:10:5+52
-    assume ($t4 == $Dereference($t2));
-
-    // $t5 := borrow_field<BasicCoin::R>.f1($t0, $t2) at ./sources/FirstModule.move:11:9+4
+    // $t3 := borrow_field<BasicCoin::R>.f1($t0) at ./sources/FirstModule.move:11:9+4
     assume {:print "$at(2,174,178)"} true;
-    $t5 := $ChildMutation($t0, 0, $Dereference($t0)->$f1, $Dereference($t2));
+    $t3 := $ChildMutation($t0, 0, $Dereference($t0)->$f1, $Dereference($t0)->$f1);
 
-    // $t3 := read_ref($t5) at ./sources/FirstModule.move:11:9+4
-    $t3 := $Dereference($t5);
+    // $t4 := read_ref($t3) at ./sources/FirstModule.move:11:9+4
+    $t4 := $Dereference($t3);
 
-    // $t4 := read_ref($t2) at ./sources/FirstModule.move:11:9+4
-    $t4 := $Dereference($t2);
+    // $t5 := read_ref($t2) at ./sources/FirstModule.move:11:9+4
+    $t5 := $Dereference($t2);
 
-    // write_ref($t5, $t4) at ./sources/FirstModule.move:11:9+4
-    $t5 := $UpdateMutation($t5, $t4);
+    // write_ref($t3, $t5) at ./sources/FirstModule.move:11:9+4
+    $t3 := $UpdateMutation($t3, $t5);
 
-    // release($t5) at ./sources/FirstModule.move:11:9+4
+    // release($t3) at ./sources/FirstModule.move:11:9+4
 
-    // write_back[Reference($t0).f1 (u64)]($t5) at ./sources/FirstModule.move:11:9+4
-    assume $Fulfilled($t5);
-    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $Dereference($t5)));
+    // fulfilled[Reference($t0).f1 (u64)]($t3) at ./sources/FirstModule.move:11:9+4
+    assume $Fulfilled($t3);
 
     // trace_local[a]($t0) at ./sources/FirstModule.move:11:9+4
     $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
@@ -3590,15 +3583,14 @@ procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_Bas
     // $t6 := borrow_field<BasicCoin::R>.f1($t0, $t2) at ./sources/FirstModule.move:11:9+4
     $t6 := $ChildMutation($t0, 0, $Dereference($t0)->$f1, $Dereference($t2));
 
-    // write_ref($t6, $t3) at ./sources/FirstModule.move:11:9+4
-    $t6 := $UpdateMutation($t6, $t3);
+    // write_ref($t6, $t4) at ./sources/FirstModule.move:11:9+4
+    $t6 := $UpdateMutation($t6, $t4);
 
     // write_ref($t6, $t1) at ./sources/FirstModule.move:11:9+8
     $t6 := $UpdateMutation($t6, $t1);
 
-    // write_back[Reference($t0).f1 (u64)]($t6) at ./sources/FirstModule.move:11:9+8
+    // fulfilled[Reference($t0).f1 (u64)]($t6) at ./sources/FirstModule.move:11:9+8
     assume $Fulfilled($t6);
-    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $Dereference($t6)));
 
     // trace_local[a]($t0) at ./sources/FirstModule.move:11:9+8
     $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);

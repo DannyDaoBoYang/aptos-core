@@ -227,6 +227,7 @@ pub enum Operation {
     // Memory model
     IsParent(BorrowNode, BorrowEdge),
     WriteBack(BorrowNode, BorrowEdge),
+    Fulfilled(BorrowNode, BorrowEdge),
     UnpackRef,
     PackRef,
     UnpackRefDeep,
@@ -285,6 +286,7 @@ impl Operation {
             Operation::Havoc(_) => false,
             Operation::Stop => false,
             Operation::WriteBack(..) => false,
+            Operation::Fulfilled(..) => false,
             Operation::IsParent(..) => false,
             Operation::UnpackRef => false,
             Operation::PackRef => false,
@@ -796,6 +798,9 @@ impl Bytecode {
                     WriteBack(node, edge) => {
                         WriteBack(node.instantiate(params), edge.instantiate(params))
                     },
+                    Fulfilled(node, edge) => {
+                        Fulfilled(node.instantiate(params), edge.instantiate(params))
+                    },
                     // others
                     _ => op.clone(),
                 };
@@ -1278,6 +1283,12 @@ impl<'env> fmt::Display for OperationDisplay<'env> {
             WriteBack(node, edge) => write!(
                 f,
                 "write_back[{}{}]",
+                node.display(self.func_target),
+                edge.display(self.func_target.global_env())
+            )?,
+            Fulfilled(node, edge) => write!(
+                f,
+                "fulfilled[{}{}]",
                 node.display(self.func_target),
                 edge.display(self.func_target.global_env())
             )?,

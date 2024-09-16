@@ -169,6 +169,7 @@ impl<'a> Instrumenter<'a> {
                         .get_target()
                         .get_local_type(dests[0])
                         .to_owned();
+                    //need to pass more info to BorrowNode here
                     let node = BorrowNode::Reference(dests[0]);
                     if self.is_pack_ref_ty(ty) && after.is_in_use(&node) {
                         self.builder.set_loc_from_attr(*attr_id);
@@ -300,21 +301,38 @@ impl<'a> Instrumenter<'a> {
                         BorrowNode::Reference(..) => None,
                         BorrowNode::ReturnPlaceholder(..) => unreachable!("invalid placeholder"),
                     };
+                    let is_prophecy_write_back = match &action.dst {
+                        //TODO: differenetial borrow prophecy and regular borrow
+                        BorrowNode::Reference(..) => true,
+                        _ => false
+                    };
                     if let Some(idx) = pre_writeback_check_opt {
                         self.builder.emit_with(|id| {
                             Bytecode::Call(id, vec![], Operation::PackRefDeep, vec![idx], None)
                         });
                     }
-
-                    self.builder.emit_with(|id| {
-                        Bytecode::Call(
-                            id,
-                            vec![],
-                            Operation::WriteBack(action.dst.clone(), action.edge.clone()),
-                            vec![action.src],
-                            None,
-                        )
-                    });
+                    if (is_prophecy_write_back){
+                        self.builder.emit_with(|id| {
+                            Bytecode::Call(
+                                id,
+                                vec![],
+                                Operation::Fulfilled(action.dst.clone(), action.edge.clone()),
+                                vec![action.src],
+                                None,
+                            )
+                        });
+                    }
+                    else{
+                        self.builder.emit_with(|id| {
+                            Bytecode::Call(
+                                id,
+                                vec![],
+                                Operation::WriteBack(action.dst.clone(), action.edge.clone()),
+                                vec![action.src],
+                                None,
+                            )
+                        });
+                    }
 
                     // add a trace for written back value if it's a user variable.
                     match action.dst {
