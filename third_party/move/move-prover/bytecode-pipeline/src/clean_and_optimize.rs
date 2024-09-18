@@ -16,10 +16,10 @@ use move_stackless_bytecode::{
     dataflow_domains::{AbstractDomain, JoinResult},
     function_target::{FunctionData, FunctionTarget},
     function_target_pipeline::{FunctionTargetProcessor, FunctionTargetsHolder},
-    stackless_bytecode::{BorrowNode, Bytecode, Operation},
+    stackless_bytecode::{BorrowNode, Bytecode, Operation, ReferenceType},
     stackless_control_flow_graph::StacklessControlFlowGraph,
 };
-use std::collections::BTreeSet;
+use std::{cell::Ref, collections::BTreeSet};
 
 pub struct CleanAndOptimizeProcessor();
 
@@ -98,11 +98,11 @@ impl<'a> TransferFunctions for Optimizer<'a> {
         if let Call(_, _, oper, srcs, _) = instr {
             match oper {
                 WriteRef => {
-                    state.unwritten.insert(Reference(srcs[0]));
+                    state.unwritten.insert(Reference(srcs[0], ReferenceType::TypeWriteBack));
                 },
-                WriteBack(Reference(dest), ..) => {
-                    if state.unwritten.contains(&Reference(srcs[0])) {
-                        state.unwritten.insert(Reference(*dest));
+                WriteBack(Reference(dest, rtype), ..) => {
+                    if state.unwritten.contains(&Reference(srcs[0], rtype.clone())) {
+                        state.unwritten.insert(Reference(*dest, rtype.clone()));
                     }
                 },
                 Function(mid, fid, _) => {
@@ -126,7 +126,7 @@ impl<'a> TransferFunctions for Optimizer<'a> {
                     if has_effect {
                         for src in srcs {
                             if self.target.get_local_type(*src).is_mutable_reference() {
-                                state.unwritten.insert(Reference(*src));
+                                state.unwritten.insert(Reference(*src, ReferenceType::TypeWriteBack));
                             }
                         }
                     }
@@ -188,7 +188,7 @@ impl<'a> Optimizer<'a> {
                 },
                 (Some(Call(_, dests, IsParent(..), srcs, _)), Branch(_, _, _, tmp))
                     if dests[0] == *tmp
-                        && !is_unwritten(code_offset as CodeOffset, &Reference(srcs[0])) =>
+                        && !is_unwritten(code_offset as CodeOffset, &Reference(srcs[0], ReferenceType::TypeWriteBack)) =>
                 {
                     assert!(matches!(instrs[code_offset + 1], Label(..)));
                     // skip this obsolete IsParent check when all WriteBacks in this block are redundant
@@ -197,7 +197,7 @@ impl<'a> Optimizer<'a> {
                     loop {
                         match &instrs[block_cursor] {
                             Call(_, _, WriteBack(_, _), srcs, _) => {
-                                if is_unwritten(block_cursor as CodeOffset, &Reference(srcs[0])) {
+                                if is_unwritten(block_cursor as CodeOffset, &Reference(srcs[0], ReferenceType::TypeWriteBack)) {
                                     skip_branch = false;
                                     break;
                                 }
@@ -233,7 +233,7 @@ impl<'a> Optimizer<'a> {
             match instr {
                 // Remove unnecessary WriteBack
                 Call(_, _, WriteBack(..), srcs, _)
-                    if !is_unwritten(code_offset as CodeOffset, &Reference(srcs[0])) =>
+                    if !is_unwritten(code_offset as CodeOffset, &Reference(srcs[0], ReferenceType::TypeWriteBack)) =>
                 {
                     continue;
                 },

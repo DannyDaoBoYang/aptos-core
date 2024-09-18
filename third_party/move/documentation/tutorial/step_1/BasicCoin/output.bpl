@@ -3573,8 +3573,8 @@ procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_Bas
 
     // release($t3) at ./sources/FirstModule.move:11:9+4
 
-    // fulfilled[Reference($t0).f1 (u64)]($t3) at ./sources/FirstModule.move:11:9+4
-    assume $Fulfilled($t3);
+    // write_back[Reference($t0).f1 (u64)]($t3) at ./sources/FirstModule.move:11:9+4
+    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $Dereference($t3)));
 
     // trace_local[a]($t0) at ./sources/FirstModule.move:11:9+4
     $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);

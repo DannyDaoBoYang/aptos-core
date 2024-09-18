@@ -24,7 +24,7 @@ use move_model::{
     well_known::VECTOR_BORROW_MUT,
 };
 use std::{borrow::BorrowMut, collections::BTreeMap, fmt};
-
+use crate::stackless_bytecode::ReferenceType;
 #[derive(AbstractDomain, Debug, Clone, Eq, Ord, PartialEq, PartialOrd, Default)]
 pub struct BorrowInfo {
     /// Contains the nodes which are alive. This excludes nodes which are alive because
@@ -117,7 +117,7 @@ impl BorrowInfo {
             BorrowNode::LocalRoot(..) | BorrowNode::GlobalRoot(..) => {
                 trees.push(order);
             },
-            BorrowNode::Reference(index) => {
+            BorrowNode::Reference(index, btype) => {
                 if next.is_in_use(node) {
                     // stop at a live reference
                     trees.push(order);
@@ -231,7 +231,7 @@ impl BorrowInfo {
         ret_values: &[TempIndex],
     ) {
         for (src, outgoing) in ret_info.borrows_from.iter() {
-            if let BorrowNode::Reference(idx) = src {
+            if let BorrowNode::Reference(idx, btype) = src {
                 if let Some(pos) = ret_values.iter().position(|i| i == idx) {
                     // Construct hyper edges for this return value.
                     let leaf = BorrowNode::ReturnPlaceholder(pos);
@@ -245,7 +245,7 @@ impl BorrowInfo {
                 // Special case of a &mut parameter directly returned. We do not have this in
                 // the borrow graph, so synthesize an edge.
                 self.add_edge(
-                    BorrowNode::Reference(*ret_val),
+                    BorrowNode::Reference(*ret_val, ReferenceType::TypeWriteBack), //TODO: return btype as well
                     BorrowNode::ReturnPlaceholder(ret_idx),
                     BorrowEdge::Direct,
                 );
@@ -307,11 +307,11 @@ impl BorrowInfo {
                 .borrows_from
                 .get(&BorrowNode::ReturnPlaceholder(ret_idx))
             {
-                let out_node = BorrowNode::Reference(*out);
+                let out_node = BorrowNode::Reference(*out, ReferenceType::TypeWriteBack);
                 self.add_node(out_node.clone());
                 for (in_node, edge) in edges.iter() {
-                    if let BorrowNode::Reference(in_idx) = in_node {
-                        let actual_in_node = BorrowNode::Reference(get_in(*in_idx));
+                    if let BorrowNode::Reference(in_idx, btype) = in_node {
+                        let actual_in_node = BorrowNode::Reference(get_in(*in_idx), btype.clone());
                         self.add_edge(
                             actual_in_node,
                             out_node.clone(),
@@ -488,7 +488,7 @@ fn summarize_custom_borrow(
     let mut an = BorrowAnnotation::default();
     for param_index in params {
         for return_index in returns {
-            let param_node = BorrowNode::Reference(*param_index);
+            let param_node = BorrowNode::Reference(*param_index, ReferenceType::TypeWriteBack);
             let return_node = BorrowNode::ReturnPlaceholder(*return_index);
             let edge = BorrowEdge::Index(edge_kind.clone());
             an.summary
@@ -564,7 +564,7 @@ impl<'a> BorrowAnalysis<'a> {
 
         // Initialize state from parameters
         for idx in 0..self.func_target.get_parameter_count() {
-            state.add_node(self.borrow_node(idx));
+            state.add_node(self.borrow_node(idx, false));
         }
 
         // Run the dataflow analysis
@@ -591,11 +591,14 @@ impl<'a> BorrowAnalysis<'a> {
         BorrowAnnotation { summary, code_map }
     }
 
-    fn borrow_node(&self, idx: TempIndex) -> BorrowNode {
+    fn borrow_node(&self, idx: TempIndex, isprophecy:bool) -> BorrowNode {
         let ty = self.func_target.get_local_type(idx);
         if ty.is_reference() {
-            BorrowNode::Reference(idx)
+            BorrowNode::Reference(idx, if (isprophecy){ReferenceType::TypeFulfill}else{ReferenceType::TypeWriteBack})
         } else {
+            if(isprophecy){
+                print!("can't be local root");
+            }
             BorrowNode::LocalRoot(idx)
         }
     }
@@ -615,10 +618,10 @@ impl<'a> TransferFunctions for BorrowAnalysis<'a> {
 
         match instr {
             Assign(_, dest, src, kind) => {
-                let dest_node = self.borrow_node(*dest);
+                let dest_node = self.borrow_node(*dest, false);
                 state.add_node(dest_node.clone());
 
-                let src_node = self.borrow_node(*src);
+                let src_node = self.borrow_node(*src, false);
                 match kind {
                     AssignKind::Move | AssignKind::Inferred => {
                         if self.func_target.get_local_type(*src).is_mutable_reference() {
@@ -628,6 +631,9 @@ impl<'a> TransferFunctions for BorrowAnalysis<'a> {
                                 .is_mutable_reference());
                             state.add_edge(src_node, dest_node, BorrowEdge::Direct);
                         } else {
+                            let src_node2 = self.borrow_node(*src, true);
+
+                            state.del_node(&src_node2);
                             state.del_node(&src_node)
                         }
                     },
@@ -650,15 +656,15 @@ impl<'a> TransferFunctions for BorrowAnalysis<'a> {
                     // otherwise never end live time, because we cannot see a node
                     // being created and dying at the very same instruction.
                     BorrowLoc if livevar_annotation_at.after.contains(&dests[0]) => {
-                        let dest_node = self.borrow_node(dests[0]);
-                        let src_node = self.borrow_node(srcs[0]);
+                        let dest_node = self.borrow_node(dests[0], false);
+                        let src_node = self.borrow_node(srcs[0], false);
                         state.add_node(dest_node.clone());
                         state.add_edge(src_node, dest_node, BorrowEdge::Direct);
                     },
                     BorrowGlobal(mid, sid, inst)
                         if livevar_annotation_at.after.contains(&dests[0]) =>
                     {
-                        let dest_node = self.borrow_node(dests[0]);
+                        let dest_node = self.borrow_node(dests[0], false);
                         let src_node = BorrowNode::GlobalRoot(QualifiedInstId {
                             module_id: *mid,
                             id: *sid,
@@ -670,8 +676,8 @@ impl<'a> TransferFunctions for BorrowAnalysis<'a> {
                     BorrowField(mid, sid, inst, field)
                         if livevar_annotation_at.after.contains(&dests[0]) =>
                     {
-                        let dest_node = self.borrow_node(dests[0]);
-                        let src_node = self.borrow_node(srcs[0]);
+                        let dest_node = self.borrow_node(dests[0], false);
+                        let src_node = self.borrow_node(srcs[0], false);
                         state.add_node(dest_node.clone());
                         state.add_edge(
                             src_node,
@@ -686,8 +692,8 @@ impl<'a> TransferFunctions for BorrowAnalysis<'a> {
                     BorrowFieldProphecy(mid, sid, inst, field, tindex)
                         if livevar_annotation_at.after.contains(&dests[0]) =>
                     {
-                        let dest_node = self.borrow_node(dests[0]);
-                        let src_node = self.borrow_node(srcs[0]);
+                        let dest_node = self.borrow_node(dests[0], true);
+                        let src_node = self.borrow_node(srcs[0], true);
                         state.add_node(dest_node.clone());
                         state.add_edge(
                             src_node,
@@ -758,8 +764,10 @@ impl<'a> TransferFunctions for BorrowAnalysis<'a> {
             .difference(&livevar_annotation_at.after)
         {
             if self.func_target.get_local_type(*idx).is_reference() {
-                let node = self.borrow_node(*idx);
+                let node = self.borrow_node(*idx, false); //TODO: here
+                let node2 = self.borrow_node(*idx, true);
                 state.del_node(&node);
+                state.del_node(&node2);
             }
         }
     }

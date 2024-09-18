@@ -17,7 +17,7 @@ use move_stackless_bytecode::{
     stackless_bytecode::{
         BorrowNode,
         Bytecode::{self, *},
-        Operation,
+        Operation, ReferenceType,
     },
 };
 use std::collections::BTreeSet;
@@ -163,14 +163,29 @@ impl<'a> Instrumenter<'a> {
         if let Call(attr_id, dests, op, _, _) = bytecode {
             use Operation::*;
             match op {
-                BorrowLoc | BorrowField(..) | BorrowGlobal(..) | BorrowFieldProphecy(..) => {
+                BorrowLoc | BorrowField(..) | BorrowGlobal(..)  => {
                     let ty = &self
                         .builder
                         .get_target()
                         .get_local_type(dests[0])
                         .to_owned();
                     //need to pass more info to BorrowNode here
-                    let node = BorrowNode::Reference(dests[0]);
+                    let node = BorrowNode::Reference(dests[0], ReferenceType::TypeWriteBack);
+                    if self.is_pack_ref_ty(ty) && after.is_in_use(&node) {
+                        self.builder.set_loc_from_attr(*attr_id);
+                        self.builder.emit_with(|id| {
+                            Bytecode::Call(id, vec![], Operation::UnpackRef, vec![dests[0]], None)
+                        });
+                    }
+                },
+                BorrowFieldProphecy(..) => {
+                    let ty = &self
+                        .builder
+                        .get_target()
+                        .get_local_type(dests[0])
+                        .to_owned();
+                    //need to pass more info to BorrowNode here
+                    let node = BorrowNode::Reference(dests[0], ReferenceType::TypeFulfill);
                     if self.is_pack_ref_ty(ty) && after.is_in_use(&node) {
                         self.builder.set_loc_from_attr(*attr_id);
                         self.builder.emit_with(|id| {
@@ -192,7 +207,7 @@ impl<'a> Instrumenter<'a> {
                 BorrowNode::LocalRoot(..) | BorrowNode::GlobalRoot(..) => {
                     continue;
                 },
-                BorrowNode::Reference(idx) => {
+                BorrowNode::Reference(idx, rtype) => {
                     if idx < param_count {
                         // NOTE: we have an entry-point assumption where a &mut parameter must
                         // have its data invariants hold. As a result, when we write-back the
@@ -303,7 +318,16 @@ impl<'a> Instrumenter<'a> {
                     };
                     let is_prophecy_write_back = match &action.dst {
                         //TODO: differenetial borrow prophecy and regular borrow
-                        BorrowNode::Reference(..) => true,
+                        BorrowNode::Reference(index, rtype) => {
+                            if (*rtype == ReferenceType::TypeFulfill){
+                                print!("Fulfill\n");
+                                true
+                            }
+                            else{
+                                print!("WriteBack\n");
+                                false
+                            }
+                        },
                         _ => false
                     };
                     if let Some(idx) = pre_writeback_check_opt {
@@ -336,7 +360,7 @@ impl<'a> Instrumenter<'a> {
 
                     // add a trace for written back value if it's a user variable.
                     match action.dst {
-                        BorrowNode::LocalRoot(temp) | BorrowNode::Reference(temp) => {
+                        BorrowNode::LocalRoot(temp) | BorrowNode::Reference(temp, _) => {
                             if temp < self.builder.fun_env.get_local_count().unwrap_or_default() {
                                 self.builder.emit_with(|id| {
                                     Bytecode::Call(

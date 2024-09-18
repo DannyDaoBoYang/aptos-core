@@ -328,12 +328,17 @@ impl Operation {
     }
 }
 
+#[derive(Debug, Clone, Eq, Ord, PartialEq, PartialOrd)]
+pub enum ReferenceType {
+    TypeWriteBack,
+    TypeFulfill
+}
 /// A borrow node -- used in memory operations.
 #[derive(Debug, Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum BorrowNode {
     GlobalRoot(QualifiedInstId<StructId>),
     LocalRoot(TempIndex),
-    Reference(TempIndex),
+    Reference(TempIndex, ReferenceType),
     // Used in summaries to represent a returned mutation at return index. This does not
     // appear in bytecode instructions.
     ReturnPlaceholder(usize),
@@ -341,7 +346,7 @@ pub enum BorrowNode {
 
 impl BorrowNode {
     pub fn get_ref(&self) -> Option<TempIndex> {
-        if let BorrowNode::Reference(idx) = self {
+        if let BorrowNode::Reference(idx, rtype) = self {
             Some(*idx)
         } else {
             None
@@ -692,7 +697,7 @@ impl Bytecode {
         };
         let map_node = |f: &mut F, node: BorrowNode| match node {
             LocalRoot(tmp) => LocalRoot(f(true, tmp)),
-            Reference(tmp) => Reference(f(true, tmp)),
+            Reference(tmp, btype) => Reference(f(true, tmp), btype),
             _ => node,
         };
         match self {
@@ -869,7 +874,7 @@ impl Bytecode {
                 // write-back to a local variable distorts the value
                 (add_abort(vec![*dest], aa), vec![])
             },
-            Call(_, _, Operation::WriteBack(Reference(dest), ..), _, aa) => {
+            Call(_, _, Operation::WriteBack(Reference(dest, btype), ..), _, aa) => {
                 // write-back to a reference only distorts the value, but not the pointer itself
                 (add_abort(vec![], aa), vec![(*dest, false)])
             },
@@ -1449,7 +1454,7 @@ impl<'env> fmt::Display for BorrowNodeDisplay<'env> {
             LocalRoot(idx) => {
                 write!(f, "LocalRoot($t{})", idx)?;
             },
-            Reference(idx) => {
+            Reference(idx, btype) => {
                 write!(f, "Reference($t{})", idx)?;
             },
             ReturnPlaceholder(idx) => {

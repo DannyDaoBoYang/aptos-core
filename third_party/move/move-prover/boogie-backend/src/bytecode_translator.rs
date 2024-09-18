@@ -1140,7 +1140,7 @@ impl<'env> FunctionTranslator<'env> {
                         self.translate_fulfilled(node, edge, srcs[0]);
                     },
                     IsParent(node, edge) => {
-                        if let BorrowNode::Reference(parent) = node {
+                        if let BorrowNode::Reference(parent, rtype) = node {
                             let src_str = str_local(srcs[0]);
                             let edge_pattern = edge
                                 .flatten()
@@ -2326,7 +2326,7 @@ impl<'env> FunctionTranslator<'env> {
                 //assert!(matches!(edge, BorrowEdge::Direct));
                 emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
-            Reference(idx) => {
+            Reference(idx, rtype) => {
                 //bookmarkD
                 let dst_value = format!("$Dereference($t{})", idx);
 
@@ -2382,7 +2382,7 @@ impl<'env> FunctionTranslator<'env> {
             LocalRoot(idx) => {
                 unreachable!("unexpected local borrow node for fulfill")
             },
-            Reference(idx) => {
+            Reference(idx, rtype) => {
                 emitln!(writer, "assume $Fulfilled($t{});", src.clone());
             },
         }
