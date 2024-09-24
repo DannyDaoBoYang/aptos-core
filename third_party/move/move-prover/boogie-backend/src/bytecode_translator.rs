@@ -1412,9 +1412,10 @@ impl<'env> FunctionTranslator<'env> {
                         let dest = dests[0];
                         emitln!(
                             writer,
-                            "{} := $Mutation($Local({}), EmptyVec(), {});",
+                            "{} := $Mutation($Local({}), EmptyVec(), {}, {});",
                             str_local(dest),
                             src,
+                            str_local(src),
                             str_local(src)
                         );
                     },
@@ -2750,13 +2751,6 @@ impl<'env> FunctionTranslator<'env> {
                         edges,
                         at + 1,
                     );
-                    if variant.is_none() {
-                        format!(
-                        "assume $Fullfilled({});",
-                        new_src
-                        )
-                    }
-                    else{
                     let update_fun = boogie_field_update(&field_env, &memory.inst);
                     if new_dest_needed {
                         format!(
@@ -2769,7 +2763,6 @@ impl<'env> FunctionTranslator<'env> {
                         )
                     } else {
                         format!("{}({}, {})", update_fun, (*mk_dest)(), new_src)
-                    }
                     }
                 },
                 BorrowEdge::Index(index_edge_kind) => {
