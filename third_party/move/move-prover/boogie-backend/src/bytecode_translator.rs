@@ -1731,7 +1731,6 @@ impl<'env> FunctionTranslator<'env> {
                         }
                         emitln!(writer, "} else { call $ExecFailureAbort(); }");
                     },
-                    BorrowField(mid, sid, _, field_offset) => {
                     BorrowField(mid, sid, inst, field_offset) => {
                         let src_str = str_local(srcs[0]);
                         let dest_str = str_local(dests[0]);
@@ -1757,8 +1756,7 @@ impl<'env> FunctionTranslator<'env> {
                             update_fun,
                             src_str,
                             dest_str
-                        )
-
+                        );
                     },
                     BorrowVariantField(mid, sid, variants, inst, field_offset) => {
                         let inst = &self.inst_slice(inst);
@@ -2638,6 +2636,7 @@ impl<'env> FunctionTranslator<'env> {
             Reference(idx) => {
                 let dst_value = format!("$Dereference($t{})", idx);
                 let src_value = format!("$Dereference({})", src_str);
+
                 let get_path_index = |offset: usize| {
                     if offset == 0 {
                         format!("ReadVec({}->p, LenVec($t{}->p))", src_str, idx)
@@ -2709,9 +2708,11 @@ impl<'env> FunctionTranslator<'env> {
         } else {
             match &edges[at] {
                 BorrowEdge::Direct => {
+                    println!("1");
                     self.translate_write_back_update(mk_dest, get_path_index, src, edges, at + 1)
                 },
                 BorrowEdge::Field(memory, variant, offset) => {
+                    println!("2");
                     let memory = memory.to_owned().instantiate(self.type_inst);
                     let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
                     let field_env = if variant.is_none() {
@@ -2750,6 +2751,7 @@ impl<'env> FunctionTranslator<'env> {
                     }
                 },
                 BorrowEdge::Index(index_edge_kind) => {
+                    println!("3");
                     // Index edge is used for both vectors, tables, and custom native methods
                     // implementing similar functionality (mutable borrow). Determine which
                     // operations to use to read and update.

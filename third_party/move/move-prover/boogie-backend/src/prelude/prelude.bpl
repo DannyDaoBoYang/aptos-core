@@ -309,6 +309,11 @@ function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
     $Mutation(m->l, m->p, v, m->v_final)
 }
 
+//prophecy fullfilled
+function {:inline} $Fulfilled<T>(ref: $Mutation T): bool {
+    ref->v == ref->v_final
+}
+
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
     $Mutation(m->l, ExtendVec(m->p, offset), v, v)
 }
