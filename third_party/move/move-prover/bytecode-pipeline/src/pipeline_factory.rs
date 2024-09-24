@@ -34,7 +34,6 @@ pub fn default_pipeline_with_options(options: &ProverOptions) -> FunctionTargetP
         // transformation and analysis
         EliminateImmRefsProcessor::new(),
         MutRefInstrumenter::new(),
-        FutureWriteBackProcessor::new(),
         ReachingDefProcessor::new(),
         PrintProcessor::new(),
         LiveVarAnalysisProcessor::new(),

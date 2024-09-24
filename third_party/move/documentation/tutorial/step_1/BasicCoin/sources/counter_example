@@ -1,0 +1,24 @@
+type ab{
+    b: u64
+}
+
+foo(){
+    a = own(type ab)
+    bar(&mut a)  // <b_current = X_b, b_future = undef>
+}
+
+bar(&mut fa){
+    b=bag(&mut fa)  // <fb_current = a.b, fb_future = X_b>
+                    // <fb1_current = X_fb, fb1_future = X_b>  
+                    // 
+    b+=1            //  <ffb3_current = ffb2_current + 1, ffb3_future = ffb2_future> 
+                    //  write back: assume(ffb3_current == ffb3_future) 
+}
+
+bag(&mut ffa){
+    let x = &mut ffa.b; // <ffb_current = a.b, ffb_future = X_fb>
+                        // <ffb1_current = X_ffb, ffb1_future = X_fb>
+                        // <ffb2_current = a.b, ffb2_future = X_ffb> 
+                        // update?: assume(ffb1_current = ffb1_future)
+    return x;           
+}

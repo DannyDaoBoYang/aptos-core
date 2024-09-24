@@ -1487,7 +1487,7 @@ impl<'env> FunctionTranslator<'env> {
                             emitln!(writer, "{} := {};", str_local(dests[i]), field_sel);
                         }
                     },
-                    BorrowField(mid, sid, _, field_offset) => {
+                    BorrowField(mid, sid, inst, field_offset) => {
                         let src_str = str_local(srcs[0]);
                         let dest_str = str_local(dests[0]);
                         let struct_env = env.get_module(*mid).into_struct(*sid);
@@ -1505,6 +1505,19 @@ impl<'env> FunctionTranslator<'env> {
                             src_str,
                             field_sel
                         );
+                        //Danny'
+                        let update_fun = boogie_field_update(field_env, inst);
+                        emitln!(
+                            writer,
+                            "{} := $UpdateMutation({}, {}($Dereference({}), $Dereference({})));",
+                            src_str,
+                            src_str,
+                            update_fun,
+                            src_str,
+                            dest_str
+                        )
+
+
                     },
                     BorrowFieldProphecy(mid, sid, _, field_offset, tindex) => {
                         let src_str = str_local(srcs[0]);
@@ -2426,6 +2439,7 @@ impl<'env> FunctionTranslator<'env> {
                 BorrowEdge::Direct => {
                     self.translate_write_back_update(mk_dest, get_path_index, src, edges, at + 1, writer)
                 },
+                //Danny
                 BorrowEdge::Field(memory, variant, offset) => {
                     let memory = memory.to_owned().instantiate(self.type_inst);
                     let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());

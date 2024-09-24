@@ -3561,6 +3561,7 @@ procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_Bas
     // $t3 := borrow_field<BasicCoin::R>.f1($t0) at ./sources/FirstModule.move:11:9+4
     assume {:print "$at(2,174,178)"} true;
     $t3 := $ChildMutation($t0, 0, $Dereference($t0)->$f1, $Dereference($t0)->$f1);
+    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $Dereference($t3)));
 
     // $t4 := read_ref($t3) at ./sources/FirstModule.move:11:9+4
     $t4 := $Dereference($t3);
