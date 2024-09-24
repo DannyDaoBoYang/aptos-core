@@ -1475,7 +1475,7 @@ impl<'env> FunctionTranslator<'env> {
                             emitln!(writer, "{} := {};", str_local(dests[i]), field_sel);
                         }
                     },
-                    BorrowField(mid, sid, _, field_offset) => {
+                    BorrowField(mid, sid, inst, field_offset) => {
                         let src_str = str_local(srcs[0]);
                         let dest_str = str_local(dests[0]);
                         let struct_env = env.get_module(*mid).into_struct(*sid);
@@ -1484,13 +1484,24 @@ impl<'env> FunctionTranslator<'env> {
                         let field_sel = boogie_field_sel(field_env);
                         emitln!(
                             writer,
-                            "{} := $ChildMutation({}, {}, $Dereference({})->{});",
+                            "call {} := $ChildMutationAlt({}, {}, $Dereference({})->{});",
                             dest_str,
                             src_str,
                             field_offset,
                             src_str,
                             field_sel,
                         );
+                        let update_fun = boogie_field_update(field_env, inst);
+                        emitln!(
+                            writer,
+                            "{} := $UpdateMutation({}, {}($Dereference({}), $DereferenceProphecy({})));",
+                            src_str,
+                            src_str,
+                            update_fun,
+                            src_str,
+                            dest_str
+                        )
+
                     },
                     GetField(mid, sid, _, field_offset) => {
                         let src = srcs[0];

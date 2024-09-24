@@ -1,9 +1,12 @@
 module 0xCAFE::BasicCoin {
     struct Coin has key {
-        value: u64,
+        value: u64
     }
-
-    public fun mint(account: signer, value: u64) {
-        move_to(&account, Coin { value })
+    struct R{
+        f1: u64,
+        f2: u64
+    }
+    public fun mint( a:&mut R) {
+        a.f1 = 1;
     }
 }

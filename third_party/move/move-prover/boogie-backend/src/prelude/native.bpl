@@ -255,7 +255,7 @@ returns (dst: $Mutation ({{T}}), m': $Mutation (Vec ({{T}})))
         call $ExecFailureAbort();
         return;
     }
-    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index));
+    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index), ReadVec(v, index));
     m' := m;
 }
 
@@ -488,7 +488,7 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     if (!ContainsTable(t, enc_k)) {
         call $Abort($StdError(7/*INVALID_ARGUMENTS*/, 101/*ENOT_FOUND*/));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
+        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k),GetTable(t, enc_k));
         m' := m;
     }
 }
@@ -505,9 +505,9 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     if (!ContainsTable(t, enc_k)) {
         m' := $UpdateMutation(m, AddTable(t, enc_k, default));
         t' := $Dereference(m');
-        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k));
+        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k), GetTable(t', enc_k));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
+        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(t', enc_k));
         m' := m;
     }
 }

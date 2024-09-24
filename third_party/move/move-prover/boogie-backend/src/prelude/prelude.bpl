@@ -280,7 +280,7 @@ datatype $Location {
 // are single threaded in Move, we can keep them together and treat them as a value
 // during mutation until the point they are stored back to their original location.
 datatype $Mutation<T> {
-    $Mutation(l: $Location, p: Vec int, v: T)
+    $Mutation(l: $Location, p: Vec int, v: T, v_final: T)
 }
 
 // Representation of memory for a given type.
@@ -299,13 +299,24 @@ function {:inline} $Dereference<T>(ref: $Mutation T): T {
     ref->v
 }
 
+// Dereferences a mutation.
+function {:inline} $DereferenceProphecy<T>(ref: $Mutation T): T {
+    ref->v_final
+}
+
 // Update the value of a mutation.
 function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
-    $Mutation(m->l, m->p, v)
+    $Mutation(m->l, m->p, v, m->v_final)
 }
 
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
-    $Mutation(m->l, ExtendVec(m->p, offset), v)
+    $Mutation(m->l, ExtendVec(m->p, offset), v, v)
+}
+//functions are pure and deterministic, have to use procedure
+procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns (result: $Mutation T2) {
+    var prophecy: T2;
+    havoc prophecy;
+    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy);
 }
 
 // Return true if two mutations share the location and path
