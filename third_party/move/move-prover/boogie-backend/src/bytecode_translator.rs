@@ -1858,8 +1858,10 @@ impl<'env> FunctionTranslator<'env> {
                         writer.with_indent(|| {
                             emitln!(
                                 writer,
-                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}));",
+                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}), $ResourceValue({}, {}));",
                                 dest_str,
+                                addr_str,
+                                memory,
                                 addr_str,
                                 memory,
                                 addr_str
