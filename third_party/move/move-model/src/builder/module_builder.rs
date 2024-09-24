@@ -32,7 +32,7 @@ use crate::{
     },
     symbol::{Symbol, SymbolPool},
     ty::{Constraint, ConstraintContext, ErrorMessageContext, PrimitiveType, Type, BOOL_TYPE},
-    LanguageVersion,
+    well_known, LanguageVersion,
 };
 use codespan_reporting::diagnostic::Severity;
 use itertools::Itertools;
@@ -1257,6 +1257,15 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                         }
                     })
                     .collect_vec();
+                if variant_maps.is_empty() {
+                    self.parent.error(
+                        &self.parent.to_loc(&def.loc),
+                        &format!(
+                            "enum type `{}` must have at least one variant.",
+                            qsym.symbol.display(self.parent.env.symbol_pool())
+                        ),
+                    )
+                }
                 (StructLayout::Variants(variant_maps), false)
             },
             EA::StructLayout::Native(_) => (StructLayout::None, false),
@@ -1728,18 +1737,18 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                     let orig_sym = et.symbol_pool().make(orig_name);
                     let remapped_sym = et.symbol_pool().make(remapped_name);
                     let preset_arg_syms = preset_args
-                            .iter()
-                            .map(|v| {
-                                let sym = et.symbol_pool().make(v.value().as_str());
-                                if et.lookup_local(sym, false).is_none() {
-                                    et.error(
-                                        loc,
-                                        "[internal] error in finding used local variables in lambda calls",
-                                    );
-                                }
-                                sym
-                            })
-                            .collect();
+                        .iter()
+                        .map(|v| {
+                            let sym = et.symbol_pool().make(v.value().as_str());
+                            if et.lookup_local(sym, false).is_none() {
+                                et.error(
+                                    loc,
+                                    "[internal] error in finding used local variables in lambda calls",
+                                );
+                            }
+                            sym
+                        })
+                        .collect();
                     et.fun_ptrs_table
                         .insert(orig_sym, (remapped_sym, preset_arg_syms));
                 }
@@ -1776,7 +1785,17 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                 et.define_type_params(loc, &entry.type_params, false);
                 if let StructLayout::Singleton(fields, _is_positional) = &entry.layout {
                     et.enter_scope();
+                    let lang_ver_ge_2 =
+                        et.env().language_version.is_at_least(LanguageVersion::V2_0);
                     for f in fields.values() {
+                        // In Aptos Move 2.0 and above, field `self` is omitted from local bindings
+                        // so `self` can be used to refer to `self` parameter.
+                        if lang_ver_ge_2
+                            && f.name.display(et.symbol_pool()).to_string()
+                                == well_known::RECEIVER_PARAM_NAME
+                        {
+                            continue;
+                        }
                         et.define_local(
                             loc,
                             f.name,
@@ -1788,6 +1807,20 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                             )),
                             None,
                         );
+                    }
+                    if lang_ver_ge_2 {
+                        let receiver_param_name =
+                            et.symbol_pool().make(well_known::RECEIVER_PARAM_NAME);
+                        let struct_type = Type::Struct(entry.module_id, entry.struct_id, vec![]);
+                        et.define_local(loc, receiver_param_name, struct_type, None, None);
+                    }
+                } else if let StructLayout::Variants(_) = &entry.layout {
+                    et.enter_scope();
+                    if et.env().language_version.is_at_least(LanguageVersion::V2_0) {
+                        let receiver_param_name =
+                            et.symbol_pool().make(well_known::RECEIVER_PARAM_NAME);
+                        let struct_type = Type::Struct(entry.module_id, entry.struct_id, vec![]);
+                        et.define_local(loc, receiver_param_name, struct_type, None, None);
                     }
                 }
 
@@ -2202,9 +2235,9 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
             _ => {
                 if !additional_exps.is_empty() {
                     et.error(
-                          loc,
-                          "additional expressions only allowed with `aborts_if`, `aborts_with`, `modifies`, or `emits`",
-                      );
+                        loc,
+                        "additional expressions only allowed with `aborts_if`, `aborts_with`, `modifies`, or `emits`",
+                    );
                 }
                 (et.translate_exp(exp, &expected_type).into_exp(), vec![])
             },
@@ -3456,9 +3489,10 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
             let spec = self.struct_specs.remove(&name.symbol).unwrap_or_default();
             let mut field_data: BTreeMap<FieldId, FieldData> = BTreeMap::new();
             let mut variants: BTreeMap<Symbol, model::StructVariant> = BTreeMap::new();
-            match &entry.layout {
+            let is_enum = match &entry.layout {
                 StructLayout::Singleton(fields, _) => {
                     field_data.extend(fields.values().map(|f| (FieldId::new(f.name), f.clone())));
+                    false
                 },
                 StructLayout::Variants(entry_variants) => {
                     for (order, variant) in entry_variants.iter().enumerate() {
@@ -3477,9 +3511,10 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                             field_data.insert(field_id, field);
                         }
                     }
+                    true
                 },
-                StructLayout::None => {},
-            }
+                StructLayout::None => false,
+            };
             let data = StructData {
                 name: name.symbol,
                 loc: entry.loc.clone(),
@@ -3489,11 +3524,7 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                 abilities: entry.abilities,
                 spec_var_opt: None,
                 field_data,
-                variants: if variants.is_empty() {
-                    None
-                } else {
-                    Some(variants)
-                },
+                variants: if is_enum { Some(variants) } else { None },
                 spec: RefCell::new(spec),
                 is_native: entry.is_native,
             };
