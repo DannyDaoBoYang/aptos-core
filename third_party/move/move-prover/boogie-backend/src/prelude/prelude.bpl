@@ -309,7 +309,7 @@ function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
     $Mutation(m->l, m->p, v, m->v_final)
 }
 
-//prophecy fullfilled
+//prophecy Fullfilled
 function {:inline} $Fulfilled<T>(ref: $Mutation T): bool {
     ref->v == ref->v_final
 }

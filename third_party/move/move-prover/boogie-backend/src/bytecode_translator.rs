@@ -2644,6 +2644,15 @@ impl<'env> FunctionTranslator<'env> {
                         format!("ReadVec({}->p, LenVec($t{}->p) + {})", src_str, idx, offset)
                     }
                 };
+                let isBorrowField = match edge{
+                    BorrowEdge::Field(_,_ ,_) => true,
+                    _ => false
+                };
+                if isBorrowField {
+                    //how do I handle the case when the hyper edges consist both borrow field and borrow direct?
+                    emitln!(writer, "assume $Fulfilled({});", src_str);
+                }
+                else{
                 let update = if let BorrowEdge::Hyper(edges) = edge {
                     self.translate_write_back_update(
                         &mut || dst_value.clone(),
@@ -2659,15 +2668,17 @@ impl<'env> FunctionTranslator<'env> {
                         src_value,
                         &[edge.to_owned()],
                         0,
-                    )
-                };
-                emitln!(
-                    writer,
-                    "$t{} := $UpdateMutation($t{}, {});",
-                    idx,
-                    idx,
-                    update
-                );
+                        )
+                    };
+                    emitln!(
+                        writer,
+                        "$t{} := $UpdateMutation($t{}, {});",
+                        idx,
+                        idx,
+                        update
+                    );
+                }
+
             },
         }
     }
@@ -2712,6 +2723,7 @@ impl<'env> FunctionTranslator<'env> {
                     self.translate_write_back_update(mk_dest, get_path_index, src, edges, at + 1)
                 },
                 BorrowEdge::Field(memory, variant, offset) => {
+
                     println!("2");
                     let memory = memory.to_owned().instantiate(self.type_inst);
                     let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
@@ -2736,6 +2748,13 @@ impl<'env> FunctionTranslator<'env> {
                         edges,
                         at + 1,
                     );
+                    if variant.is_none() {
+                        format!(
+                        "assume $Fullfilled({});",
+                        new_src
+                        )
+                    }
+                    else{
                     let update_fun = boogie_field_update(&field_env, &memory.inst);
                     if new_dest_needed {
                         format!(
@@ -2748,6 +2767,7 @@ impl<'env> FunctionTranslator<'env> {
                         )
                     } else {
                         format!("{}({}, {})", update_fun, (*mk_dest)(), new_src)
+                    }
                     }
                 },
                 BorrowEdge::Index(index_edge_kind) => {

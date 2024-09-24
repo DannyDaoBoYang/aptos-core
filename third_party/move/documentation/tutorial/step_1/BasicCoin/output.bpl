@@ -1141,7 +1141,7 @@ function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
     $Mutation(m->l, m->p, v, m->v_final)
 }
 
-//prophecy fullfilled
+//prophecy Fullfilled
 function {:inline} $Fulfilled<T>(ref: $Mutation T): bool {
     ref->v == ref->v_final
 }
@@ -3515,49 +3515,30 @@ datatype $TypeParamInfo {
 // Given Types for Type Parameters
 
 
-// struct BasicCoin::R at ./sources/FirstModule.move:5:5+47
+// struct BasicCoin::R at ./sources/FirstModule.move:5:5+48
 datatype $cafe_BasicCoin_R {
-    $cafe_BasicCoin_R($f1: int, $f2: $cafe_BasicCoin_R2)
+    $cafe_BasicCoin_R($f1: int, $f2: int)
 }
 function {:inline} $Update'$cafe_BasicCoin_R'_f1(s: $cafe_BasicCoin_R, x: int): $cafe_BasicCoin_R {
     $cafe_BasicCoin_R(x, s->$f2)
 }
-function {:inline} $Update'$cafe_BasicCoin_R'_f2(s: $cafe_BasicCoin_R, x: $cafe_BasicCoin_R2): $cafe_BasicCoin_R {
+function {:inline} $Update'$cafe_BasicCoin_R'_f2(s: $cafe_BasicCoin_R, x: int): $cafe_BasicCoin_R {
     $cafe_BasicCoin_R(s->$f1, x)
 }
 function $IsValid'$cafe_BasicCoin_R'(s: $cafe_BasicCoin_R): bool {
     $IsValid'u64'(s->$f1)
-      && $IsValid'$cafe_BasicCoin_R2'(s->$f2)
+      && $IsValid'u64'(s->$f2)
 }
 function {:inline} $IsEqual'$cafe_BasicCoin_R'(s1: $cafe_BasicCoin_R, s2: $cafe_BasicCoin_R): bool {
     s1 == s2
 }
 
-// struct BasicCoin::R2 at ./sources/FirstModule.move:9:5+49
-datatype $cafe_BasicCoin_R2 {
-    $cafe_BasicCoin_R2($f1: int, $f2: int)
-}
-function {:inline} $Update'$cafe_BasicCoin_R2'_f1(s: $cafe_BasicCoin_R2, x: int): $cafe_BasicCoin_R2 {
-    $cafe_BasicCoin_R2(x, s->$f2)
-}
-function {:inline} $Update'$cafe_BasicCoin_R2'_f2(s: $cafe_BasicCoin_R2, x: int): $cafe_BasicCoin_R2 {
-    $cafe_BasicCoin_R2(s->$f1, x)
-}
-function $IsValid'$cafe_BasicCoin_R2'(s: $cafe_BasicCoin_R2): bool {
-    $IsValid'u64'(s->$f1)
-      && $IsValid'u64'(s->$f2)
-}
-function {:inline} $IsEqual'$cafe_BasicCoin_R2'(s1: $cafe_BasicCoin_R2, s2: $cafe_BasicCoin_R2): bool {
-    s1 == s2
-}
-
-// fun BasicCoin::mint [verification] at ./sources/FirstModule.move:13:5+55
+// fun BasicCoin::mint [verification] at ./sources/FirstModule.move:10:5+52
 procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_BasicCoin_R)) returns ($ret0: $Mutation ($cafe_BasicCoin_R))
 {
     // declare local variables
     var $t1: int;
-    var $t2: $Mutation ($cafe_BasicCoin_R2);
-    var $t3: $Mutation (int);
+    var $t2: $Mutation (int);
     var $t0: $Mutation ($cafe_BasicCoin_R);
     var $temp_0'$cafe_BasicCoin_R': $cafe_BasicCoin_R;
     $t0 := _$t0;
@@ -3567,50 +3548,43 @@ procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: $Mutation ($cafe_Bas
     assume $t0->l == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at ./sources/FirstModule.move:13:5+1
-    assume {:print "$at(2,188,189)"} true;
+    // assume WellFormed($t0) at ./sources/FirstModule.move:10:5+1
+    assume {:print "$at(2,137,138)"} true;
     assume $IsValid'$cafe_BasicCoin_R'($Dereference($t0));
 
-    // trace_local[a]($t0) at ./sources/FirstModule.move:13:5+1
+    // trace_local[a]($t0) at ./sources/FirstModule.move:10:5+1
     $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
     assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
 
-    // $t1 := 1 at ./sources/FirstModule.move:14:19+1
-    assume {:print "$at(2,235,236)"} true;
+    // $t1 := 1 at ./sources/FirstModule.move:11:16+1
+    assume {:print "$at(2,181,182)"} true;
     $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // $t2 := borrow_field<BasicCoin::R>.f2($t0) at ./sources/FirstModule.move:14:9+4
-    call $t2 := $ChildMutationAlt($t0, 1, $Dereference($t0)->$f2);
-    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f2($Dereference($t0), $DereferenceProphecy($t2)));
+    // $t2 := borrow_field<BasicCoin::R>.f1($t0) at ./sources/FirstModule.move:11:9+4
+    call $t2 := $ChildMutationAlt($t0, 0, $Dereference($t0)->$f1);
+    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f1($Dereference($t0), $DereferenceProphecy($t2)));
 
-    // $t3 := borrow_field<BasicCoin::R2>.f1($t2) at ./sources/FirstModule.move:14:9+7
-    call $t3 := $ChildMutationAlt($t2, 0, $Dereference($t2)->$f1);
-    $t2 := $UpdateMutation($t2, $Update'$cafe_BasicCoin_R2'_f1($Dereference($t2), $DereferenceProphecy($t3)));
+    // write_ref($t2, $t1) at ./sources/FirstModule.move:11:9+8
+    $t2 := $UpdateMutation($t2, $t1);
 
-    // write_ref($t3, $t1) at ./sources/FirstModule.move:14:9+11
-    $t3 := $UpdateMutation($t3, $t1);
+    // write_back[Reference($t0).f1 (u64)]($t2) at ./sources/FirstModule.move:11:9+8
+    assume $Fulfilled($t2);
 
-    // write_back[Reference($t2).f1 (u64)]($t3) at ./sources/FirstModule.move:14:9+11
-    $t2 := $UpdateMutation($t2, $Update'$cafe_BasicCoin_R2'_f1($Dereference($t2), $Dereference($t3)));
-
-    // write_back[Reference($t0).f2 (BasicCoin::R2)]($t2) at ./sources/FirstModule.move:14:9+11
-    $t0 := $UpdateMutation($t0, $Update'$cafe_BasicCoin_R'_f2($Dereference($t0), $Dereference($t2)));
-
-    // trace_local[a]($t0) at ./sources/FirstModule.move:14:9+11
+    // trace_local[a]($t0) at ./sources/FirstModule.move:11:9+8
     $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
     assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
 
-    // trace_local[a]($t0) at ./sources/FirstModule.move:14:20+1
+    // trace_local[a]($t0) at ./sources/FirstModule.move:11:17+1
     $temp_0'$cafe_BasicCoin_R' := $Dereference($t0);
     assume {:print "$track_local(0,0,0):", $temp_0'$cafe_BasicCoin_R'} $temp_0'$cafe_BasicCoin_R' == $temp_0'$cafe_BasicCoin_R';
 
-    // label L1 at ./sources/FirstModule.move:15:5+1
-    assume {:print "$at(2,242,243)"} true;
+    // label L1 at ./sources/FirstModule.move:12:5+1
+    assume {:print "$at(2,188,189)"} true;
 L1:
 
-    // return () at ./sources/FirstModule.move:15:5+1
-    assume {:print "$at(2,242,243)"} true;
+    // return () at ./sources/FirstModule.move:12:5+1
+    assume {:print "$at(2,188,189)"} true;
     $ret0 := $t0;
     return;
 
