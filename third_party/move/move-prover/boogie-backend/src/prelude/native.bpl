@@ -250,12 +250,14 @@ procedure {:inline 1} $1_vector_borrow_mut{{S}}(m: $Mutation (Vec ({{T}})), inde
 returns (dst: $Mutation ({{T}}), m': $Mutation (Vec ({{T}})))
 {
     var v: Vec ({{T}});
+    var vf: Vec ({{T}});
     v := $Dereference(m);
+    vf := $DereferenceProphecy(m);
     if (!InRangeVec(v, index)) {
         call $ExecFailureAbort();
         return;
     }
-    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index), ReadVec(v, index));
+    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index), ReadVec(vf, index));
     m' := m;
 }
 
@@ -483,12 +485,14 @@ procedure {:inline 2} {{impl.fun_borrow_mut}}{{S}}(m: $Mutation ({{Self}}), k: {
 returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     var enc_k: int;
     var t: {{Self}};
+    var tf: {{Self}};
     enc_k := {{ENC}}(k);
     t := $Dereference(m);
+    tf := $DereferenceProphecy(m);
     if (!ContainsTable(t, enc_k)) {
         call $Abort($StdError(7/*INVALID_ARGUMENTS*/, 101/*ENOT_FOUND*/));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(t, enc_k));
+        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(tf, enc_k));
         m' := m;
     }
 }
@@ -500,14 +504,18 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     var enc_k: int;
     var t: {{Self}};
     var t': {{Self}};
+    var tf: {{Self}};
+    var tf': {{Self}};
     enc_k := {{ENC}}(k);
     t := $Dereference(m);
+    tf := $DereferenceProphecy(m);
     if (!ContainsTable(t, enc_k)) {
         m' := $UpdateMutation(m, AddTable(t, enc_k, default));
         t' := $Dereference(m');
-        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k), GetTable(t', enc_k));
+        tf' := $DereferenceProphecy(m');
+        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k), GetTable(tf', enc_k));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(t, enc_k));
+        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(tf, enc_k));
         m' := m;
     }
 }
