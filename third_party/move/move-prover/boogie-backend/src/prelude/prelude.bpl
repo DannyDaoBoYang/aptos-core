@@ -293,6 +293,10 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
+// The proble is if abort occurs, I have to call a function that reverts it.
+function {:inline} $MutationDup<T>(l: $Location, p: Vec int, v: T): $Mutation T {
+    $Mutation(l, p, v, v)
+}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {

@@ -7,10 +7,12 @@ module 0xCAFE::BasicCoin {
         f2: u64
     }
     spec mint(a:&mut R){
-        aborts_if a.f1<=0;
+        aborts_if a.f1>=5;
     }
     public fun mint( a:&mut R) {
-        a.f1 = 4;
         a.f1 = 6;
+        if (a.f1 >= 5) {
+            abort 0;  // Aborts with custom error code
+        };
     }
 }

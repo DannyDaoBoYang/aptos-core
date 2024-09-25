@@ -1412,10 +1412,9 @@ impl<'env> FunctionTranslator<'env> {
                         let dest = dests[0];
                         emitln!(
                             writer,
-                            "{} := $Mutation($Local({}), EmptyVec(), {}, {});",
+                            "{} := $MutationDup($Local({}), EmptyVec(), {});",
                             str_local(dest),
                             src,
-                            str_local(src),
                             str_local(src)
                         );
                     },
@@ -1859,10 +1858,8 @@ impl<'env> FunctionTranslator<'env> {
                         writer.with_indent(|| {
                             emitln!(
                                 writer,
-                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}), $ResourceValue({}, {}));",
+                                "{} := $MutationDup($Global({}), EmptyVec(), $ResourceValue({}, {}));",
                                 dest_str,
-                                addr_str,
-                                memory,
                                 addr_str,
                                 memory,
                                 addr_str
