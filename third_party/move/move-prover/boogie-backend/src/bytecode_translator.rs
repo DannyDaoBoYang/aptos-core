@@ -2645,14 +2645,24 @@ impl<'env> FunctionTranslator<'env> {
                     }
                 };
                 let isBorrowField = match edge{
-                    BorrowEdge::Field(_,_ ,_) => true,
+                    BorrowEdge::Field(memory, variant, offset) =>{
+                        let memory = memory.to_owned().instantiate(self.type_inst);
+                        let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
+                        let field_env = if variant.is_none() {
+                            struct_env.get_field_by_offset_optional_variant(None, *offset)
+                        } else {
+                            struct_env.get_field_by_offset_optional_variant(
+                                Some(variant.clone().unwrap()[0]),
+                                *offset,
+                            )
+                        };
+                        let suffix = boogie_type_suffix(env, &field_env.get_type());
+                        emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix, src_str, src_str);
+                        true
+                    },
                     _ => false
                 };
-                if isBorrowField {
-                    //how do I handle the case when the hyper edges consist both borrow field and borrow direct?
-                    emitln!(writer, "assume $Fulfilled({});", src_str);
-                }
-                else{
+                if !isBorrowField {
                 let update = if let BorrowEdge::Hyper(edges) = edge {
                     self.translate_write_back_update(
                         &mut || dst_value.clone(),
@@ -2748,6 +2758,7 @@ impl<'env> FunctionTranslator<'env> {
                         edges,
                         at + 1,
                     );
+                    //Danny
                     let update_fun = boogie_field_update(&field_env, &memory.inst);
                     if new_dest_needed {
                         format!(

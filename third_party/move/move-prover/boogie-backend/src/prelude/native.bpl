@@ -251,13 +251,14 @@ returns (dst: $Mutation ({{T}}), m': $Mutation (Vec ({{T}})))
 {
     var v: Vec ({{T}});
     var vf: Vec ({{T}});
+    
     v := $Dereference(m);
-    vf := $DereferenceProphecy(m);
     if (!InRangeVec(v, index)) {
         call $ExecFailureAbort();
         return;
     }
-    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index), ReadVec(vf, index));
+    //Todo: this is where it is borrowed.
+    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index), ReadVec(v, index));
     m' := m;
 }
 
@@ -492,7 +493,7 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     if (!ContainsTable(t, enc_k)) {
         call $Abort($StdError(7/*INVALID_ARGUMENTS*/, 101/*ENOT_FOUND*/));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(tf, enc_k));
+        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(t, enc_k));
         m' := m;
     }
 }
@@ -513,9 +514,9 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
         m' := $UpdateMutation(m, AddTable(t, enc_k, default));
         t' := $Dereference(m');
         tf' := $DereferenceProphecy(m');
-        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k), GetTable(tf', enc_k));
+        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k), GetTable(t', enc_k));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(tf, enc_k));
+        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k), GetTable(t, enc_k));
         m' := m;
     }
 }
