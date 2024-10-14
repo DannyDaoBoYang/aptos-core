@@ -220,6 +220,15 @@ impl<'env> BoogieTranslator<'env> {
                 param_type,
                 param_type
             );
+            /* we definetly need custom havoc for map and tables.
+            emitln!(
+                writer,
+                "function {{:inline}} $Havoc'{}'(): {} {{ havoc x; }}",
+                suffix,
+                param_type,
+                param_type,
+                param_type
+            );*/
             emitln!(
                 writer,
                 "function {{:inline}} $IsValid'{}'(x: {}): bool {{ true }}",
@@ -2657,6 +2666,7 @@ impl<'env> FunctionTranslator<'env> {
                             )
                         };
                         let suffix = boogie_type_suffix(env, &field_env.get_type());
+                        //emitln!(writer, "assume $Fulfilled({});", src_str);
                         emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix, src_str, src_str);
                         true
                     },
@@ -2729,12 +2739,9 @@ impl<'env> FunctionTranslator<'env> {
         } else {
             match &edges[at] {
                 BorrowEdge::Direct => {
-                    println!("1");
                     self.translate_write_back_update(mk_dest, get_path_index, src, edges, at + 1)
                 },
                 BorrowEdge::Field(memory, variant, offset) => {
-
-                    println!("2");
                     let memory = memory.to_owned().instantiate(self.type_inst);
                     let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
                     let field_env = if variant.is_none() {
@@ -2774,7 +2781,6 @@ impl<'env> FunctionTranslator<'env> {
                     }
                 },
                 BorrowEdge::Index(index_edge_kind) => {
-                    println!("3");
                     // Index edge is used for both vectors, tables, and custom native methods
                     // implementing similar functionality (mutable borrow). Determine which
                     // operations to use to read and update.
