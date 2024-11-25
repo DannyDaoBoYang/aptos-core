@@ -1421,10 +1421,16 @@ impl<'env> FunctionTranslator<'env> {
                         let dest = dests[0];
                         emitln!(
                             writer,
-                            "{} := $MutationDup($Local({}), EmptyVec(), {});",
+                            "call {} := $MutationAlt($Local({}), EmptyVec(), {});",
                             str_local(dest),
                             src,
                             str_local(src)
+                        );
+                        emitln!(
+                            writer,
+                            "{} := $DereferenceProphecy({});",
+                            str_local(src),
+                            str_local(dest)
                         );
                     },
                     ReadRef => {
@@ -1867,13 +1873,22 @@ impl<'env> FunctionTranslator<'env> {
                         writer.with_indent(|| {
                             emitln!(
                                 writer,
-                                "{} := $MutationDup($Global({}), EmptyVec(), $ResourceValue({}, {}));",
+                                "call {} := $MutationAlt($Global({}), EmptyVec(), $ResourceValue({}, {}));",
                                 dest_str,
                                 addr_str,
                                 memory,
                                 addr_str
                             );
                         });
+                        emitln!(
+                            writer,
+                            "{} := $ResourceUpdate({}, $GlobalLocationAddress({}),\n    \
+                                             $DereferenceProphecy({}));",
+                            memory,
+                            memory,
+                            dest_str,
+                            dest_str
+                        );
                         emitln!(writer, "}");
                     },
                     GetGlobal(mid, sid, inst) => {
@@ -2628,7 +2643,11 @@ impl<'env> FunctionTranslator<'env> {
                 assert!(matches!(edge, BorrowEdge::Direct));
                 let memory = &memory.to_owned().instantiate(self.type_inst);
                 let memory_name = boogie_resource_memory_name(env, memory, &None);
-                emitln!(
+                let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
+                let suffix = boogie_type_suffix_for_struct(struct_env, self.type_inst, false);
+                emitln!(writer, "assume $Dereference({}) == $DereferenceProphecy({});", src_str, src_str)
+                //emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix , src_str, src_str);
+                /*emitln!(
                     writer,
                     "{} := $ResourceUpdate({}, $GlobalLocationAddress({}),\n    \
                                      $Dereference({}));",
@@ -2636,11 +2655,13 @@ impl<'env> FunctionTranslator<'env> {
                     memory_name,
                     src_str,
                     src_str
-                );
+                );*/
             },
             LocalRoot(idx) => {
                 assert!(matches!(edge, BorrowEdge::Direct));
-                emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
+                //Danny: Todo, let's skip type for now
+                emitln!(writer, "assume $Dereference({}) == $DereferenceProphecy({});", src_str, src_str);
+                //emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
                 let dst_value = format!("$Dereference($t{})", idx);

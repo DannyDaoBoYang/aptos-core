@@ -297,6 +297,11 @@ axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 function {:inline} $MutationDup<T>(l: $Location, p: Vec int, v: T): $Mutation T {
     $Mutation(l, p, v, v)
 }
+procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
+    var prophecy: T;
+    havoc prophecy;
+    result := $Mutation(l, p, v, prophecy);
+}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {

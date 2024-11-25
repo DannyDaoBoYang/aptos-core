@@ -232,6 +232,7 @@ impl<'a> Instrumenter<'a> {
                         .src,
                     node_idx
                 );
+
                 let first_writeBack_is_reference =  match &chain.first().unwrap().dst {
                         BorrowNode::Reference(..) => true,
                         _ => false
@@ -352,9 +353,10 @@ impl<'a> Instrumenter<'a> {
                     self.builder.emit_with(|id| Bytecode::Label(id, label));
                 }
             }
-            //think I need a branch here?youalbion
+            //think I need a branch here
             //Second iteration: reference nodes only
             //already in the skip_lable
+
             for (chain_index, chain) in ancestors.iter().enumerate() {
                 // sanity check: the src node of the first action must be the node itself
                 assert_eq!(
@@ -427,6 +429,7 @@ impl<'a> Instrumenter<'a> {
                     }
                 }
             }
+
         }
     }
 }
