@@ -220,7 +220,7 @@ impl<'a> Instrumenter<'a> {
             // Generate write_back for this reference.
             //Danny
             //only the most recent reference type matter
-            let is_conditional = ancestors.len() > 1;
+            let is_conditional = false; // ancestors.len() > 1;
             let haveConditional = false;
             //1st iteration: non reference nodes
             for (chain_index, chain) in ancestors.iter().enumerate() {
@@ -233,13 +233,6 @@ impl<'a> Instrumenter<'a> {
                     node_idx
                 );
 
-                let first_writeBack_is_reference =  match &chain.first().unwrap().dst {
-                        BorrowNode::Reference(..) => true,
-                        _ => false
-                };
-                if first_writeBack_is_reference {
-                    continue
-                };
                 // decide on whether we need IsParent checks and how to instrument the checks
                 let skip_label_opt = if is_conditional {
                     let factors = Self::get_differentiation_factors(&ancestors, chain_index);
@@ -356,7 +349,7 @@ impl<'a> Instrumenter<'a> {
             //think I need a branch here
             //Second iteration: reference nodes only
             //already in the skip_lable
-
+            /*
             for (chain_index, chain) in ancestors.iter().enumerate() {
                 // sanity check: the src node of the first action must be the node itself
                 assert_eq!(
@@ -428,7 +421,7 @@ impl<'a> Instrumenter<'a> {
                         _ => {},
                     }
                 }
-            }
+            }*/
 
         }
     }

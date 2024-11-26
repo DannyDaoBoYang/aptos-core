@@ -1129,6 +1129,11 @@ axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 function {:inline} $MutationDup<T>(l: $Location, p: Vec int, v: T): $Mutation T {
     $Mutation(l, p, v, v)
 }
+procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
+    var prophecy: T;
+    havoc prophecy;
+    result := $Mutation(l, p, v, prophecy);
+}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {
@@ -3603,8 +3608,6 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic$verify(_$t0: boo
     var $t5: $Mutation ($cafe_BasicCoin_V'#1');
     var $t6: int;
     var $t7: int;
-    var $t8: bool;
-    var $t9: bool;
     var $t0: bool;
     var $t1: int;
     var $temp_0'address': int;
@@ -3654,26 +3657,28 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic$verify(_$t0: boo
     // trace_local[a]($t1) at ./sources/FirstModule.move:20:5+1
     assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
 
-    // if ($t0) goto L9 else goto L10 at ./sources/FirstModule.move:21:17+180
+    // if ($t0) goto L5 else goto L6 at ./sources/FirstModule.move:21:17+180
     assume {:print "$at(2,353,533)"} true;
-    if ($t0) { goto L9; } else { goto L10; }
+    if ($t0) { goto L5; } else { goto L6; }
 
     // label L1 at ./sources/FirstModule.move:22:46+1
     assume {:print "$at(2,410,411)"} true;
 L1:
 
-    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:22:22+17
+    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L4 with $t6 at ./sources/FirstModule.move:22:22+17
     assume {:print "$at(2,386,403)"} true;
     if (!$ResourceExists($cafe_BasicCoin_V'#0'_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
-        $t4 := $MutationDup($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
+        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
+    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t4),
+        $DereferenceProphecy($t4));
     }
     if ($abort_flag) {
         assume {:print "$at(2,386,403)"} true;
         $t6 := $abort_code;
         assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
+        goto L4;
     }
 
     // $t2 := borrow_field<BasicCoin::V<#0>>.x($t4) at ./sources/FirstModule.move:23:13+9
@@ -3689,18 +3694,20 @@ L1:
     assume {:print "$at(2,498,499)"} true;
 L0:
 
-    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:25:22+17
+    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L4 with $t6 at ./sources/FirstModule.move:25:22+17
     assume {:print "$at(2,474,491)"} true;
     if (!$ResourceExists($cafe_BasicCoin_V'#1'_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
-        $t5 := $MutationDup($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
+        call $t5 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
+    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t5),
+        $DereferenceProphecy($t5));
     }
     if ($abort_flag) {
         assume {:print "$at(2,474,491)"} true;
         $t6 := $abort_code;
         assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
+        goto L4;
     }
 
     // $t2 := borrow_field<BasicCoin::V<#1>>.x($t5) at ./sources/FirstModule.move:26:13+9
@@ -3725,50 +3732,21 @@ L2:
     // write_ref($t2, $t7) at ./sources/FirstModule.move:28:9+6
     $t2 := $UpdateMutation($t2, $t7);
 
-    // $t8 := is_parent[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    $t8 := $IsParentMutation($t4, 0, $t2);
-
-    // if ($t8) goto L3 else goto L11 at ./sources/FirstModule.move:28:9+6
-    if ($t8) { goto L3; } else { goto L11; }
-
-    // label L3 at ./sources/FirstModule.move:28:9+6
-L3:
-
     // write_back[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
     assume $IsEqual'u64'($Dereference($t2), $DereferenceProphecy($t2));
 
     // write_back[BasicCoin::V<#0>@]($t4) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t4),
-        $Dereference($t4));
-
-    // label L4 at ./sources/FirstModule.move:28:9+6
-L4:
-
-    // $t9 := is_parent[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    $t9 := $IsParentMutation($t5, 0, $t2);
-
-    // if ($t9) goto L5 else goto L12 at ./sources/FirstModule.move:28:9+6
-    if ($t9) { goto L5; } else { goto L12; }
-
-    // label L5 at ./sources/FirstModule.move:28:9+6
-L5:
+    assume $Dereference($t4) == $DereferenceProphecy($t4);
 
     // write_back[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
     assume $IsEqual'u64'($Dereference($t2), $DereferenceProphecy($t2));
 
     // write_back[BasicCoin::V<#1>@]($t5) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t5),
-        $Dereference($t5));
+    assume $Dereference($t5) == $DereferenceProphecy($t5);
 
-    // label L6 at ./sources/FirstModule.move:28:9+6
-L6:
-
-    // label L7 at ./sources/FirstModule.move:29:5+1
+    // label L3 at ./sources/FirstModule.move:29:5+1
     assume {:print "$at(2,555,556)"} true;
-L7:
+L3:
 
     // assert Not(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1)))) at ./sources/FirstModule.move:32:9+35
     assume {:print "$at(2,599,634)"} true;
@@ -3792,9 +3770,9 @@ L7:
     // return () at ./sources/FirstModule.move:34:9+69
     return;
 
-    // label L8 at ./sources/FirstModule.move:29:5+1
+    // label L4 at ./sources/FirstModule.move:29:5+1
     assume {:print "$at(2,555,556)"} true;
-L8:
+L4:
 
     // assert Or(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1))), And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:31:5+201
     assume {:print "$at(2,562,763)"} true;
@@ -3806,9 +3784,9 @@ L8:
     $abort_flag := true;
     return;
 
-    // label L9 at <internal>:1:1+10
+    // label L5 at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
-L9:
+L5:
 
     // drop($t4) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
@@ -3816,34 +3794,14 @@ L9:
     // goto L1 at <internal>:1:1+10
     goto L1;
 
-    // label L10 at <internal>:1:1+10
-L10:
+    // label L6 at <internal>:1:1+10
+L6:
 
     // drop($t5) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
 
     // goto L0 at <internal>:1:1+10
     goto L0;
-
-    // label L11 at <internal>:1:1+10
-L11:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L4 at <internal>:1:1+10
-    goto L4;
-
-    // label L12 at <internal>:1:1+10
-L12:
-
-    // drop($t2) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // drop($t5) at <internal>:1:1+10
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
 
 }
 
@@ -3857,8 +3815,6 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#0_#0'$verify(_$
     var $t5: $Mutation ($cafe_BasicCoin_V'#0');
     var $t6: int;
     var $t7: int;
-    var $t8: bool;
-    var $t9: bool;
     var $t0: bool;
     var $t1: int;
     var $temp_0'address': int;
@@ -3908,26 +3864,28 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#0_#0'$verify(_$
     // trace_local[a]($t1) at ./sources/FirstModule.move:20:5+1
     assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
 
-    // if ($t0) goto L9 else goto L10 at ./sources/FirstModule.move:21:17+180
+    // if ($t0) goto L5 else goto L6 at ./sources/FirstModule.move:21:17+180
     assume {:print "$at(2,353,533)"} true;
-    if ($t0) { goto L9; } else { goto L10; }
+    if ($t0) { goto L5; } else { goto L6; }
 
     // label L1 at ./sources/FirstModule.move:22:46+1
     assume {:print "$at(2,410,411)"} true;
 L1:
 
-    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:22:22+17
+    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L4 with $t6 at ./sources/FirstModule.move:22:22+17
     assume {:print "$at(2,386,403)"} true;
     if (!$ResourceExists($cafe_BasicCoin_V'#0'_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
-        $t4 := $MutationDup($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
+        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
+    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t4),
+        $DereferenceProphecy($t4));
     }
     if ($abort_flag) {
         assume {:print "$at(2,386,403)"} true;
         $t6 := $abort_code;
         assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
+        goto L4;
     }
 
     // $t2 := borrow_field<BasicCoin::V<#0>>.x($t4) at ./sources/FirstModule.move:23:13+9
@@ -3943,18 +3901,20 @@ L1:
     assume {:print "$at(2,498,499)"} true;
 L0:
 
-    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:25:22+17
+    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L4 with $t6 at ./sources/FirstModule.move:25:22+17
     assume {:print "$at(2,474,491)"} true;
     if (!$ResourceExists($cafe_BasicCoin_V'#0'_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
-        $t5 := $MutationDup($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
+        call $t5 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
+    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t5),
+        $DereferenceProphecy($t5));
     }
     if ($abort_flag) {
         assume {:print "$at(2,474,491)"} true;
         $t6 := $abort_code;
         assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
+        goto L4;
     }
 
     // $t2 := borrow_field<BasicCoin::V<#1>>.x($t5) at ./sources/FirstModule.move:26:13+9
@@ -3979,50 +3939,21 @@ L2:
     // write_ref($t2, $t7) at ./sources/FirstModule.move:28:9+6
     $t2 := $UpdateMutation($t2, $t7);
 
-    // $t8 := is_parent[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    $t8 := $IsParentMutation($t4, 0, $t2);
-
-    // if ($t8) goto L3 else goto L11 at ./sources/FirstModule.move:28:9+6
-    if ($t8) { goto L3; } else { goto L11; }
-
-    // label L3 at ./sources/FirstModule.move:28:9+6
-L3:
-
     // write_back[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
     assume $IsEqual'u64'($Dereference($t2), $DereferenceProphecy($t2));
 
     // write_back[BasicCoin::V<#0>@]($t4) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t4),
-        $Dereference($t4));
-
-    // label L4 at ./sources/FirstModule.move:28:9+6
-L4:
-
-    // $t9 := is_parent[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    $t9 := $IsParentMutation($t5, 0, $t2);
-
-    // if ($t9) goto L5 else goto L12 at ./sources/FirstModule.move:28:9+6
-    if ($t9) { goto L5; } else { goto L12; }
-
-    // label L5 at ./sources/FirstModule.move:28:9+6
-L5:
+    assume $Dereference($t4) == $DereferenceProphecy($t4);
 
     // write_back[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
     assume $IsEqual'u64'($Dereference($t2), $DereferenceProphecy($t2));
 
     // write_back[BasicCoin::V<#1>@]($t5) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t5),
-        $Dereference($t5));
+    assume $Dereference($t5) == $DereferenceProphecy($t5);
 
-    // label L6 at ./sources/FirstModule.move:28:9+6
-L6:
-
-    // label L7 at ./sources/FirstModule.move:29:5+1
+    // label L3 at ./sources/FirstModule.move:29:5+1
     assume {:print "$at(2,555,556)"} true;
-L7:
+L3:
 
     // assert Not(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1)))) at ./sources/FirstModule.move:32:9+35
     assume {:print "$at(2,599,634)"} true;
@@ -4046,9 +3977,9 @@ L7:
     // return () at ./sources/FirstModule.move:34:9+69
     return;
 
-    // label L8 at ./sources/FirstModule.move:29:5+1
+    // label L4 at ./sources/FirstModule.move:29:5+1
     assume {:print "$at(2,555,556)"} true;
-L8:
+L4:
 
     // assert Or(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1))), And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:31:5+201
     assume {:print "$at(2,562,763)"} true;
@@ -4060,9 +3991,9 @@ L8:
     $abort_flag := true;
     return;
 
-    // label L9 at <internal>:1:1+10
+    // label L5 at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
-L9:
+L5:
 
     // drop($t4) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
@@ -4070,34 +4001,14 @@ L9:
     // goto L1 at <internal>:1:1+10
     goto L1;
 
-    // label L10 at <internal>:1:1+10
-L10:
+    // label L6 at <internal>:1:1+10
+L6:
 
     // drop($t5) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
 
     // goto L0 at <internal>:1:1+10
     goto L0;
-
-    // label L11 at <internal>:1:1+10
-L11:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L4 at <internal>:1:1+10
-    goto L4;
-
-    // label L12 at <internal>:1:1+10
-L12:
-
-    // drop($t2) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // drop($t5) at <internal>:1:1+10
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
 
 }
 
@@ -4111,8 +4022,6 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#1_#1'$verify(_$
     var $t5: $Mutation ($cafe_BasicCoin_V'#1');
     var $t6: int;
     var $t7: int;
-    var $t8: bool;
-    var $t9: bool;
     var $t0: bool;
     var $t1: int;
     var $temp_0'address': int;
@@ -4162,26 +4071,28 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#1_#1'$verify(_$
     // trace_local[a]($t1) at ./sources/FirstModule.move:20:5+1
     assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
 
-    // if ($t0) goto L9 else goto L10 at ./sources/FirstModule.move:21:17+180
+    // if ($t0) goto L5 else goto L6 at ./sources/FirstModule.move:21:17+180
     assume {:print "$at(2,353,533)"} true;
-    if ($t0) { goto L9; } else { goto L10; }
+    if ($t0) { goto L5; } else { goto L6; }
 
     // label L1 at ./sources/FirstModule.move:22:46+1
     assume {:print "$at(2,410,411)"} true;
 L1:
 
-    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:22:22+17
+    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L4 with $t6 at ./sources/FirstModule.move:22:22+17
     assume {:print "$at(2,386,403)"} true;
     if (!$ResourceExists($cafe_BasicCoin_V'#1'_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
-        $t4 := $MutationDup($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
+        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
+    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t4),
+        $DereferenceProphecy($t4));
     }
     if ($abort_flag) {
         assume {:print "$at(2,386,403)"} true;
         $t6 := $abort_code;
         assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
+        goto L4;
     }
 
     // $t2 := borrow_field<BasicCoin::V<#0>>.x($t4) at ./sources/FirstModule.move:23:13+9
@@ -4197,18 +4108,20 @@ L1:
     assume {:print "$at(2,498,499)"} true;
 L0:
 
-    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:25:22+17
+    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L4 with $t6 at ./sources/FirstModule.move:25:22+17
     assume {:print "$at(2,474,491)"} true;
     if (!$ResourceExists($cafe_BasicCoin_V'#1'_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
-        $t5 := $MutationDup($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
+        call $t5 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
+    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t5),
+        $DereferenceProphecy($t5));
     }
     if ($abort_flag) {
         assume {:print "$at(2,474,491)"} true;
         $t6 := $abort_code;
         assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
+        goto L4;
     }
 
     // $t2 := borrow_field<BasicCoin::V<#1>>.x($t5) at ./sources/FirstModule.move:26:13+9
@@ -4233,50 +4146,21 @@ L2:
     // write_ref($t2, $t7) at ./sources/FirstModule.move:28:9+6
     $t2 := $UpdateMutation($t2, $t7);
 
-    // $t8 := is_parent[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    $t8 := $IsParentMutation($t4, 0, $t2);
-
-    // if ($t8) goto L3 else goto L11 at ./sources/FirstModule.move:28:9+6
-    if ($t8) { goto L3; } else { goto L11; }
-
-    // label L3 at ./sources/FirstModule.move:28:9+6
-L3:
-
     // write_back[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
     assume $IsEqual'u64'($Dereference($t2), $DereferenceProphecy($t2));
 
     // write_back[BasicCoin::V<#0>@]($t4) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t4),
-        $Dereference($t4));
-
-    // label L4 at ./sources/FirstModule.move:28:9+6
-L4:
-
-    // $t9 := is_parent[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    $t9 := $IsParentMutation($t5, 0, $t2);
-
-    // if ($t9) goto L5 else goto L12 at ./sources/FirstModule.move:28:9+6
-    if ($t9) { goto L5; } else { goto L12; }
-
-    // label L5 at ./sources/FirstModule.move:28:9+6
-L5:
+    assume $Dereference($t4) == $DereferenceProphecy($t4);
 
     // write_back[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
     assume $IsEqual'u64'($Dereference($t2), $DereferenceProphecy($t2));
 
     // write_back[BasicCoin::V<#1>@]($t5) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t5),
-        $Dereference($t5));
+    assume $Dereference($t5) == $DereferenceProphecy($t5);
 
-    // label L6 at ./sources/FirstModule.move:28:9+6
-L6:
-
-    // label L7 at ./sources/FirstModule.move:29:5+1
+    // label L3 at ./sources/FirstModule.move:29:5+1
     assume {:print "$at(2,555,556)"} true;
-L7:
+L3:
 
     // assert Not(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1)))) at ./sources/FirstModule.move:32:9+35
     assume {:print "$at(2,599,634)"} true;
@@ -4300,9 +4184,9 @@ L7:
     // return () at ./sources/FirstModule.move:34:9+69
     return;
 
-    // label L8 at ./sources/FirstModule.move:29:5+1
+    // label L4 at ./sources/FirstModule.move:29:5+1
     assume {:print "$at(2,555,556)"} true;
-L8:
+L4:
 
     // assert Or(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1))), And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:31:5+201
     assume {:print "$at(2,562,763)"} true;
@@ -4314,9 +4198,9 @@ L8:
     $abort_flag := true;
     return;
 
-    // label L9 at <internal>:1:1+10
+    // label L5 at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
-L9:
+L5:
 
     // drop($t4) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
@@ -4324,33 +4208,13 @@ L9:
     // goto L1 at <internal>:1:1+10
     goto L1;
 
-    // label L10 at <internal>:1:1+10
-L10:
+    // label L6 at <internal>:1:1+10
+L6:
 
     // drop($t5) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
 
     // goto L0 at <internal>:1:1+10
     goto L0;
-
-    // label L11 at <internal>:1:1+10
-L11:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L4 at <internal>:1:1+10
-    goto L4;
-
-    // label L12 at <internal>:1:1+10
-L12:
-
-    // drop($t2) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // drop($t5) at <internal>:1:1+10
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
 
 }

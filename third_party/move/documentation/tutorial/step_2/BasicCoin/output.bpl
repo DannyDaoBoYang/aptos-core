@@ -1129,6 +1129,11 @@ axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 function {:inline} $MutationDup<T>(l: $Location, p: Vec int, v: T): $Mutation T {
     $Mutation(l, p, v, v)
 }
+procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
+    var prophecy: T;
+    havoc prophecy;
+    result := $Mutation(l, p, v, prophecy);
+}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {
@@ -3698,7 +3703,8 @@ L1:
 
     // $t5 := borrow_local($t0) at ./sources/FirstModule.move:11:16+11
     assume {:print "$at(2,258,269)"} true;
-    $t5 := $MutationDup($Local(0), EmptyVec(), $t0);
+    call $t5 := $MutationAlt($Local(0), EmptyVec(), $t0);
+    $t0 := $DereferenceProphecy($t5);
 
     // $t3 := BasicCoin::ib($t5) on_abort goto L4 with $t7 at ./sources/FirstModule.move:11:13+15
     call $t3,$t5 := $cafe_BasicCoin_ib($t5);
@@ -3719,7 +3725,8 @@ L0:
 
     // $t6 := borrow_local($t1) at ./sources/FirstModule.move:13:18+6
     assume {:print "$at(2,305,311)"} true;
-    $t6 := $MutationDup($Local(1), EmptyVec(), $t1);
+    call $t6 := $MutationAlt($Local(1), EmptyVec(), $t1);
+    $t1 := $DereferenceProphecy($t6);
 
     // $t3 := borrow_field<BasicCoin::S>.y($t6) at ./sources/FirstModule.move:13:13+13
     call $t3 := $ChildMutationAlt($t6, 1, $Dereference($t6)->$y);
@@ -3746,7 +3753,7 @@ L2:
     assume $IsEqual'u64'($Dereference($t3), $DereferenceProphecy($t3));
 
     // write_back[LocalRoot($t0)@]($t5) at ./sources/FirstModule.move:15:9+6
-    $t0 := $Dereference($t5);
+    assume $Dereference($t5) == $DereferenceProphecy($t5);
 
     // trace_local[value1]($t0) at ./sources/FirstModule.move:15:9+6
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
@@ -3755,7 +3762,7 @@ L2:
     assume $IsEqual'u64'($Dereference($t3), $DereferenceProphecy($t3));
 
     // write_back[LocalRoot($t1)@]($t6) at ./sources/FirstModule.move:15:9+6
-    $t1 := $Dereference($t6);
+    assume $Dereference($t6) == $DereferenceProphecy($t6);
 
     // trace_local[value2]($t1) at ./sources/FirstModule.move:15:9+6
     assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
