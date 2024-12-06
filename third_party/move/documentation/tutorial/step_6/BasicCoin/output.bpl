@@ -3554,577 +3554,562 @@ function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 var #0_info: $TypeParamInfo;
 var #0_$memory: $Memory #0;
-type #1;
-function {:inline} $IsEqual'#1'(x1: #1, x2: #1): bool { x1 == x2 }
-function {:inline} $IsValid'#1'(x: #1): bool { true }
-var #1_info: $TypeParamInfo;
-var #1_$memory: $Memory #1;
 
-// struct BasicCoin::V<#0> at ./sources/FirstModule.move:15:5+64
-datatype $cafe_BasicCoin_V'#0' {
-    $cafe_BasicCoin_V'#0'($x: int, $y: #0)
+// fun signer::address_of [baseline] at ./../../../../move-stdlib/sources/signer.move:12:5+77
+procedure {:inline 1} $1_signer_address_of(_$t0: $signer) returns ($ret0: int)
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: int;
+    var $t0: $signer;
+    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[s]($t0) at ./../../../../move-stdlib/sources/signer.move:12:5+1
+    assume {:print "$at(11,389,390)"} true;
+    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
+
+    // $t1 := signer::borrow_address($t0) on_abort goto L2 with $t2 at ./../../../../move-stdlib/sources/signer.move:13:10+17
+    assume {:print "$at(11,443,460)"} true;
+    call $t1 := $1_signer_borrow_address($t0);
+    if ($abort_flag) {
+        assume {:print "$at(11,443,460)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // trace_return[0]($t1) at ./../../../../move-stdlib/sources/signer.move:13:9+18
+    assume {:print "$track_return(1,0,0):", $t1} $t1 == $t1;
+
+    // label L1 at ./../../../../move-stdlib/sources/signer.move:14:5+1
+    assume {:print "$at(11,465,466)"} true;
+L1:
+
+    // return $t1 at ./../../../../move-stdlib/sources/signer.move:14:5+1
+    assume {:print "$at(11,465,466)"} true;
+    $ret0 := $t1;
+    return;
+
+    // label L2 at ./../../../../move-stdlib/sources/signer.move:14:5+1
+L2:
+
+    // abort($t2) at ./../../../../move-stdlib/sources/signer.move:14:5+1
+    assume {:print "$at(11,465,466)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
 }
-function {:inline} $Update'$cafe_BasicCoin_V'#0''_x(s: $cafe_BasicCoin_V'#0', x: int): $cafe_BasicCoin_V'#0' {
-    $cafe_BasicCoin_V'#0'(x, s->$y)
+
+// struct BasicCoin::Balance<MyOddCoin::MyOddCoin> at ./sources/BasicCoin.move:14:5+77
+datatype $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin' {
+    $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'($coin: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin')
 }
-function {:inline} $Update'$cafe_BasicCoin_V'#0''_y(s: $cafe_BasicCoin_V'#0', x: #0): $cafe_BasicCoin_V'#0' {
-    $cafe_BasicCoin_V'#0'(s->$x, x)
+function {:inline} $Update'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''_coin(s: $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin', x: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'): $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin' {
+    $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'(x)
 }
-function $IsValid'$cafe_BasicCoin_V'#0''(s: $cafe_BasicCoin_V'#0'): bool {
-    $IsValid'u64'(s->$x)
-      && $IsValid'#0'(s->$y)
+function $IsValid'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''(s: $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'): bool {
+    $IsValid'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin''(s->$coin)
 }
-function {:inline} $IsEqual'$cafe_BasicCoin_V'#0''(s1: $cafe_BasicCoin_V'#0', s2: $cafe_BasicCoin_V'#0'): bool {
+function {:inline} $IsEqual'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''(s1: $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin', s2: $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'): bool {
     s1 == s2
 }
-var $cafe_BasicCoin_V'#0'_$memory: $Memory $cafe_BasicCoin_V'#0';
+var $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory: $Memory $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin';
 
-// struct BasicCoin::V<#1> at ./sources/FirstModule.move:15:5+64
-datatype $cafe_BasicCoin_V'#1' {
-    $cafe_BasicCoin_V'#1'($x: int, $y: #1)
+// struct BasicCoin::Balance<#0> at ./sources/BasicCoin.move:14:5+77
+datatype $cafe_BasicCoin_Balance'#0' {
+    $cafe_BasicCoin_Balance'#0'($coin: $cafe_BasicCoin_Coin'#0')
 }
-function {:inline} $Update'$cafe_BasicCoin_V'#1''_x(s: $cafe_BasicCoin_V'#1', x: int): $cafe_BasicCoin_V'#1' {
-    $cafe_BasicCoin_V'#1'(x, s->$y)
+function {:inline} $Update'$cafe_BasicCoin_Balance'#0''_coin(s: $cafe_BasicCoin_Balance'#0', x: $cafe_BasicCoin_Coin'#0'): $cafe_BasicCoin_Balance'#0' {
+    $cafe_BasicCoin_Balance'#0'(x)
 }
-function {:inline} $Update'$cafe_BasicCoin_V'#1''_y(s: $cafe_BasicCoin_V'#1', x: #1): $cafe_BasicCoin_V'#1' {
-    $cafe_BasicCoin_V'#1'(s->$x, x)
+function $IsValid'$cafe_BasicCoin_Balance'#0''(s: $cafe_BasicCoin_Balance'#0'): bool {
+    $IsValid'$cafe_BasicCoin_Coin'#0''(s->$coin)
 }
-function $IsValid'$cafe_BasicCoin_V'#1''(s: $cafe_BasicCoin_V'#1'): bool {
-    $IsValid'u64'(s->$x)
-      && $IsValid'#1'(s->$y)
-}
-function {:inline} $IsEqual'$cafe_BasicCoin_V'#1''(s1: $cafe_BasicCoin_V'#1', s2: $cafe_BasicCoin_V'#1'): bool {
+function {:inline} $IsEqual'$cafe_BasicCoin_Balance'#0''(s1: $cafe_BasicCoin_Balance'#0', s2: $cafe_BasicCoin_Balance'#0'): bool {
     s1 == s2
 }
-var $cafe_BasicCoin_V'#1'_$memory: $Memory $cafe_BasicCoin_V'#1';
+var $cafe_BasicCoin_Balance'#0'_$memory: $Memory $cafe_BasicCoin_Balance'#0';
 
-// fun BasicCoin::diff_resource_generic [verification] at ./sources/FirstModule.move:20:5+309
-procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic$verify(_$t0: bool, _$t1: int) returns ()
+// struct BasicCoin::Coin<MyOddCoin::MyOddCoin> at ./sources/BasicCoin.move:10:5+66
+datatype $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin' {
+    $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'($value: int)
+}
+function {:inline} $Update'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin''_value(s: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin', x: int): $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin' {
+    $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'(x)
+}
+function $IsValid'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin''(s: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'): bool {
+    $IsValid'u64'(s->$value)
+}
+function {:inline} $IsEqual'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin''(s1: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin', s2: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'): bool {
+    s1 == s2
+}
+
+// struct BasicCoin::Coin<#0> at ./sources/BasicCoin.move:10:5+66
+datatype $cafe_BasicCoin_Coin'#0' {
+    $cafe_BasicCoin_Coin'#0'($value: int)
+}
+function {:inline} $Update'$cafe_BasicCoin_Coin'#0''_value(s: $cafe_BasicCoin_Coin'#0', x: int): $cafe_BasicCoin_Coin'#0' {
+    $cafe_BasicCoin_Coin'#0'(x)
+}
+function $IsValid'$cafe_BasicCoin_Coin'#0''(s: $cafe_BasicCoin_Coin'#0'): bool {
+    $IsValid'u64'(s->$value)
+}
+function {:inline} $IsEqual'$cafe_BasicCoin_Coin'#0''(s1: $cafe_BasicCoin_Coin'#0', s2: $cafe_BasicCoin_Coin'#0'): bool {
+    s1 == s2
+}
+
+// fun BasicCoin::balance_of<MyOddCoin::MyOddCoin> [baseline] at ./sources/BasicCoin.move:33:5+136
+procedure {:inline 1} $cafe_BasicCoin_balance_of'$cafe_MyOddCoin_MyOddCoin'(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $t2: $Mutation (int);
-    var $t3: $Mutation (int);
-    var $t4: $Mutation ($cafe_BasicCoin_V'#0');
-    var $t5: $Mutation ($cafe_BasicCoin_V'#1');
-    var $t6: int;
-    var $t7: int;
-    var $t8: bool;
-    var $t9: bool;
-    var $t0: bool;
-    var $t1: int;
+    var $t1: $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin';
+    var $t2: int;
+    var $t3: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $t4: int;
+    var $t0: int;
     var $temp_0'address': int;
-    var $temp_0'bool': bool;
     var $temp_0'u64': int;
-    var $cafe_BasicCoin_V'#0'_$memory#0: $Memory $cafe_BasicCoin_V'#0';
-    var $cafe_BasicCoin_V'#1'_$memory#1: $Memory $cafe_BasicCoin_V'#1';
     $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$at(2,247,248)"} true;
-    assume $IsValid'bool'($t0);
+    // trace_local[owner]($t0) at ./sources/BasicCoin.move:33:5+1
+    assume {:print "$at(2,1276,1277)"} true;
+    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
 
-    // assume WellFormed($t1) at ./sources/FirstModule.move:20:5+1
-    assume $IsValid'address'($t1);
+    // $t1 := get_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t2 at ./sources/BasicCoin.move:34:9+13
+    assume {:print "$at(2,1356,1369)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t1 := $ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1356,1369)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
 
-    // assume forall $rsc: BasicCoin::V<#0>: ResourceDomain<BasicCoin::V<#0>>(): WellFormed($rsc) at ./sources/FirstModule.move:20:5+1
-    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_V'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $a_0);
-    ($IsValid'$cafe_BasicCoin_V'#0''($rsc))));
+    // $t3 := get_field<BasicCoin::Balance<#0>>.coin($t1) at ./sources/BasicCoin.move:34:9+44
+    $t3 := $t1->$coin;
 
-    // assume forall $rsc: BasicCoin::V<#1>: ResourceDomain<BasicCoin::V<#1>>(): WellFormed($rsc) at ./sources/FirstModule.move:20:5+1
-    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_V'#1'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $a_0);
-    ($IsValid'$cafe_BasicCoin_V'#1''($rsc))));
+    // $t4 := get_field<BasicCoin::Coin<#0>>.value($t3) at ./sources/BasicCoin.move:34:9+50
+    $t4 := $t3->$value;
 
-    // uninit($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-    assume $t4->l == $Uninitialized();
+    // trace_return[0]($t4) at ./sources/BasicCoin.move:34:9+50
+    assume {:print "$track_return(2,0,0):", $t4} $t4 == $t4;
 
-    // uninit($t5) at <internal>:1:1+10
-    assume $t5->l == $Uninitialized();
-
-    // @0 := save_mem(BasicCoin::V<#0>) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$at(2,247,248)"} true;
-    $cafe_BasicCoin_V'#0'_$memory#0 := $cafe_BasicCoin_V'#0'_$memory;
-
-    // @1 := save_mem(BasicCoin::V<#1>) at ./sources/FirstModule.move:20:5+1
-    $cafe_BasicCoin_V'#1'_$memory#1 := $cafe_BasicCoin_V'#1'_$memory;
-
-    // trace_local[cond]($t0) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
-
-    // trace_local[a]($t1) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
-
-    // if ($t0) goto L9 else goto L10 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-    if ($t0) { goto L9; } else { goto L10; }
-
-    // label L1 at ./sources/FirstModule.move:22:46+1
-    assume {:print "$at(2,410,411)"} true;
+    // label L1 at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
 L1:
 
-    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:22:22+17
-    assume {:print "$at(2,386,403)"} true;
-    if (!$ResourceExists($cafe_BasicCoin_V'#0'_$memory, $t1)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,386,403)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
-    }
+    // return $t4 at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+    $ret0 := $t4;
+    return;
 
-    // $t2 := borrow_field<BasicCoin::V<#0>>.x($t4) at ./sources/FirstModule.move:23:13+9
-    assume {:print "$at(2,426,435)"} true;
-    call $t2 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$x);
-    $t4 := $UpdateMutation($t4, $Update'$cafe_BasicCoin_V'#0''_x($Dereference($t4), $DereferenceProphecy($t2)));
-
-    // goto L2 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-    goto L2;
-
-    // label L0 at ./sources/FirstModule.move:25:46+1
-    assume {:print "$at(2,498,499)"} true;
-L0:
-
-    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:25:22+17
-    assume {:print "$at(2,474,491)"} true;
-    if (!$ResourceExists($cafe_BasicCoin_V'#1'_$memory, $t1)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t5 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,474,491)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
-    }
-
-    // $t2 := borrow_field<BasicCoin::V<#1>>.x($t5) at ./sources/FirstModule.move:26:13+9
-    assume {:print "$at(2,514,523)"} true;
-    call $t2 := $ChildMutationAlt($t5, 0, $Dereference($t5)->$x);
-    $t5 := $UpdateMutation($t5, $Update'$cafe_BasicCoin_V'#1''_x($Dereference($t5), $DereferenceProphecy($t2)));
-
-    // label L2 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
+    // label L2 at ./sources/BasicCoin.move:35:5+1
 L2:
 
-    // trace_local[x]($t2) at ./sources/FirstModule.move:21:13+1
-    assume {:print "$at(2,349,350)"} true;
-    $temp_0'u64' := $Dereference($t2);
-    assume {:print "$track_local(0,0,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t7 := 0 at ./sources/FirstModule.move:28:14+1
-    assume {:print "$at(2,548,549)"} true;
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // write_ref($t2, $t7) at ./sources/FirstModule.move:28:9+6
-    $t2 := $UpdateMutation($t2, $t7);
-
-    // $t8 := is_parent[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    $t8 := $IsParentMutation($t4, 0, $t2);
-
-    // if ($t8) goto L3 else goto L11 at ./sources/FirstModule.move:28:9+6
-    if ($t8) { goto L3; } else { goto L11; }
-
-    // label L3 at ./sources/FirstModule.move:28:9+6
-L3:
-
-    // write_back[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    assume $Fulfilled($t2);
-
-    // write_back[BasicCoin::V<#0>@]($t4) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t4),
-        $Dereference($t4));
-
-    // label L4 at ./sources/FirstModule.move:28:9+6
-L4:
-
-    // $t9 := is_parent[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    $t9 := $IsParentMutation($t5, 0, $t2);
-
-    // if ($t9) goto L5 else goto L12 at ./sources/FirstModule.move:28:9+6
-    if ($t9) { goto L5; } else { goto L12; }
-
-    // label L5 at ./sources/FirstModule.move:28:9+6
-L5:
-
-    // write_back[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    assume $Fulfilled($t2);
-
-    // write_back[BasicCoin::V<#1>@]($t5) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t5),
-        $Dereference($t5));
-
-    // label L6 at ./sources/FirstModule.move:28:9+6
-L6:
-
-    // label L7 at ./sources/FirstModule.move:29:5+1
-    assume {:print "$at(2,555,556)"} true;
-L7:
-
-    // assert Not(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1)))) at ./sources/FirstModule.move:32:9+35
-    assume {:print "$at(2,599,634)"} true;
-    assert {:msg "assert_failed(2,599,634): function does not abort under this condition"}
-      !($t0 && !$ResourceExists($cafe_BasicCoin_V'#0'_$memory#0, $t1));
-
-    // assert Not(And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:33:9+36
-    assume {:print "$at(2,643,679)"} true;
-    assert {:msg "assert_failed(2,643,679): function does not abort under this condition"}
-      !(!$t0 && !$ResourceExists($cafe_BasicCoin_V'#1'_$memory#1, $t1));
-
-    // assert if $t0 {
-    //   Eq<u64>(select BasicCoin::V.x<BasicCoin::V<#0>>(global<BasicCoin::V<#0>>($t1)), 0)
-    // } else {
-    //   Eq<u64>(select BasicCoin::V.x<BasicCoin::V<#1>>(global<BasicCoin::V<#1>>($t1)), 0)
-    // } at ./sources/FirstModule.move:34:9+69
-    assume {:print "$at(2,688,757)"} true;
-    assert {:msg "assert_failed(2,688,757): post-condition does not hold"}
-      (if ($t0) then ($IsEqual'u64'($ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1)->$x, 0)) else ($IsEqual'u64'($ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1)->$x, 0)));
-
-    // return () at ./sources/FirstModule.move:34:9+69
-    return;
-
-    // label L8 at ./sources/FirstModule.move:29:5+1
-    assume {:print "$at(2,555,556)"} true;
-L8:
-
-    // assert Or(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1))), And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:31:5+201
-    assume {:print "$at(2,562,763)"} true;
-    assert {:msg "assert_failed(2,562,763): abort not covered by any of the `aborts_if` clauses"}
-      (($t0 && !$ResourceExists($cafe_BasicCoin_V'#0'_$memory#0, $t1)) || (!$t0 && !$ResourceExists($cafe_BasicCoin_V'#1'_$memory#1, $t1)));
-
-    // abort($t6) at ./sources/FirstModule.move:31:5+201
-    $abort_code := $t6;
+    // abort($t2) at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+    $abort_code := $t2;
     $abort_flag := true;
     return;
-
-    // label L9 at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-L9:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L1 at <internal>:1:1+10
-    goto L1;
-
-    // label L10 at <internal>:1:1+10
-L10:
-
-    // drop($t5) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L0 at <internal>:1:1+10
-    goto L0;
-
-    // label L11 at <internal>:1:1+10
-L11:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L4 at <internal>:1:1+10
-    goto L4;
-
-    // label L12 at <internal>:1:1+10
-L12:
-
-    // drop($t2) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // drop($t5) at <internal>:1:1+10
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
 
 }
 
-// fun BasicCoin::diff_resource_generic<#0, #0> [verification] at ./sources/FirstModule.move:20:5+309
-procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#0_#0'$verify(_$t0: bool, _$t1: int) returns ()
+// fun BasicCoin::balance_of<#0> [baseline] at ./sources/BasicCoin.move:33:5+136
+procedure {:inline 1} $cafe_BasicCoin_balance_of'#0'(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $t2: $Mutation (int);
-    var $t3: $Mutation (int);
-    var $t4: $Mutation ($cafe_BasicCoin_V'#0');
-    var $t5: $Mutation ($cafe_BasicCoin_V'#0');
-    var $t6: int;
-    var $t7: int;
-    var $t8: bool;
-    var $t9: bool;
-    var $t0: bool;
-    var $t1: int;
+    var $t1: $cafe_BasicCoin_Balance'#0';
+    var $t2: int;
+    var $t3: $cafe_BasicCoin_Coin'#0';
+    var $t4: int;
+    var $t0: int;
     var $temp_0'address': int;
-    var $temp_0'bool': bool;
     var $temp_0'u64': int;
-    var $cafe_BasicCoin_V'#0'_$memory#0: $Memory $cafe_BasicCoin_V'#0';
-    var $cafe_BasicCoin_V'#0'_$memory#1: $Memory $cafe_BasicCoin_V'#0';
     $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$at(2,247,248)"} true;
-    assume $IsValid'bool'($t0);
+    // trace_local[owner]($t0) at ./sources/BasicCoin.move:33:5+1
+    assume {:print "$at(2,1276,1277)"} true;
+    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
 
-    // assume WellFormed($t1) at ./sources/FirstModule.move:20:5+1
-    assume $IsValid'address'($t1);
+    // $t1 := get_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t2 at ./sources/BasicCoin.move:34:9+13
+    assume {:print "$at(2,1356,1369)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t1 := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1356,1369)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
 
-    // assume forall $rsc: BasicCoin::V<#0>: ResourceDomain<BasicCoin::V<#0>>(): WellFormed($rsc) at ./sources/FirstModule.move:20:5+1
-    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_V'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $a_0);
-    ($IsValid'$cafe_BasicCoin_V'#0''($rsc))));
+    // $t3 := get_field<BasicCoin::Balance<#0>>.coin($t1) at ./sources/BasicCoin.move:34:9+44
+    $t3 := $t1->$coin;
 
-    // assume forall $rsc: BasicCoin::V<#1>: ResourceDomain<BasicCoin::V<#1>>(): WellFormed($rsc) at ./sources/FirstModule.move:20:5+1
-    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_V'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $a_0);
-    ($IsValid'$cafe_BasicCoin_V'#0''($rsc))));
+    // $t4 := get_field<BasicCoin::Coin<#0>>.value($t3) at ./sources/BasicCoin.move:34:9+50
+    $t4 := $t3->$value;
 
-    // uninit($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-    assume $t4->l == $Uninitialized();
+    // trace_return[0]($t4) at ./sources/BasicCoin.move:34:9+50
+    assume {:print "$track_return(2,0,0):", $t4} $t4 == $t4;
 
-    // uninit($t5) at <internal>:1:1+10
-    assume $t5->l == $Uninitialized();
-
-    // @0 := save_mem(BasicCoin::V<#0>) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$at(2,247,248)"} true;
-    $cafe_BasicCoin_V'#0'_$memory#0 := $cafe_BasicCoin_V'#0'_$memory;
-
-    // @1 := save_mem(BasicCoin::V<#1>) at ./sources/FirstModule.move:20:5+1
-    $cafe_BasicCoin_V'#0'_$memory#1 := $cafe_BasicCoin_V'#0'_$memory;
-
-    // trace_local[cond]($t0) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
-
-    // trace_local[a]($t1) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
-
-    // if ($t0) goto L9 else goto L10 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-    if ($t0) { goto L9; } else { goto L10; }
-
-    // label L1 at ./sources/FirstModule.move:22:46+1
-    assume {:print "$at(2,410,411)"} true;
+    // label L1 at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
 L1:
 
-    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:22:22+17
-    assume {:print "$at(2,386,403)"} true;
-    if (!$ResourceExists($cafe_BasicCoin_V'#0'_$memory, $t1)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,386,403)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
-    }
+    // return $t4 at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+    $ret0 := $t4;
+    return;
 
-    // $t2 := borrow_field<BasicCoin::V<#0>>.x($t4) at ./sources/FirstModule.move:23:13+9
-    assume {:print "$at(2,426,435)"} true;
-    call $t2 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$x);
-    $t4 := $UpdateMutation($t4, $Update'$cafe_BasicCoin_V'#0''_x($Dereference($t4), $DereferenceProphecy($t2)));
-
-    // goto L2 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-    goto L2;
-
-    // label L0 at ./sources/FirstModule.move:25:46+1
-    assume {:print "$at(2,498,499)"} true;
-L0:
-
-    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:25:22+17
-    assume {:print "$at(2,474,491)"} true;
-    if (!$ResourceExists($cafe_BasicCoin_V'#0'_$memory, $t1)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t5 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,474,491)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
-    }
-
-    // $t2 := borrow_field<BasicCoin::V<#1>>.x($t5) at ./sources/FirstModule.move:26:13+9
-    assume {:print "$at(2,514,523)"} true;
-    call $t2 := $ChildMutationAlt($t5, 0, $Dereference($t5)->$x);
-    $t5 := $UpdateMutation($t5, $Update'$cafe_BasicCoin_V'#0''_x($Dereference($t5), $DereferenceProphecy($t2)));
-
-    // label L2 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
+    // label L2 at ./sources/BasicCoin.move:35:5+1
 L2:
 
-    // trace_local[x]($t2) at ./sources/FirstModule.move:21:13+1
-    assume {:print "$at(2,349,350)"} true;
-    $temp_0'u64' := $Dereference($t2);
-    assume {:print "$track_local(0,0,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t7 := 0 at ./sources/FirstModule.move:28:14+1
-    assume {:print "$at(2,548,549)"} true;
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // write_ref($t2, $t7) at ./sources/FirstModule.move:28:9+6
-    $t2 := $UpdateMutation($t2, $t7);
-
-    // $t8 := is_parent[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    $t8 := $IsParentMutation($t4, 0, $t2);
-
-    // if ($t8) goto L3 else goto L11 at ./sources/FirstModule.move:28:9+6
-    if ($t8) { goto L3; } else { goto L11; }
-
-    // label L3 at ./sources/FirstModule.move:28:9+6
-L3:
-
-    // write_back[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    assume $Fulfilled($t2);
-
-    // write_back[BasicCoin::V<#0>@]($t4) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t4),
-        $Dereference($t4));
-
-    // label L4 at ./sources/FirstModule.move:28:9+6
-L4:
-
-    // $t9 := is_parent[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    $t9 := $IsParentMutation($t5, 0, $t2);
-
-    // if ($t9) goto L5 else goto L12 at ./sources/FirstModule.move:28:9+6
-    if ($t9) { goto L5; } else { goto L12; }
-
-    // label L5 at ./sources/FirstModule.move:28:9+6
-L5:
-
-    // write_back[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    assume $Fulfilled($t2);
-
-    // write_back[BasicCoin::V<#1>@]($t5) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#0'_$memory, $GlobalLocationAddress($t5),
-        $Dereference($t5));
-
-    // label L6 at ./sources/FirstModule.move:28:9+6
-L6:
-
-    // label L7 at ./sources/FirstModule.move:29:5+1
-    assume {:print "$at(2,555,556)"} true;
-L7:
-
-    // assert Not(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1)))) at ./sources/FirstModule.move:32:9+35
-    assume {:print "$at(2,599,634)"} true;
-    assert {:msg "assert_failed(2,599,634): function does not abort under this condition"}
-      !($t0 && !$ResourceExists($cafe_BasicCoin_V'#0'_$memory#0, $t1));
-
-    // assert Not(And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:33:9+36
-    assume {:print "$at(2,643,679)"} true;
-    assert {:msg "assert_failed(2,643,679): function does not abort under this condition"}
-      !(!$t0 && !$ResourceExists($cafe_BasicCoin_V'#0'_$memory#1, $t1));
-
-    // assert if $t0 {
-    //   Eq<u64>(select BasicCoin::V.x<BasicCoin::V<#0>>(global<BasicCoin::V<#0>>($t1)), 0)
-    // } else {
-    //   Eq<u64>(select BasicCoin::V.x<BasicCoin::V<#1>>(global<BasicCoin::V<#1>>($t1)), 0)
-    // } at ./sources/FirstModule.move:34:9+69
-    assume {:print "$at(2,688,757)"} true;
-    assert {:msg "assert_failed(2,688,757): post-condition does not hold"}
-      (if ($t0) then ($IsEqual'u64'($ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1)->$x, 0)) else ($IsEqual'u64'($ResourceValue($cafe_BasicCoin_V'#0'_$memory, $t1)->$x, 0)));
-
-    // return () at ./sources/FirstModule.move:34:9+69
-    return;
-
-    // label L8 at ./sources/FirstModule.move:29:5+1
-    assume {:print "$at(2,555,556)"} true;
-L8:
-
-    // assert Or(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1))), And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:31:5+201
-    assume {:print "$at(2,562,763)"} true;
-    assert {:msg "assert_failed(2,562,763): abort not covered by any of the `aborts_if` clauses"}
-      (($t0 && !$ResourceExists($cafe_BasicCoin_V'#0'_$memory#0, $t1)) || (!$t0 && !$ResourceExists($cafe_BasicCoin_V'#0'_$memory#1, $t1)));
-
-    // abort($t6) at ./sources/FirstModule.move:31:5+201
-    $abort_code := $t6;
+    // abort($t2) at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+    $abort_code := $t2;
     $abort_flag := true;
     return;
-
-    // label L9 at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-L9:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L1 at <internal>:1:1+10
-    goto L1;
-
-    // label L10 at <internal>:1:1+10
-L10:
-
-    // drop($t5) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L0 at <internal>:1:1+10
-    goto L0;
-
-    // label L11 at <internal>:1:1+10
-L11:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L4 at <internal>:1:1+10
-    goto L4;
-
-    // label L12 at <internal>:1:1+10
-L12:
-
-    // drop($t2) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // drop($t5) at <internal>:1:1+10
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
 
 }
 
-// fun BasicCoin::diff_resource_generic<#1, #1> [verification] at ./sources/FirstModule.move:20:5+309
-procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#1_#1'$verify(_$t0: bool, _$t1: int) returns ()
+// fun BasicCoin::balance_of [verification] at ./sources/BasicCoin.move:33:5+136
+procedure {:timeLimit 80} $cafe_BasicCoin_balance_of$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $t2: $Mutation (int);
-    var $t3: $Mutation (int);
-    var $t4: $Mutation ($cafe_BasicCoin_V'#1');
-    var $t5: $Mutation ($cafe_BasicCoin_V'#1');
-    var $t6: int;
-    var $t7: int;
-    var $t8: bool;
-    var $t9: bool;
-    var $t0: bool;
-    var $t1: int;
+    var $t1: $cafe_BasicCoin_Balance'#0';
+    var $t2: int;
+    var $t3: $cafe_BasicCoin_Coin'#0';
+    var $t4: int;
+    var $t0: int;
     var $temp_0'address': int;
-    var $temp_0'bool': bool;
     var $temp_0'u64': int;
-    var $cafe_BasicCoin_V'#1'_$memory#0: $Memory $cafe_BasicCoin_V'#1';
-    var $cafe_BasicCoin_V'#1'_$memory#1: $Memory $cafe_BasicCoin_V'#1';
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:33:5+1
+    assume {:print "$at(2,1276,1277)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:33:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'#0''($rsc))));
+
+    // trace_local[owner]($t0) at ./sources/BasicCoin.move:33:5+1
+    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
+
+    // $t1 := get_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t2 at ./sources/BasicCoin.move:34:9+13
+    assume {:print "$at(2,1356,1369)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t1 := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1356,1369)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t3 := get_field<BasicCoin::Balance<#0>>.coin($t1) at ./sources/BasicCoin.move:34:9+44
+    $t3 := $t1->$coin;
+
+    // $t4 := get_field<BasicCoin::Coin<#0>>.value($t3) at ./sources/BasicCoin.move:34:9+50
+    $t4 := $t3->$value;
+
+    // trace_return[0]($t4) at ./sources/BasicCoin.move:34:9+50
+    assume {:print "$track_return(2,0,0):", $t4} $t4 == $t4;
+
+    // label L1 at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+L1:
+
+    // return $t4 at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+    $ret0 := $t4;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:35:5+1
+L2:
+
+    // abort($t2) at ./sources/BasicCoin.move:35:5+1
+    assume {:print "$at(2,1411,1412)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::deposit<MyOddCoin::MyOddCoin> [baseline] at ./sources/BasicCoin.move:52:5+295
+procedure {:inline 1} $cafe_BasicCoin_deposit'$cafe_MyOddCoin_MyOddCoin'(_$t0: int, _$t1: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin') returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $Mutation ($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin');
+    var $t8: $Mutation ($cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin');
+    var $t9: $Mutation (int);
+    var $t10: int;
+    var $t11: int;
+    var $t0: int;
+    var $t1: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $temp_0'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'': $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$at(2,2221,2222)"} true;
+    assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[check]($t1) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$track_local(2,1,1):", $t1} $t1 == $t1;
+
+    // $t5 := BasicCoin::balance_of<#0>($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:53:23+26
+    assume {:print "$at(2,2321,2347)"} true;
+    call $t5 := $cafe_BasicCoin_balance_of'$cafe_MyOddCoin_MyOddCoin'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,2321,2347)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // trace_local[balance]($t5) at ./sources/BasicCoin.move:53:13+7
+    assume {:print "$track_local(2,1,2):", $t5} $t5 == $t5;
+
+    // $t7 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:54:32+17
+    assume {:print "$at(2,2380,2397)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t7 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2380,2397)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // $t8 := borrow_field<BasicCoin::Balance<#0>>.coin($t7) at ./sources/BasicCoin.move:54:32+47
+    call $t8 := $ChildMutationAlt($t7, 0, $Dereference($t7)->$coin);
+    $t7 := $UpdateMutation($t7, $Update'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''_coin($Dereference($t7), $DereferenceProphecy($t8)));
+
+    // $t9 := borrow_field<BasicCoin::Coin<#0>>.value($t8) at ./sources/BasicCoin.move:54:27+58
+    call $t9 := $ChildMutationAlt($t8, 0, $Dereference($t8)->$value);
+    $t8 := $UpdateMutation($t8, $Update'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin''_value($Dereference($t8), $DereferenceProphecy($t9)));
+
+    // trace_local[balance_ref]($t9) at ./sources/BasicCoin.move:54:13+11
+    $temp_0'u64' := $Dereference($t9);
+    assume {:print "$track_local(2,1,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t10 := unpack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:55:13+14
+    assume {:print "$at(2,2447,2461)"} true;
+    $t10 := $t1->$value;
+
+    // trace_local[value]($t10) at ./sources/BasicCoin.move:55:20+5
+    assume {:print "$track_local(2,1,4):", $t10} $t10 == $t10;
+
+    // $t11 := +($t5, $t10) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:56:32+1
+    assume {:print "$at(2,2502,2503)"} true;
+    call $t11 := $AddU64($t5, $t10);
+    if ($abort_flag) {
+        assume {:print "$at(2,2502,2503)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // write_ref($t9, $t11) at ./sources/BasicCoin.move:56:9+30
+    $t9 := $UpdateMutation($t9, $t11);
+
+    // write_back[Reference($t8).value (u64)]($t9) at ./sources/BasicCoin.move:56:9+30
+    assume $Fulfilled($t9);
+
+    // write_back[Reference($t7).coin (BasicCoin::Coin<#0>)]($t8) at ./sources/BasicCoin.move:56:9+30
+    assume $Fulfilled($t8);
+
+    // write_back[BasicCoin::Balance<#0>@]($t7) at ./sources/BasicCoin.move:56:9+30
+    $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $GlobalLocationAddress($t7),
+        $Dereference($t7));
+
+    // label L1 at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
+L1:
+
+    // return () at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:57:5+1
+L2:
+
+    // abort($t6) at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::deposit<#0> [baseline] at ./sources/BasicCoin.move:52:5+295
+procedure {:inline 1} $cafe_BasicCoin_deposit'#0'(_$t0: int, _$t1: $cafe_BasicCoin_Coin'#0') returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $Mutation ($cafe_BasicCoin_Balance'#0');
+    var $t8: $Mutation ($cafe_BasicCoin_Coin'#0');
+    var $t9: $Mutation (int);
+    var $t10: int;
+    var $t11: int;
+    var $t0: int;
+    var $t1: $cafe_BasicCoin_Coin'#0';
+    var $temp_0'$cafe_BasicCoin_Coin'#0'': $cafe_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$at(2,2221,2222)"} true;
+    assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[check]($t1) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$track_local(2,1,1):", $t1} $t1 == $t1;
+
+    // $t5 := BasicCoin::balance_of<#0>($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:53:23+26
+    assume {:print "$at(2,2321,2347)"} true;
+    call $t5 := $cafe_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,2321,2347)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // trace_local[balance]($t5) at ./sources/BasicCoin.move:53:13+7
+    assume {:print "$track_local(2,1,2):", $t5} $t5 == $t5;
+
+    // $t7 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:54:32+17
+    assume {:print "$at(2,2380,2397)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t7 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2380,2397)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // $t8 := borrow_field<BasicCoin::Balance<#0>>.coin($t7) at ./sources/BasicCoin.move:54:32+47
+    call $t8 := $ChildMutationAlt($t7, 0, $Dereference($t7)->$coin);
+    $t7 := $UpdateMutation($t7, $Update'$cafe_BasicCoin_Balance'#0''_coin($Dereference($t7), $DereferenceProphecy($t8)));
+
+    // $t9 := borrow_field<BasicCoin::Coin<#0>>.value($t8) at ./sources/BasicCoin.move:54:27+58
+    call $t9 := $ChildMutationAlt($t8, 0, $Dereference($t8)->$value);
+    $t8 := $UpdateMutation($t8, $Update'$cafe_BasicCoin_Coin'#0''_value($Dereference($t8), $DereferenceProphecy($t9)));
+
+    // trace_local[balance_ref]($t9) at ./sources/BasicCoin.move:54:13+11
+    $temp_0'u64' := $Dereference($t9);
+    assume {:print "$track_local(2,1,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t10 := unpack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:55:13+14
+    assume {:print "$at(2,2447,2461)"} true;
+    $t10 := $t1->$value;
+
+    // trace_local[value]($t10) at ./sources/BasicCoin.move:55:20+5
+    assume {:print "$track_local(2,1,4):", $t10} $t10 == $t10;
+
+    // $t11 := +($t5, $t10) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:56:32+1
+    assume {:print "$at(2,2502,2503)"} true;
+    call $t11 := $AddU64($t5, $t10);
+    if ($abort_flag) {
+        assume {:print "$at(2,2502,2503)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // write_ref($t9, $t11) at ./sources/BasicCoin.move:56:9+30
+    $t9 := $UpdateMutation($t9, $t11);
+
+    // write_back[Reference($t8).value (u64)]($t9) at ./sources/BasicCoin.move:56:9+30
+    assume $Fulfilled($t9);
+
+    // write_back[Reference($t7).coin (BasicCoin::Coin<#0>)]($t8) at ./sources/BasicCoin.move:56:9+30
+    assume $Fulfilled($t8);
+
+    // write_back[BasicCoin::Balance<#0>@]($t7) at ./sources/BasicCoin.move:56:9+30
+    $cafe_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t7),
+        $Dereference($t7));
+
+    // label L1 at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
+L1:
+
+    // return () at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:57:5+1
+L2:
+
+    // abort($t6) at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::deposit [verification] at ./sources/BasicCoin.move:52:5+295
+procedure {:timeLimit 80} $cafe_BasicCoin_deposit$verify(_$t0: int, _$t1: $cafe_BasicCoin_Coin'#0') returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $Mutation ($cafe_BasicCoin_Balance'#0');
+    var $t8: $Mutation ($cafe_BasicCoin_Coin'#0');
+    var $t9: $Mutation (int);
+    var $t10: int;
+    var $t11: int;
+    var $t0: int;
+    var $t1: $cafe_BasicCoin_Coin'#0';
+    var $temp_0'$cafe_BasicCoin_Coin'#0'': $cafe_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
     $t0 := _$t0;
     $t1 := _$t1;
 
@@ -4132,230 +4117,1394 @@ procedure {:timeLimit 80} $cafe_BasicCoin_diff_resource_generic'#1_#1'$verify(_$
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$at(2,247,248)"} true;
-    assume $IsValid'bool'($t0);
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$at(2,2221,2222)"} true;
+    assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at ./sources/FirstModule.move:20:5+1
-    assume $IsValid'address'($t1);
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:52:5+1
+    assume $IsValid'$cafe_BasicCoin_Coin'#0''($t1);
 
-    // assume forall $rsc: BasicCoin::V<#0>: ResourceDomain<BasicCoin::V<#0>>(): WellFormed($rsc) at ./sources/FirstModule.move:20:5+1
-    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_V'#1'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $a_0);
-    ($IsValid'$cafe_BasicCoin_V'#1''($rsc))));
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:52:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'#0''($rsc))));
 
-    // assume forall $rsc: BasicCoin::V<#1>: ResourceDomain<BasicCoin::V<#1>>(): WellFormed($rsc) at ./sources/FirstModule.move:20:5+1
-    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_V'#1'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $a_0);
-    ($IsValid'$cafe_BasicCoin_V'#1''($rsc))));
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
 
-    // uninit($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-    assume $t4->l == $Uninitialized();
+    // trace_local[check]($t1) at ./sources/BasicCoin.move:52:5+1
+    assume {:print "$track_local(2,1,1):", $t1} $t1 == $t1;
 
-    // uninit($t5) at <internal>:1:1+10
-    assume $t5->l == $Uninitialized();
+    // $t5 := BasicCoin::balance_of<#0>($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:53:23+26
+    assume {:print "$at(2,2321,2347)"} true;
+    call $t5 := $cafe_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,2321,2347)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
 
-    // @0 := save_mem(BasicCoin::V<#0>) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$at(2,247,248)"} true;
-    $cafe_BasicCoin_V'#1'_$memory#0 := $cafe_BasicCoin_V'#1'_$memory;
+    // trace_local[balance]($t5) at ./sources/BasicCoin.move:53:13+7
+    assume {:print "$track_local(2,1,2):", $t5} $t5 == $t5;
 
-    // @1 := save_mem(BasicCoin::V<#1>) at ./sources/FirstModule.move:20:5+1
-    $cafe_BasicCoin_V'#1'_$memory#1 := $cafe_BasicCoin_V'#1'_$memory;
+    // $t7 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:54:32+17
+    assume {:print "$at(2,2380,2397)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t7 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2380,2397)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
 
-    // trace_local[cond]($t0) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
+    // $t8 := borrow_field<BasicCoin::Balance<#0>>.coin($t7) at ./sources/BasicCoin.move:54:32+47
+    call $t8 := $ChildMutationAlt($t7, 0, $Dereference($t7)->$coin);
+    $t7 := $UpdateMutation($t7, $Update'$cafe_BasicCoin_Balance'#0''_coin($Dereference($t7), $DereferenceProphecy($t8)));
 
-    // trace_local[a]($t1) at ./sources/FirstModule.move:20:5+1
-    assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
+    // $t9 := borrow_field<BasicCoin::Coin<#0>>.value($t8) at ./sources/BasicCoin.move:54:27+58
+    call $t9 := $ChildMutationAlt($t8, 0, $Dereference($t8)->$value);
+    $t8 := $UpdateMutation($t8, $Update'$cafe_BasicCoin_Coin'#0''_value($Dereference($t8), $DereferenceProphecy($t9)));
 
-    // if ($t0) goto L9 else goto L10 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-    if ($t0) { goto L9; } else { goto L10; }
+    // trace_local[balance_ref]($t9) at ./sources/BasicCoin.move:54:13+11
+    $temp_0'u64' := $Dereference($t9);
+    assume {:print "$track_local(2,1,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at ./sources/FirstModule.move:22:46+1
-    assume {:print "$at(2,410,411)"} true;
+    // $t10 := unpack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:55:13+14
+    assume {:print "$at(2,2447,2461)"} true;
+    $t10 := $t1->$value;
+
+    // trace_local[value]($t10) at ./sources/BasicCoin.move:55:20+5
+    assume {:print "$track_local(2,1,4):", $t10} $t10 == $t10;
+
+    // $t11 := +($t5, $t10) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:56:32+1
+    assume {:print "$at(2,2502,2503)"} true;
+    call $t11 := $AddU64($t5, $t10);
+    if ($abort_flag) {
+        assume {:print "$at(2,2502,2503)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,1):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // write_ref($t9, $t11) at ./sources/BasicCoin.move:56:9+30
+    $t9 := $UpdateMutation($t9, $t11);
+
+    // write_back[Reference($t8).value (u64)]($t9) at ./sources/BasicCoin.move:56:9+30
+    assume $Fulfilled($t9);
+
+    // write_back[Reference($t7).coin (BasicCoin::Coin<#0>)]($t8) at ./sources/BasicCoin.move:56:9+30
+    assume $Fulfilled($t8);
+
+    // write_back[BasicCoin::Balance<#0>@]($t7) at ./sources/BasicCoin.move:56:9+30
+    $cafe_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t7),
+        $Dereference($t7));
+
+    // label L1 at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
 L1:
 
-    // $t4 := borrow_global<BasicCoin::V<#0>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:22:22+17
-    assume {:print "$at(2,386,403)"} true;
-    if (!$ResourceExists($cafe_BasicCoin_V'#1'_$memory, $t1)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,386,403)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
-    }
-
-    // $t2 := borrow_field<BasicCoin::V<#0>>.x($t4) at ./sources/FirstModule.move:23:13+9
-    assume {:print "$at(2,426,435)"} true;
-    call $t2 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$x);
-    $t4 := $UpdateMutation($t4, $Update'$cafe_BasicCoin_V'#1''_x($Dereference($t4), $DereferenceProphecy($t2)));
-
-    // goto L2 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-    goto L2;
-
-    // label L0 at ./sources/FirstModule.move:25:46+1
-    assume {:print "$at(2,498,499)"} true;
-L0:
-
-    // $t5 := borrow_global<BasicCoin::V<#1>>($t1) on_abort goto L8 with $t6 at ./sources/FirstModule.move:25:22+17
-    assume {:print "$at(2,474,491)"} true;
-    if (!$ResourceExists($cafe_BasicCoin_V'#1'_$memory, $t1)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t5 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,474,491)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L8;
-    }
-
-    // $t2 := borrow_field<BasicCoin::V<#1>>.x($t5) at ./sources/FirstModule.move:26:13+9
-    assume {:print "$at(2,514,523)"} true;
-    call $t2 := $ChildMutationAlt($t5, 0, $Dereference($t5)->$x);
-    $t5 := $UpdateMutation($t5, $Update'$cafe_BasicCoin_V'#1''_x($Dereference($t5), $DereferenceProphecy($t2)));
-
-    // label L2 at ./sources/FirstModule.move:21:17+180
-    assume {:print "$at(2,353,533)"} true;
-L2:
-
-    // trace_local[x]($t2) at ./sources/FirstModule.move:21:13+1
-    assume {:print "$at(2,349,350)"} true;
-    $temp_0'u64' := $Dereference($t2);
-    assume {:print "$track_local(0,0,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t7 := 0 at ./sources/FirstModule.move:28:14+1
-    assume {:print "$at(2,548,549)"} true;
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // write_ref($t2, $t7) at ./sources/FirstModule.move:28:9+6
-    $t2 := $UpdateMutation($t2, $t7);
-
-    // $t8 := is_parent[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    $t8 := $IsParentMutation($t4, 0, $t2);
-
-    // if ($t8) goto L3 else goto L11 at ./sources/FirstModule.move:28:9+6
-    if ($t8) { goto L3; } else { goto L11; }
-
-    // label L3 at ./sources/FirstModule.move:28:9+6
-L3:
-
-    // write_back[Reference($t4).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    assume $Fulfilled($t2);
-
-    // write_back[BasicCoin::V<#0>@]($t4) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t4),
-        $Dereference($t4));
-
-    // label L4 at ./sources/FirstModule.move:28:9+6
-L4:
-
-    // $t9 := is_parent[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    $t9 := $IsParentMutation($t5, 0, $t2);
-
-    // if ($t9) goto L5 else goto L12 at ./sources/FirstModule.move:28:9+6
-    if ($t9) { goto L5; } else { goto L12; }
-
-    // label L5 at ./sources/FirstModule.move:28:9+6
-L5:
-
-    // write_back[Reference($t5).x (u64)]($t2) at ./sources/FirstModule.move:28:9+6
-    assume {:print "$at(2,543,549)"} true;
-    assume $Fulfilled($t2);
-
-    // write_back[BasicCoin::V<#1>@]($t5) at ./sources/FirstModule.move:28:9+6
-    $cafe_BasicCoin_V'#1'_$memory := $ResourceUpdate($cafe_BasicCoin_V'#1'_$memory, $GlobalLocationAddress($t5),
-        $Dereference($t5));
-
-    // label L6 at ./sources/FirstModule.move:28:9+6
-L6:
-
-    // label L7 at ./sources/FirstModule.move:29:5+1
-    assume {:print "$at(2,555,556)"} true;
-L7:
-
-    // assert Not(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1)))) at ./sources/FirstModule.move:32:9+35
-    assume {:print "$at(2,599,634)"} true;
-    assert {:msg "assert_failed(2,599,634): function does not abort under this condition"}
-      !($t0 && !$ResourceExists($cafe_BasicCoin_V'#1'_$memory#0, $t1));
-
-    // assert Not(And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:33:9+36
-    assume {:print "$at(2,643,679)"} true;
-    assert {:msg "assert_failed(2,643,679): function does not abort under this condition"}
-      !(!$t0 && !$ResourceExists($cafe_BasicCoin_V'#1'_$memory#1, $t1));
-
-    // assert if $t0 {
-    //   Eq<u64>(select BasicCoin::V.x<BasicCoin::V<#0>>(global<BasicCoin::V<#0>>($t1)), 0)
-    // } else {
-    //   Eq<u64>(select BasicCoin::V.x<BasicCoin::V<#1>>(global<BasicCoin::V<#1>>($t1)), 0)
-    // } at ./sources/FirstModule.move:34:9+69
-    assume {:print "$at(2,688,757)"} true;
-    assert {:msg "assert_failed(2,688,757): post-condition does not hold"}
-      (if ($t0) then ($IsEqual'u64'($ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1)->$x, 0)) else ($IsEqual'u64'($ResourceValue($cafe_BasicCoin_V'#1'_$memory, $t1)->$x, 0)));
-
-    // return () at ./sources/FirstModule.move:34:9+69
+    // return () at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
     return;
 
-    // label L8 at ./sources/FirstModule.move:29:5+1
-    assume {:print "$at(2,555,556)"} true;
-L8:
+    // label L2 at ./sources/BasicCoin.move:57:5+1
+L2:
 
-    // assert Or(And($t0, Not(exists[@0]<BasicCoin::V<#0>>($t1))), And(Not($t0), Not(exists[@1]<BasicCoin::V<#1>>($t1)))) at ./sources/FirstModule.move:31:5+201
-    assume {:print "$at(2,562,763)"} true;
-    assert {:msg "assert_failed(2,562,763): abort not covered by any of the `aborts_if` clauses"}
-      (($t0 && !$ResourceExists($cafe_BasicCoin_V'#1'_$memory#0, $t1)) || (!$t0 && !$ResourceExists($cafe_BasicCoin_V'#1'_$memory#1, $t1)));
-
-    // abort($t6) at ./sources/FirstModule.move:31:5+201
+    // abort($t6) at ./sources/BasicCoin.move:57:5+1
+    assume {:print "$at(2,2515,2516)"} true;
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
-    // label L9 at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-L9:
+}
 
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
+// fun BasicCoin::mint<MyOddCoin::MyOddCoin> [baseline] at ./sources/BasicCoin.move:28:5+244
+procedure {:inline 1} $cafe_BasicCoin_mint'$cafe_MyOddCoin_MyOddCoin'(_$t0: int, _$t1: int, _$t2: $cafe_MyOddCoin_MyOddCoin) returns ()
+{
+    // declare local variables
+    var $t3: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $t4: int;
+    var $t0: int;
+    var $t1: int;
+    var $t2: $cafe_MyOddCoin_MyOddCoin;
+    var $temp_0'$cafe_MyOddCoin_MyOddCoin': $cafe_MyOddCoin_MyOddCoin;
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
 
-    // goto L1 at <internal>:1:1+10
-    goto L1;
+    // bytecode translation starts here
+    // trace_local[mint_addr]($t0) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$at(2,1026,1027)"} true;
+    assume {:print "$track_local(2,2,0):", $t0} $t0 == $t0;
 
-    // label L10 at <internal>:1:1+10
-L10:
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$track_local(2,2,1):", $t1} $t1 == $t1;
 
-    // drop($t5) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
+    // trace_local[_witness]($t2) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$track_local(2,2,2):", $t2} $t2 == $t2;
 
-    // goto L0 at <internal>:1:1+10
-    goto L0;
+    // $t3 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:30:28+32
+    assume {:print "$at(2,1230,1262)"} true;
+    $t3 := $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'($t1);
 
-    // label L11 at <internal>:1:1+10
-L11:
+    // BasicCoin::deposit<#0>($t0, $t3) on_abort goto L2 with $t4 at ./sources/BasicCoin.move:30:9+52
+    call $cafe_BasicCoin_deposit'$cafe_MyOddCoin_MyOddCoin'($t0, $t3);
+    if ($abort_flag) {
+        assume {:print "$at(2,1211,1263)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(2,2):", $t4} $t4 == $t4;
+        goto L2;
+    }
 
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
+    // label L1 at ./sources/BasicCoin.move:31:5+1
+    assume {:print "$at(2,1269,1270)"} true;
+L1:
 
-    // goto L4 at <internal>:1:1+10
+    // return () at ./sources/BasicCoin.move:31:5+1
+    assume {:print "$at(2,1269,1270)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:31:5+1
+L2:
+
+    // abort($t4) at ./sources/BasicCoin.move:31:5+1
+    assume {:print "$at(2,1269,1270)"} true;
+    $abort_code := $t4;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::mint [verification] at ./sources/BasicCoin.move:28:5+244
+procedure {:timeLimit 80} $cafe_BasicCoin_mint$verify(_$t0: int, _$t1: int, _$t2: #0) returns ()
+{
+    // declare local variables
+    var $t3: $cafe_BasicCoin_Coin'#0';
+    var $t4: int;
+    var $t0: int;
+    var $t1: int;
+    var $t2: #0;
+    var $temp_0'#0': #0;
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$at(2,1026,1027)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:28:5+1
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at ./sources/BasicCoin.move:28:5+1
+    assume $IsValid'#0'($t2);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:28:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'#0''($rsc))));
+
+    // trace_local[mint_addr]($t0) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$track_local(2,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$track_local(2,2,1):", $t1} $t1 == $t1;
+
+    // trace_local[_witness]($t2) at ./sources/BasicCoin.move:28:5+1
+    assume {:print "$track_local(2,2,2):", $t2} $t2 == $t2;
+
+    // $t3 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:30:28+32
+    assume {:print "$at(2,1230,1262)"} true;
+    $t3 := $cafe_BasicCoin_Coin'#0'($t1);
+
+    // BasicCoin::deposit<#0>($t0, $t3) on_abort goto L2 with $t4 at ./sources/BasicCoin.move:30:9+52
+    call $cafe_BasicCoin_deposit'#0'($t0, $t3);
+    if ($abort_flag) {
+        assume {:print "$at(2,1211,1263)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(2,2):", $t4} $t4 == $t4;
+        goto L2;
+    }
+
+    // label L1 at ./sources/BasicCoin.move:31:5+1
+    assume {:print "$at(2,1269,1270)"} true;
+L1:
+
+    // return () at ./sources/BasicCoin.move:31:5+1
+    assume {:print "$at(2,1269,1270)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:31:5+1
+L2:
+
+    // abort($t4) at ./sources/BasicCoin.move:31:5+1
+    assume {:print "$at(2,1269,1270)"} true;
+    $abort_code := $t4;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::publish_balance<MyOddCoin::MyOddCoin> [baseline] at ./sources/BasicCoin.move:20:5+279
+procedure {:inline 1} $cafe_BasicCoin_publish_balance'$cafe_MyOddCoin_MyOddCoin'(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $t8: $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin';
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[account]($t0) at ./sources/BasicCoin.move:20:5+1
+    assume {:print "$at(2,570,571)"} true;
+    assume {:print "$track_local(2,3,0):", $t0} $t0 == $t0;
+
+    // $t1 := signer::address_of($t0) on_abort goto L4 with $t2 at ./sources/BasicCoin.move:22:44+27
+    assume {:print "$at(2,724,751)"} true;
+    call $t1 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,724,751)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t2} $t2 == $t2;
+        goto L4;
+    }
+
+    // $t3 := exists<BasicCoin::Balance<#0>>($t1) at ./sources/BasicCoin.move:22:18+6
+    $t3 := $ResourceExists($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t1);
+
+    // $t4 := !($t3) at ./sources/BasicCoin.move:22:17+1
+    call $t4 := $Not($t3);
+
+    // if ($t4) goto L1 else goto L0 at ./sources/BasicCoin.move:22:9+86
+    if ($t4) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:22:9+86
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:22:9+86
+    assume {:print "$at(2,689,775)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:22:9+86
+L0:
+
+    // $t5 := 2 at ./sources/BasicCoin.move:22:74+20
+    assume {:print "$at(2,754,774)"} true;
+    $t5 := 2;
+    assume $IsValid'u64'($t5);
+
+    // trace_abort($t5) at ./sources/BasicCoin.move:22:9+86
+    assume {:print "$at(2,689,775)"} true;
+    assume {:print "$track_abort(2,3):", $t5} $t5 == $t5;
+
+    // $t2 := move($t5) at ./sources/BasicCoin.move:22:9+86
+    $t2 := $t5;
+
+    // goto L4 at ./sources/BasicCoin.move:22:9+86
     goto L4;
 
-    // label L12 at <internal>:1:1+10
-L12:
+    // label L2 at ./sources/BasicCoin.move:23:17+7
+    assume {:print "$at(2,793,800)"} true;
+L2:
 
-    // drop($t2) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
+    // $t6 := 0 at ./sources/BasicCoin.move:21:50+1
+    assume {:print "$at(2,676,677)"} true;
+    $t6 := 0;
+    assume $IsValid'u64'($t6);
 
-    // drop($t5) at <internal>:1:1+10
+    // $t7 := pack BasicCoin::Coin<#0>($t6) at ./sources/BasicCoin.move:21:26+27
+    $t7 := $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'($t6);
 
-    // goto L6 at <internal>:1:1+10
-    goto L6;
+    // $t8 := pack BasicCoin::Balance<#0>($t7) at ./sources/BasicCoin.move:23:26+39
+    assume {:print "$at(2,802,841)"} true;
+    $t8 := $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'($t7);
+
+    // move_to<BasicCoin::Balance<#0>>($t8, $t0) on_abort goto L4 with $t2 at ./sources/BasicCoin.move:23:9+7
+    if ($ResourceExists($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0->$addr)) {
+        call $ExecFailureAbort();
+    } else {
+        $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0->$addr, $t8);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,785,792)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t2} $t2 == $t2;
+        goto L4;
+    }
+
+    // label L3 at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,848,849)"} true;
+L3:
+
+    // return () at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,848,849)"} true;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:24:5+1
+L4:
+
+    // abort($t2) at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,848,849)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::publish_balance [verification] at ./sources/BasicCoin.move:20:5+279
+procedure {:timeLimit 80} $cafe_BasicCoin_publish_balance$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $cafe_BasicCoin_Coin'#0';
+    var $t8: $cafe_BasicCoin_Balance'#0';
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:20:5+1
+    assume {:print "$at(2,570,571)"} true;
+    assume $IsValid'signer'($t0) && $1_signer_is_txn_signer($t0) && $1_signer_is_txn_signer_addr($t0->$addr);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:20:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'#0''($rsc))));
+
+    // trace_local[account]($t0) at ./sources/BasicCoin.move:20:5+1
+    assume {:print "$track_local(2,3,0):", $t0} $t0 == $t0;
+
+    // $t1 := signer::address_of($t0) on_abort goto L4 with $t2 at ./sources/BasicCoin.move:22:44+27
+    assume {:print "$at(2,724,751)"} true;
+    call $t1 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,724,751)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t2} $t2 == $t2;
+        goto L4;
+    }
+
+    // $t3 := exists<BasicCoin::Balance<#0>>($t1) at ./sources/BasicCoin.move:22:18+6
+    $t3 := $ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t1);
+
+    // $t4 := !($t3) at ./sources/BasicCoin.move:22:17+1
+    call $t4 := $Not($t3);
+
+    // if ($t4) goto L1 else goto L0 at ./sources/BasicCoin.move:22:9+86
+    if ($t4) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:22:9+86
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:22:9+86
+    assume {:print "$at(2,689,775)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:22:9+86
+L0:
+
+    // $t5 := 2 at ./sources/BasicCoin.move:22:74+20
+    assume {:print "$at(2,754,774)"} true;
+    $t5 := 2;
+    assume $IsValid'u64'($t5);
+
+    // trace_abort($t5) at ./sources/BasicCoin.move:22:9+86
+    assume {:print "$at(2,689,775)"} true;
+    assume {:print "$track_abort(2,3):", $t5} $t5 == $t5;
+
+    // $t2 := move($t5) at ./sources/BasicCoin.move:22:9+86
+    $t2 := $t5;
+
+    // goto L4 at ./sources/BasicCoin.move:22:9+86
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:23:17+7
+    assume {:print "$at(2,793,800)"} true;
+L2:
+
+    // $t6 := 0 at ./sources/BasicCoin.move:21:50+1
+    assume {:print "$at(2,676,677)"} true;
+    $t6 := 0;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := pack BasicCoin::Coin<#0>($t6) at ./sources/BasicCoin.move:21:26+27
+    $t7 := $cafe_BasicCoin_Coin'#0'($t6);
+
+    // $t8 := pack BasicCoin::Balance<#0>($t7) at ./sources/BasicCoin.move:23:26+39
+    assume {:print "$at(2,802,841)"} true;
+    $t8 := $cafe_BasicCoin_Balance'#0'($t7);
+
+    // move_to<BasicCoin::Balance<#0>>($t8, $t0) on_abort goto L4 with $t2 at ./sources/BasicCoin.move:23:9+7
+    if ($ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0->$addr)) {
+        call $ExecFailureAbort();
+    } else {
+        $cafe_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'#0'_$memory, $t0->$addr, $t8);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,785,792)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t2} $t2 == $t2;
+        goto L4;
+    }
+
+    // label L3 at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,848,849)"} true;
+L3:
+
+    // return () at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,848,849)"} true;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:24:5+1
+L4:
+
+    // abort($t2) at ./sources/BasicCoin.move:24:5+1
+    assume {:print "$at(2,848,849)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::transfer<MyOddCoin::MyOddCoin> [baseline] at ./sources/BasicCoin.move:39:5+233
+procedure {:inline 1} $cafe_BasicCoin_transfer'$cafe_MyOddCoin_MyOddCoin'(_$t0: $signer, _$t1: int, _$t2: int, _$t3: $cafe_MyOddCoin_MyOddCoin) returns ()
+{
+    // declare local variables
+    var $t4: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $t5: int;
+    var $t6: int;
+    var $t7: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: int;
+    var $t3: $cafe_MyOddCoin_MyOddCoin;
+    var $temp_0'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'': $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $temp_0'$cafe_MyOddCoin_MyOddCoin': $cafe_MyOddCoin_MyOddCoin;
+    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    $t3 := _$t3;
+
+    // bytecode translation starts here
+    // trace_local[from]($t0) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$at(2,1607,1608)"} true;
+    assume {:print "$track_local(2,4,0):", $t0} $t0 == $t0;
+
+    // trace_local[to]($t1) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,1):", $t1} $t1 == $t1;
+
+    // trace_local[amount]($t2) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,2):", $t2} $t2 == $t2;
+
+    // trace_local[_witness]($t3) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,3):", $t3} $t3 == $t3;
+
+    // $t5 := signer::address_of($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:40:40+24
+    assume {:print "$at(2,1762,1786)"} true;
+    call $t5 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,1762,1786)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // $t7 := BasicCoin::withdraw<#0>($t5, $t2) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:40:21+52
+    call $t7 := $cafe_BasicCoin_withdraw'$cafe_MyOddCoin_MyOddCoin'($t5, $t2);
+    if ($abort_flag) {
+        assume {:print "$at(2,1743,1795)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // trace_local[check]($t7) at ./sources/BasicCoin.move:40:13+5
+    assume {:print "$track_local(2,4,4):", $t7} $t7 == $t7;
+
+    // BasicCoin::deposit<#0>($t1, $t7) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:41:9+28
+    assume {:print "$at(2,1805,1833)"} true;
+    call $cafe_BasicCoin_deposit'$cafe_MyOddCoin_MyOddCoin'($t1, $t7);
+    if ($abort_flag) {
+        assume {:print "$at(2,1805,1833)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // label L1 at ./sources/BasicCoin.move:42:5+1
+    assume {:print "$at(2,1839,1840)"} true;
+L1:
+
+    // return () at ./sources/BasicCoin.move:42:5+1
+    assume {:print "$at(2,1839,1840)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:42:5+1
+L2:
+
+    // abort($t6) at ./sources/BasicCoin.move:42:5+1
+    assume {:print "$at(2,1839,1840)"} true;
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::transfer [verification] at ./sources/BasicCoin.move:39:5+233
+procedure {:timeLimit 80} $cafe_BasicCoin_transfer$verify(_$t0: $signer, _$t1: int, _$t2: int, _$t3: #0) returns ()
+{
+    // declare local variables
+    var $t4: $cafe_BasicCoin_Coin'#0';
+    var $t5: int;
+    var $t6: int;
+    var $t7: $cafe_BasicCoin_Coin'#0';
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: int;
+    var $t3: #0;
+    var $temp_0'#0': #0;
+    var $temp_0'$cafe_BasicCoin_Coin'#0'': $cafe_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    $t3 := _$t3;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$at(2,1607,1608)"} true;
+    assume $IsValid'signer'($t0) && $1_signer_is_txn_signer($t0) && $1_signer_is_txn_signer_addr($t0->$addr);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:39:5+1
+    assume $IsValid'address'($t1);
+
+    // assume WellFormed($t2) at ./sources/BasicCoin.move:39:5+1
+    assume $IsValid'u64'($t2);
+
+    // assume WellFormed($t3) at ./sources/BasicCoin.move:39:5+1
+    assume $IsValid'#0'($t3);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:39:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'#0''($rsc))));
+
+    // trace_local[from]($t0) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,0):", $t0} $t0 == $t0;
+
+    // trace_local[to]($t1) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,1):", $t1} $t1 == $t1;
+
+    // trace_local[amount]($t2) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,2):", $t2} $t2 == $t2;
+
+    // trace_local[_witness]($t3) at ./sources/BasicCoin.move:39:5+1
+    assume {:print "$track_local(2,4,3):", $t3} $t3 == $t3;
+
+    // $t5 := signer::address_of($t0) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:40:40+24
+    assume {:print "$at(2,1762,1786)"} true;
+    call $t5 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,1762,1786)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // $t7 := BasicCoin::withdraw<#0>($t5, $t2) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:40:21+52
+    call $t7 := $cafe_BasicCoin_withdraw'#0'($t5, $t2);
+    if ($abort_flag) {
+        assume {:print "$at(2,1743,1795)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // trace_local[check]($t7) at ./sources/BasicCoin.move:40:13+5
+    assume {:print "$track_local(2,4,4):", $t7} $t7 == $t7;
+
+    // BasicCoin::deposit<#0>($t1, $t7) on_abort goto L2 with $t6 at ./sources/BasicCoin.move:41:9+28
+    assume {:print "$at(2,1805,1833)"} true;
+    call $cafe_BasicCoin_deposit'#0'($t1, $t7);
+    if ($abort_flag) {
+        assume {:print "$at(2,1805,1833)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(2,4):", $t6} $t6 == $t6;
+        goto L2;
+    }
+
+    // label L1 at ./sources/BasicCoin.move:42:5+1
+    assume {:print "$at(2,1839,1840)"} true;
+L1:
+
+    // return () at ./sources/BasicCoin.move:42:5+1
+    assume {:print "$at(2,1839,1840)"} true;
+    return;
+
+    // label L2 at ./sources/BasicCoin.move:42:5+1
+L2:
+
+    // abort($t6) at ./sources/BasicCoin.move:42:5+1
+    assume {:print "$at(2,1839,1840)"} true;
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::withdraw<MyOddCoin::MyOddCoin> [baseline] at ./sources/BasicCoin.move:44:5+369
+procedure {:inline 1} $cafe_BasicCoin_withdraw'$cafe_MyOddCoin_MyOddCoin'(_$t0: int, _$t1: int) returns ($ret0: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin')
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: $Mutation ($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin');
+    var $t9: $Mutation ($cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin');
+    var $t10: $Mutation (int);
+    var $t11: int;
+    var $t12: $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $t0: int;
+    var $t1: int;
+    var $temp_0'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'': $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$at(2,1846,1847)"} true;
+    assume {:print "$track_local(2,5,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,5,1):", $t1} $t1 == $t1;
+
+    // $t4 := BasicCoin::balance_of<#0>($t0) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:45:23+26
+    assume {:print "$at(2,1955,1981)"} true;
+    call $t4 := $cafe_BasicCoin_balance_of'$cafe_MyOddCoin_MyOddCoin'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,1955,1981)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // trace_local[balance]($t4) at ./sources/BasicCoin.move:45:13+7
+    assume {:print "$track_local(2,5,2):", $t4} $t4 == $t4;
+
+    // $t6 := >=($t4, $t1) at ./sources/BasicCoin.move:46:25+2
+    assume {:print "$at(2,2007,2009)"} true;
+    call $t6 := $Ge($t4, $t1);
+
+    // if ($t6) goto L1 else goto L0 at ./sources/BasicCoin.move:46:9+49
+    if ($t6) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:46:9+49
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:46:9+49
+    assume {:print "$at(2,1991,2040)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:46:36+21
+L0:
+
+    // $t7 := 1 at ./sources/BasicCoin.move:46:36+21
+    assume {:print "$at(2,2018,2039)"} true;
+    $t7 := 1;
+    assume $IsValid'u64'($t7);
+
+    // trace_abort($t7) at ./sources/BasicCoin.move:46:9+49
+    assume {:print "$at(2,1991,2040)"} true;
+    assume {:print "$track_abort(2,5):", $t7} $t7 == $t7;
+
+    // $t5 := move($t7) at ./sources/BasicCoin.move:46:9+49
+    $t5 := $t7;
+
+    // goto L4 at ./sources/BasicCoin.move:46:9+49
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:47:69+4
+    assume {:print "$at(2,2110,2114)"} true;
+L2:
+
+    // $t8 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:47:32+17
+    assume {:print "$at(2,2073,2090)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t8 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2073,2090)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // $t9 := borrow_field<BasicCoin::Balance<#0>>.coin($t8) at ./sources/BasicCoin.move:47:32+47
+    call $t9 := $ChildMutationAlt($t8, 0, $Dereference($t8)->$coin);
+    $t8 := $UpdateMutation($t8, $Update'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''_coin($Dereference($t8), $DereferenceProphecy($t9)));
+
+    // $t10 := borrow_field<BasicCoin::Coin<#0>>.value($t9) at ./sources/BasicCoin.move:47:27+58
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$value);
+    $t9 := $UpdateMutation($t9, $Update'$cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin''_value($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // trace_local[balance_ref]($t10) at ./sources/BasicCoin.move:47:13+11
+    $temp_0'u64' := $Dereference($t10);
+    assume {:print "$track_local(2,5,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t11 := -($t4, $t1) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:48:32+1
+    assume {:print "$at(2,2159,2160)"} true;
+    call $t11 := $Sub($t4, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,2159,2160)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // write_ref($t10, $t11) at ./sources/BasicCoin.move:48:9+31
+    $t10 := $UpdateMutation($t10, $t11);
+
+    // write_back[Reference($t9).value (u64)]($t10) at ./sources/BasicCoin.move:48:9+31
+    assume $Fulfilled($t10);
+
+    // write_back[Reference($t8).coin (BasicCoin::Coin<#0>)]($t9) at ./sources/BasicCoin.move:48:9+31
+    assume $Fulfilled($t9);
+
+    // write_back[BasicCoin::Balance<#0>@]($t8) at ./sources/BasicCoin.move:48:9+31
+    $cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $GlobalLocationAddress($t8),
+        $Dereference($t8));
+
+    // $t12 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:49:9+32
+    assume {:print "$at(2,2177,2209)"} true;
+    $t12 := $cafe_BasicCoin_Coin'$cafe_MyOddCoin_MyOddCoin'($t1);
+
+    // trace_return[0]($t12) at ./sources/BasicCoin.move:49:9+32
+    assume {:print "$track_return(2,5,0):", $t12} $t12 == $t12;
+
+    // label L3 at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+L3:
+
+    // return $t12 at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+    $ret0 := $t12;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:50:5+1
+L4:
+
+    // abort($t5) at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::withdraw<#0> [baseline] at ./sources/BasicCoin.move:44:5+369
+procedure {:inline 1} $cafe_BasicCoin_withdraw'#0'(_$t0: int, _$t1: int) returns ($ret0: $cafe_BasicCoin_Coin'#0')
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: $Mutation ($cafe_BasicCoin_Balance'#0');
+    var $t9: $Mutation ($cafe_BasicCoin_Coin'#0');
+    var $t10: $Mutation (int);
+    var $t11: int;
+    var $t12: $cafe_BasicCoin_Coin'#0';
+    var $t0: int;
+    var $t1: int;
+    var $temp_0'$cafe_BasicCoin_Coin'#0'': $cafe_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$at(2,1846,1847)"} true;
+    assume {:print "$track_local(2,5,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,5,1):", $t1} $t1 == $t1;
+
+    // $t4 := BasicCoin::balance_of<#0>($t0) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:45:23+26
+    assume {:print "$at(2,1955,1981)"} true;
+    call $t4 := $cafe_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,1955,1981)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // trace_local[balance]($t4) at ./sources/BasicCoin.move:45:13+7
+    assume {:print "$track_local(2,5,2):", $t4} $t4 == $t4;
+
+    // $t6 := >=($t4, $t1) at ./sources/BasicCoin.move:46:25+2
+    assume {:print "$at(2,2007,2009)"} true;
+    call $t6 := $Ge($t4, $t1);
+
+    // if ($t6) goto L1 else goto L0 at ./sources/BasicCoin.move:46:9+49
+    if ($t6) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:46:9+49
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:46:9+49
+    assume {:print "$at(2,1991,2040)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:46:36+21
+L0:
+
+    // $t7 := 1 at ./sources/BasicCoin.move:46:36+21
+    assume {:print "$at(2,2018,2039)"} true;
+    $t7 := 1;
+    assume $IsValid'u64'($t7);
+
+    // trace_abort($t7) at ./sources/BasicCoin.move:46:9+49
+    assume {:print "$at(2,1991,2040)"} true;
+    assume {:print "$track_abort(2,5):", $t7} $t7 == $t7;
+
+    // $t5 := move($t7) at ./sources/BasicCoin.move:46:9+49
+    $t5 := $t7;
+
+    // goto L4 at ./sources/BasicCoin.move:46:9+49
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:47:69+4
+    assume {:print "$at(2,2110,2114)"} true;
+L2:
+
+    // $t8 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:47:32+17
+    assume {:print "$at(2,2073,2090)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t8 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2073,2090)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // $t9 := borrow_field<BasicCoin::Balance<#0>>.coin($t8) at ./sources/BasicCoin.move:47:32+47
+    call $t9 := $ChildMutationAlt($t8, 0, $Dereference($t8)->$coin);
+    $t8 := $UpdateMutation($t8, $Update'$cafe_BasicCoin_Balance'#0''_coin($Dereference($t8), $DereferenceProphecy($t9)));
+
+    // $t10 := borrow_field<BasicCoin::Coin<#0>>.value($t9) at ./sources/BasicCoin.move:47:27+58
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$value);
+    $t9 := $UpdateMutation($t9, $Update'$cafe_BasicCoin_Coin'#0''_value($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // trace_local[balance_ref]($t10) at ./sources/BasicCoin.move:47:13+11
+    $temp_0'u64' := $Dereference($t10);
+    assume {:print "$track_local(2,5,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t11 := -($t4, $t1) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:48:32+1
+    assume {:print "$at(2,2159,2160)"} true;
+    call $t11 := $Sub($t4, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,2159,2160)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // write_ref($t10, $t11) at ./sources/BasicCoin.move:48:9+31
+    $t10 := $UpdateMutation($t10, $t11);
+
+    // write_back[Reference($t9).value (u64)]($t10) at ./sources/BasicCoin.move:48:9+31
+    assume $Fulfilled($t10);
+
+    // write_back[Reference($t8).coin (BasicCoin::Coin<#0>)]($t9) at ./sources/BasicCoin.move:48:9+31
+    assume $Fulfilled($t9);
+
+    // write_back[BasicCoin::Balance<#0>@]($t8) at ./sources/BasicCoin.move:48:9+31
+    $cafe_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t8),
+        $Dereference($t8));
+
+    // $t12 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:49:9+32
+    assume {:print "$at(2,2177,2209)"} true;
+    $t12 := $cafe_BasicCoin_Coin'#0'($t1);
+
+    // trace_return[0]($t12) at ./sources/BasicCoin.move:49:9+32
+    assume {:print "$track_return(2,5,0):", $t12} $t12 == $t12;
+
+    // label L3 at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+L3:
+
+    // return $t12 at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+    $ret0 := $t12;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:50:5+1
+L4:
+
+    // abort($t5) at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun BasicCoin::withdraw [verification] at ./sources/BasicCoin.move:44:5+369
+procedure {:timeLimit 80} $cafe_BasicCoin_withdraw$verify(_$t0: int, _$t1: int) returns ($ret0: $cafe_BasicCoin_Coin'#0')
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: $Mutation (int);
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: $Mutation ($cafe_BasicCoin_Balance'#0');
+    var $t9: $Mutation ($cafe_BasicCoin_Coin'#0');
+    var $t10: $Mutation (int);
+    var $t11: int;
+    var $t12: $cafe_BasicCoin_Coin'#0';
+    var $t0: int;
+    var $t1: int;
+    var $temp_0'$cafe_BasicCoin_Coin'#0'': $cafe_BasicCoin_Coin'#0';
+    var $temp_0'address': int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$at(2,1846,1847)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at ./sources/BasicCoin.move:44:5+1
+    assume $IsValid'u64'($t1);
+
+    // assume forall $rsc: BasicCoin::Balance<#0>: ResourceDomain<BasicCoin::Balance<#0>>(): WellFormed($rsc) at ./sources/BasicCoin.move:44:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'#0''($rsc))));
+
+    // trace_local[addr]($t0) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,5,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/BasicCoin.move:44:5+1
+    assume {:print "$track_local(2,5,1):", $t1} $t1 == $t1;
+
+    // $t4 := BasicCoin::balance_of<#0>($t0) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:45:23+26
+    assume {:print "$at(2,1955,1981)"} true;
+    call $t4 := $cafe_BasicCoin_balance_of'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,1955,1981)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // trace_local[balance]($t4) at ./sources/BasicCoin.move:45:13+7
+    assume {:print "$track_local(2,5,2):", $t4} $t4 == $t4;
+
+    // $t6 := >=($t4, $t1) at ./sources/BasicCoin.move:46:25+2
+    assume {:print "$at(2,2007,2009)"} true;
+    call $t6 := $Ge($t4, $t1);
+
+    // if ($t6) goto L1 else goto L0 at ./sources/BasicCoin.move:46:9+49
+    if ($t6) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/BasicCoin.move:46:9+49
+L1:
+
+    // goto L2 at ./sources/BasicCoin.move:46:9+49
+    assume {:print "$at(2,1991,2040)"} true;
+    goto L2;
+
+    // label L0 at ./sources/BasicCoin.move:46:36+21
+L0:
+
+    // $t7 := 1 at ./sources/BasicCoin.move:46:36+21
+    assume {:print "$at(2,2018,2039)"} true;
+    $t7 := 1;
+    assume $IsValid'u64'($t7);
+
+    // trace_abort($t7) at ./sources/BasicCoin.move:46:9+49
+    assume {:print "$at(2,1991,2040)"} true;
+    assume {:print "$track_abort(2,5):", $t7} $t7 == $t7;
+
+    // $t5 := move($t7) at ./sources/BasicCoin.move:46:9+49
+    $t5 := $t7;
+
+    // goto L4 at ./sources/BasicCoin.move:46:9+49
+    goto L4;
+
+    // label L2 at ./sources/BasicCoin.move:47:69+4
+    assume {:print "$at(2,2110,2114)"} true;
+L2:
+
+    // $t8 := borrow_global<BasicCoin::Balance<#0>>($t0) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:47:32+17
+    assume {:print "$at(2,2073,2090)"} true;
+    if (!$ResourceExists($cafe_BasicCoin_Balance'#0'_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t8 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($cafe_BasicCoin_Balance'#0'_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2073,2090)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // $t9 := borrow_field<BasicCoin::Balance<#0>>.coin($t8) at ./sources/BasicCoin.move:47:32+47
+    call $t9 := $ChildMutationAlt($t8, 0, $Dereference($t8)->$coin);
+    $t8 := $UpdateMutation($t8, $Update'$cafe_BasicCoin_Balance'#0''_coin($Dereference($t8), $DereferenceProphecy($t9)));
+
+    // $t10 := borrow_field<BasicCoin::Coin<#0>>.value($t9) at ./sources/BasicCoin.move:47:27+58
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$value);
+    $t9 := $UpdateMutation($t9, $Update'$cafe_BasicCoin_Coin'#0''_value($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // trace_local[balance_ref]($t10) at ./sources/BasicCoin.move:47:13+11
+    $temp_0'u64' := $Dereference($t10);
+    assume {:print "$track_local(2,5,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t11 := -($t4, $t1) on_abort goto L4 with $t5 at ./sources/BasicCoin.move:48:32+1
+    assume {:print "$at(2,2159,2160)"} true;
+    call $t11 := $Sub($t4, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,2159,2160)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(2,5):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // write_ref($t10, $t11) at ./sources/BasicCoin.move:48:9+31
+    $t10 := $UpdateMutation($t10, $t11);
+
+    // write_back[Reference($t9).value (u64)]($t10) at ./sources/BasicCoin.move:48:9+31
+    assume $Fulfilled($t10);
+
+    // write_back[Reference($t8).coin (BasicCoin::Coin<#0>)]($t9) at ./sources/BasicCoin.move:48:9+31
+    assume $Fulfilled($t9);
+
+    // write_back[BasicCoin::Balance<#0>@]($t8) at ./sources/BasicCoin.move:48:9+31
+    $cafe_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($cafe_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t8),
+        $Dereference($t8));
+
+    // $t12 := pack BasicCoin::Coin<#0>($t1) at ./sources/BasicCoin.move:49:9+32
+    assume {:print "$at(2,2177,2209)"} true;
+    $t12 := $cafe_BasicCoin_Coin'#0'($t1);
+
+    // trace_return[0]($t12) at ./sources/BasicCoin.move:49:9+32
+    assume {:print "$track_return(2,5,0):", $t12} $t12 == $t12;
+
+    // label L3 at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+L3:
+
+    // return $t12 at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+    $ret0 := $t12;
+    return;
+
+    // label L4 at ./sources/BasicCoin.move:50:5+1
+L4:
+
+    // abort($t5) at ./sources/BasicCoin.move:50:5+1
+    assume {:print "$at(2,2214,2215)"} true;
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// struct MyOddCoin::MyOddCoin at ./sources/MyOddCoin.move:7:5+28
+datatype $cafe_MyOddCoin_MyOddCoin {
+    $cafe_MyOddCoin_MyOddCoin($dummy_field: bool)
+}
+function {:inline} $Update'$cafe_MyOddCoin_MyOddCoin'_dummy_field(s: $cafe_MyOddCoin_MyOddCoin, x: bool): $cafe_MyOddCoin_MyOddCoin {
+    $cafe_MyOddCoin_MyOddCoin(x)
+}
+function $IsValid'$cafe_MyOddCoin_MyOddCoin'(s: $cafe_MyOddCoin_MyOddCoin): bool {
+    $IsValid'bool'(s->$dummy_field)
+}
+function {:inline} $IsEqual'$cafe_MyOddCoin_MyOddCoin'(s1: $cafe_MyOddCoin_MyOddCoin, s2: $cafe_MyOddCoin_MyOddCoin): bool {
+    s1 == s2
+}
+
+// fun MyOddCoin::transfer [verification] at ./sources/MyOddCoin.move:16:5+215
+procedure {:timeLimit 80} $cafe_MyOddCoin_transfer$verify(_$t0: $signer, _$t1: int, _$t2: int) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: bool;
+    var $t8: int;
+    var $t9: bool;
+    var $t10: $cafe_MyOddCoin_MyOddCoin;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: int;
+    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/MyOddCoin.move:16:5+1
+    assume {:print "$at(3,465,466)"} true;
+    assume $IsValid'signer'($t0) && $1_signer_is_txn_signer($t0) && $1_signer_is_txn_signer_addr($t0->$addr);
+
+    // assume WellFormed($t1) at ./sources/MyOddCoin.move:16:5+1
+    assume $IsValid'address'($t1);
+
+    // assume WellFormed($t2) at ./sources/MyOddCoin.move:16:5+1
+    assume $IsValid'u64'($t2);
+
+    // assume forall $rsc: BasicCoin::Balance<MyOddCoin::MyOddCoin>: ResourceDomain<BasicCoin::Balance<MyOddCoin::MyOddCoin>>(): WellFormed($rsc) at ./sources/MyOddCoin.move:16:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''($rsc))));
+
+    // trace_local[from]($t0) at ./sources/MyOddCoin.move:16:5+1
+    assume {:print "$track_local(3,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[to]($t1) at ./sources/MyOddCoin.move:16:5+1
+    assume {:print "$track_local(3,1,1):", $t1} $t1 == $t1;
+
+    // trace_local[amount]($t2) at ./sources/MyOddCoin.move:16:5+1
+    assume {:print "$track_local(3,1,2):", $t2} $t2 == $t2;
+
+    // $t3 := 2 at ./sources/MyOddCoin.move:18:26+1
+    assume {:print "$at(3,584,585)"} true;
+    $t3 := 2;
+    assume $IsValid'u64'($t3);
+
+    // $t4 := %($t2, $t3) on_abort goto L4 with $t5 at ./sources/MyOddCoin.move:18:24+1
+    call $t4 := $Mod($t2, $t3);
+    if ($abort_flag) {
+        assume {:print "$at(3,582,583)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(3,1):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // $t6 := 1 at ./sources/MyOddCoin.move:18:31+1
+    $t6 := 1;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := ==($t4, $t6) at ./sources/MyOddCoin.move:18:28+2
+    $t7 := $IsEqual'u64'($t4, $t6);
+
+    // if ($t7) goto L1 else goto L0 at ./sources/MyOddCoin.move:18:9+34
+    if ($t7) { goto L1; } else { goto L0; }
+
+    // label L1 at ./sources/MyOddCoin.move:18:9+34
+L1:
+
+    // goto L2 at ./sources/MyOddCoin.move:18:9+34
+    assume {:print "$at(3,567,601)"} true;
+    goto L2;
+
+    // label L0 at ./sources/MyOddCoin.move:18:9+34
+L0:
+
+    // $t8 := 0 at ./sources/MyOddCoin.move:18:34+8
+    assume {:print "$at(3,592,600)"} true;
+    $t8 := 0;
+    assume $IsValid'u64'($t8);
+
+    // trace_abort($t8) at ./sources/MyOddCoin.move:18:9+34
+    assume {:print "$at(3,567,601)"} true;
+    assume {:print "$track_abort(3,1):", $t8} $t8 == $t8;
+
+    // $t5 := move($t8) at ./sources/MyOddCoin.move:18:9+34
+    $t5 := $t8;
+
+    // goto L4 at ./sources/MyOddCoin.move:18:9+34
+    goto L4;
+
+    // label L2 at ./sources/MyOddCoin.move:19:40+4
+    assume {:print "$at(3,642,646)"} true;
+L2:
+
+    // $t9 := false at ./sources/MyOddCoin.move:19:58+12
+    assume {:print "$at(3,660,672)"} true;
+    $t9 := false;
+    assume $IsValid'bool'($t9);
+
+    // $t10 := pack MyOddCoin::MyOddCoin($t9) at ./sources/MyOddCoin.move:19:58+12
+    $t10 := $cafe_MyOddCoin_MyOddCoin($t9);
+
+    // BasicCoin::transfer<MyOddCoin::MyOddCoin>($t0, $t1, $t2, $t10) on_abort goto L4 with $t5 at ./sources/MyOddCoin.move:19:9+62
+    call $cafe_BasicCoin_transfer'$cafe_MyOddCoin_MyOddCoin'($t0, $t1, $t2, $t10);
+    if ($abort_flag) {
+        assume {:print "$at(3,611,673)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(3,1):", $t5} $t5 == $t5;
+        goto L4;
+    }
+
+    // label L3 at ./sources/MyOddCoin.move:20:5+1
+    assume {:print "$at(3,679,680)"} true;
+L3:
+
+    // return () at ./sources/MyOddCoin.move:20:5+1
+    assume {:print "$at(3,679,680)"} true;
+    return;
+
+    // label L4 at ./sources/MyOddCoin.move:20:5+1
+L4:
+
+    // abort($t5) at ./sources/MyOddCoin.move:20:5+1
+    assume {:print "$at(3,679,680)"} true;
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun MyOddCoin::setup_and_mint [verification] at ./sources/MyOddCoin.move:11:5+207
+procedure {:timeLimit 80} $cafe_MyOddCoin_setup_and_mint$verify(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: $cafe_MyOddCoin_MyOddCoin;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/MyOddCoin.move:11:5+1
+    assume {:print "$at(3,252,253)"} true;
+    assume $IsValid'signer'($t0) && $1_signer_is_txn_signer($t0) && $1_signer_is_txn_signer_addr($t0->$addr);
+
+    // assume WellFormed($t1) at ./sources/MyOddCoin.move:11:5+1
+    assume $IsValid'u64'($t1);
+
+    // assume forall $rsc: BasicCoin::Balance<MyOddCoin::MyOddCoin>: ResourceDomain<BasicCoin::Balance<MyOddCoin::MyOddCoin>>(): WellFormed($rsc) at ./sources/MyOddCoin.move:11:5+1
+    assume (forall $a_0: int :: {$ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $a_0)}(var $rsc := $ResourceValue($cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin'_$memory, $a_0);
+    ($IsValid'$cafe_BasicCoin_Balance'$cafe_MyOddCoin_MyOddCoin''($rsc))));
+
+    // trace_local[account]($t0) at ./sources/MyOddCoin.move:11:5+1
+    assume {:print "$track_local(3,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[amount]($t1) at ./sources/MyOddCoin.move:11:5+1
+    assume {:print "$track_local(3,0,1):", $t1} $t1 == $t1;
+
+    // BasicCoin::publish_balance<MyOddCoin::MyOddCoin>($t0) on_abort goto L2 with $t2 at ./sources/MyOddCoin.move:12:9+46
+    assume {:print "$at(3,319,365)"} true;
+    call $cafe_BasicCoin_publish_balance'$cafe_MyOddCoin_MyOddCoin'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(3,319,365)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t3 := signer::address_of($t0) on_abort goto L2 with $t2 at ./sources/MyOddCoin.move:13:36+27
+    assume {:print "$at(3,402,429)"} true;
+    call $t3 := $1_signer_address_of($t0);
+    if ($abort_flag) {
+        assume {:print "$at(3,402,429)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t4 := false at ./sources/MyOddCoin.move:13:73+12
+    $t4 := false;
+    assume $IsValid'bool'($t4);
+
+    // $t5 := pack MyOddCoin::MyOddCoin($t4) at ./sources/MyOddCoin.move:13:73+12
+    $t5 := $cafe_MyOddCoin_MyOddCoin($t4);
+
+    // BasicCoin::mint<MyOddCoin::MyOddCoin>($t3, $t1, $t5) on_abort goto L2 with $t2 at ./sources/MyOddCoin.move:13:9+77
+    call $cafe_BasicCoin_mint'$cafe_MyOddCoin_MyOddCoin'($t3, $t1, $t5);
+    if ($abort_flag) {
+        assume {:print "$at(3,375,452)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // label L1 at ./sources/MyOddCoin.move:14:5+1
+    assume {:print "$at(3,458,459)"} true;
+L1:
+
+    // return () at ./sources/MyOddCoin.move:14:5+1
+    assume {:print "$at(3,458,459)"} true;
+    return;
+
+    // label L2 at ./sources/MyOddCoin.move:14:5+1
+L2:
+
+    // abort($t2) at ./sources/MyOddCoin.move:14:5+1
+    assume {:print "$at(3,458,459)"} true;
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
 
 }

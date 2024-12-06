@@ -1747,6 +1747,7 @@ impl<'env> FunctionTranslator<'env> {
                         emitln!(writer, "} else { call $ExecFailureAbort(); }");
                     },
                     BorrowField(mid, sid, inst, field_offset) => {
+                        let inst = &self.inst_slice(inst);
                         let src_str = str_local(srcs[0]);
                         let dest_str = str_local(dests[0]);
                         let struct_env = env.get_module(*mid).into_struct(*sid);
@@ -1763,6 +1764,7 @@ impl<'env> FunctionTranslator<'env> {
                             field_sel,
                         );
                         let update_fun = boogie_field_update(field_env, inst);
+                        //Danny: this one does not
                         emitln!(
                             writer,
                             "{} := $UpdateMutation({}, {}($Dereference({}), $DereferenceProphecy({})));",
@@ -2786,7 +2788,7 @@ impl<'env> FunctionTranslator<'env> {
                         edges,
                         at + 1,
                     );
-                    //Danny
+                    //Danny: this one works
                     let update_fun = boogie_field_update(&field_env, &memory.inst);
                     if new_dest_needed {
                         format!(
