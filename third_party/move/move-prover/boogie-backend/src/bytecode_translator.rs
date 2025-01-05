@@ -26,7 +26,7 @@ use codespan_reporting::diagnostic::Severity;
 use itertools::Itertools;
 #[allow(unused_imports)]
 use log::{debug, info, log, warn, Level};
-use move_compiler::interface_generator::NATIVE_INTERFACE;
+use move_compiler::interface_generator::NATIVE_INTERFACE;   
 use move_model::{
     ast::{Attribute, TempIndex, TraceKind},
     code_writer::CodeWriter,
@@ -221,6 +221,7 @@ impl<'env> BoogieTranslator<'env> {
                 param_type
             );
             /* we definetly need custom havoc for map and tables.
+            //custom havoc
             emitln!(
                 writer,
                 "function {{:inline}} $Havoc'{}'(): {} {{ havoc x; }}",
@@ -717,9 +718,9 @@ impl<'env> StructTranslator<'env> {
                 struct_name
             ),
             || {
-                if struct_has_native_equality(struct_env, self.type_inst, self.parent.options) {
+                /*if struct_has_native_equality(struct_env, self.type_inst, self.parent.options) {
                     emitln!(writer, "s1 == s2")
-                } else if struct_env.has_variants() {
+                } else */if struct_env.has_variants() {
                     self.emit_is_equal_fn_body_for_enum(struct_env);
                 } else {
                     let mut sep = "";
@@ -1884,11 +1885,11 @@ impl<'env> FunctionTranslator<'env> {
                         });
                         emitln!(
                             writer,
-                            "{} := $ResourceUpdate({}, $GlobalLocationAddress({}),\n    \
+                            "{} := $ResourceUpdate({}, {},\n    \
                                              $DereferenceProphecy({}));",
                             memory,
                             memory,
-                            dest_str,
+                            addr_str,
                             dest_str
                         );
                         emitln!(writer, "}");
@@ -2648,7 +2649,7 @@ impl<'env> FunctionTranslator<'env> {
                 let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
                 let suffix = boogie_type_suffix_for_struct(struct_env, self.type_inst, false);
                 emitln!(writer, "assume $Dereference({}) == $DereferenceProphecy({});", src_str, src_str)
-                //emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix , src_str, src_str);
+                //emitln!(writer, "assume $IsEqual'{}'#0''($Dereference({}), $DereferenceProphecy({}));", suffix , src_str, src_str);
                 /*emitln!(
                     writer,
                     "{} := $ResourceUpdate({}, $GlobalLocationAddress({}),\n    \
@@ -2689,8 +2690,8 @@ impl<'env> FunctionTranslator<'env> {
                             )
                         };
                         let suffix = boogie_type_suffix(env, &field_env.get_type());
-                        //emitln!(writer, "assume $Fulfilled({});", src_str);
-                        emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix, src_str, src_str);
+                        emitln!(writer, "assume $Fulfilled({});", src_str);
+                        //emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix, src_str, src_str);
                         true
                     },
                     _ => false
@@ -3036,6 +3037,7 @@ fn struct_has_native_equality(
 ) -> bool {
     if options.native_equality {
         // Everything has native equality
+        //Danny: No struct should be using native equality
         return true;
     }
     if struct_env.has_variants() {

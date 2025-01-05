@@ -220,7 +220,7 @@ impl<'a> Instrumenter<'a> {
             // Generate write_back for this reference.
             //Danny
             //only the most recent reference type matter
-            let is_conditional = ancestors.len() > 1;
+            let is_conditional = false; //ancestors.len() > 1;
             //1st iteration: non reference nodes
             for (chain_index, chain) in ancestors.iter().enumerate() {
                 // sanity check: the src node of the first action must be the node itself
