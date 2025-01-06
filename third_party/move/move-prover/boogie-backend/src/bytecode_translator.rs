@@ -26,7 +26,7 @@ use codespan_reporting::diagnostic::Severity;
 use itertools::Itertools;
 #[allow(unused_imports)]
 use log::{debug, info, log, warn, Level};
-use move_compiler::interface_generator::NATIVE_INTERFACE;   
+use move_compiler::interface_generator::NATIVE_INTERFACE;
 use move_model::{
     ast::{Attribute, TempIndex, TraceKind},
     code_writer::CodeWriter,
@@ -1427,6 +1427,13 @@ impl<'env> FunctionTranslator<'env> {
                             src,
                             str_local(src)
                         );
+                        //honestly no idea why this fixed the issue or even had an effect.
+                        emitln!(
+                            writer,
+                            "assume $Dereference({}) == {};",
+                            str_local(dest),
+                            str_local(src)
+                        );
                         emitln!(
                             writer,
                             "{} := $DereferenceProphecy({});",
@@ -1764,8 +1771,9 @@ impl<'env> FunctionTranslator<'env> {
                             src_str,
                             field_sel,
                         );
+                        emitln!(writer, "assume $Dereference({}) == $Dereference({})->{};",
+                        dest_str, src_str, field_sel);
                         let update_fun = boogie_field_update(field_env, inst);
-                        //Danny: this one does not
                         emitln!(
                             writer,
                             "{} := $UpdateMutation({}, {}($Dereference({}), $DereferenceProphecy({})));",
@@ -1883,15 +1891,26 @@ impl<'env> FunctionTranslator<'env> {
                                 addr_str
                             );
                         });
-                        emitln!(
-                            writer,
-                            "{} := $ResourceUpdate({}, {},\n    \
-                                             $DereferenceProphecy({}));",
-                            memory,
-                            memory,
-                            addr_str,
-                            dest_str
-                        );
+                        writer.with_indent(|| {
+                            emitln!(
+                                writer,
+                                "assume $ResourceValue({}, {}) == $Dereference({});",
+                                memory,
+                                addr_str,
+                                dest_str
+                            );
+                        });
+                        writer.with_indent(|| {
+                            emitln!(
+                                writer,
+                                "{} := $ResourceUpdate({}, {}, $DereferenceProphecy({}));",
+                                memory,
+                                memory,
+                                addr_str,
+                                dest_str
+                            );
+                        });
+                        //emitln!(writer, "assume {{:print \"\", $DereferenceProphecy({})}} $t1 == $t1;", dest_str);
                         emitln!(writer, "}");
                     },
                     GetGlobal(mid, sid, inst) => {
@@ -2535,7 +2554,12 @@ impl<'env> FunctionTranslator<'env> {
                     Uninit => {
                         emitln!(writer, "assume $t{}->l == $Uninitialized();", srcs[0]);
                     },
-                    Drop | Release => {},
+                    Drop | Release => {
+                        //TODO: drop should assume prophecy to original
+                        //let src_str = str_local(srcs[0]);
+                        //no it should be v_final == v_original
+                        //emitln!(writer, "assume $Fulfilled({});", src_str);
+                    },
                     TraceLocal(idx) => {
                         let num_oper = global_state
                             .get_temp_index_oper(mid, fid, srcs[0], baseline_flag)
@@ -2649,7 +2673,7 @@ impl<'env> FunctionTranslator<'env> {
                 let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
                 let suffix = boogie_type_suffix_for_struct(struct_env, self.type_inst, false);
                 emitln!(writer, "assume $Dereference({}) == $DereferenceProphecy({});", src_str, src_str)
-                //emitln!(writer, "assume $IsEqual'{}'#0''($Dereference({}), $DereferenceProphecy({}));", suffix , src_str, src_str);
+                //emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix , src_str, src_str);
                 /*emitln!(
                     writer,
                     "{} := $ResourceUpdate({}, $GlobalLocationAddress({}),\n    \
@@ -2662,8 +2686,16 @@ impl<'env> FunctionTranslator<'env> {
             },
             LocalRoot(idx) => {
                 assert!(matches!(edge, BorrowEdge::Direct));
+                let bv_flag = false;
                 //Danny: Todo, let's skip type for now
-                emitln!(writer, "assume $Dereference({}) == $DereferenceProphecy({});", src_str, src_str);
+                let oper = format!(
+                    "$IsEqual'{}'",
+                    boogie_type_suffix_bv(env, &self.get_local_type(*idx), bv_flag)
+                );
+                emitln!(writer, "assume {}($Dereference({}), $DereferenceProphecy({}));",
+                    oper,
+                    src_str,
+                    src_str);
                 //emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
