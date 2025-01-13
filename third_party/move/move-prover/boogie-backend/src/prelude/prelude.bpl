@@ -293,14 +293,13 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
-// The proble is if abort occurs, I have to call a function that reverts it.
-function {:inline} $MutationDup<T>(l: $Location, p: Vec int, v: T): $Mutation T {
-    $Mutation(l, p, v, v)
-}
 procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
     var prophecy: T;
     havoc prophecy;
     result := $Mutation(l, p, v, prophecy);
+    assume result->l == l;
+    assume result->p == p;
+    assume result->v == v;
 }
 
 // Dereferences a mutation.
@@ -331,6 +330,9 @@ procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns
     var prophecy: T2;
     havoc prophecy;
     result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy);
+    assume result->l == m->l;
+    assume result->p == ExtendVec(m->p, offset);
+    assume result->v == v;
 }
 
 // Return true if two mutations share the location and path

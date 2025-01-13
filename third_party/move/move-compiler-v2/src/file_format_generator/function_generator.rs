@@ -573,6 +573,9 @@ impl<'a> FunctionGenerator<'a> {
                 // Move bytecode does not process release, values are released indirectly
                 // when the borrowed head of the borrow chain is destroyed
             },
+            Operation::Fulfilled(_) =>{
+                //This is for verification only
+            }
             Operation::Drop => {
                 // Currently Destroy is only translated for references. It may also make
                 // sense for other values, as we may figure later. Its known to be required

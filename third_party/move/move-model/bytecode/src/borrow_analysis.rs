@@ -48,6 +48,11 @@ pub struct WriteBackAction {
     pub dst: BorrowNode,
     pub edge: BorrowEdge,
 }
+#[derive(Debug, Clone, Eq, Ord, PartialEq, PartialOrd)]
+pub struct FullfilledAction{
+    pub src: TempIndex,
+    pub dst: BorrowNode,
+}
 
 impl BorrowInfo {
     /// Gets the children of this node.
@@ -80,8 +85,27 @@ impl BorrowInfo {
 
     /// Returns nodes which are dying from this to the next state. This includes those which
     /// are directly dying plus those from which they borrow. Returns nodes in child-first order.
+    pub fn fulfilled_nodes(&self, next: &BorrowInfo) -> Vec<(BorrowNode, FullfilledAction)> {
+        let mut result = vec![];
+        for dying in self.live_nodes.difference(&next.live_nodes) {
+            if next.is_in_use(dying) {
+                match dying {
+                    BorrowNode::Reference(index) => {
+                        result.push((dying.clone(),
+                        FullfilledAction{
+                            src: *index,
+                            dst: dying.clone()}));
+                    },
+                    _ => continue,
+                }
+
+            }
+        }
+        result
+    }
     pub fn dying_nodes(&self, next: &BorrowInfo) -> Vec<(BorrowNode, Vec<Vec<WriteBackAction>>)> {
         let mut result = vec![];
+
         for dying in self.live_nodes.difference(&next.live_nodes) {
             if next.is_in_use(dying) {
                 continue;

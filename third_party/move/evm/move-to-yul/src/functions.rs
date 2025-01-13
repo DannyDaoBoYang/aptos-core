@@ -565,6 +565,7 @@ impl<'a> FunctionGenerator<'a> {
                     | UnpackRef
                     | PackRef
                     | UnpackRefDeep
+                    | Fullfilled
                     | PackRefDeep
                     | TraceLocal(_)
                     | TraceReturn(_)

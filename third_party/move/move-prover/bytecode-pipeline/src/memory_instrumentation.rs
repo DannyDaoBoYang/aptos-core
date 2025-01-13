@@ -186,6 +186,17 @@ impl<'a> Instrumenter<'a> {
         self.builder.set_loc_from_attr(attr_id);
 
         //
+        for (node, FA) in before.fulfilled_nodes(after){
+            self.builder.emit_with(|id| {
+                Bytecode::Call(
+                    id,
+                    vec![],
+                    Operation::Fulfilled(FA.src),
+                    vec![FA.src],
+                    None,
+                )
+            });
+        }
         for (node, ancestors) in before.dying_nodes(after) {
             // we only care about references that occurs in the function body
             let node_idx = match node {

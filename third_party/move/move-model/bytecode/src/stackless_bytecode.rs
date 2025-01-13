@@ -179,6 +179,7 @@ pub enum Operation {
     /// Indicates that the value is no longer borrowed.
     Release,
 
+
     ReadRef,
     WriteRef, // arguments: (reference, value)
     FreezeRef(/*explicit*/ bool),
@@ -247,6 +248,7 @@ pub enum Operation {
     TraceAbort,
     TraceExp(TraceKind, NodeId),
     TraceGlobalMem(QualifiedInstId<StructId>),
+    Fulfilled(TempIndex),
 
     // Event
     EmitEvent,
@@ -277,6 +279,7 @@ impl Operation {
             Operation::GetGlobal(_, _, _) => true,
             Operation::Uninit => false,
             Operation::Drop => false,
+            Operation::Fulfilled(_) => false,
             Operation::Release => false,
             Operation::ReadRef => false,
             Operation::WriteRef => false,
@@ -1158,6 +1161,9 @@ impl<'env> fmt::Display for OperationDisplay<'env> {
             },
 
             // Borrow
+            Fulfilled(_)=>{
+                write!(f, "fulfilled")?;
+            }
             BorrowLoc => {
                 write!(f, "borrow_local")?;
             },

@@ -718,9 +718,9 @@ impl<'env> StructTranslator<'env> {
                 struct_name
             ),
             || {
-                /*if struct_has_native_equality(struct_env, self.type_inst, self.parent.options) {
+                if struct_has_native_equality(struct_env, self.type_inst, self.parent.options) {
                     emitln!(writer, "s1 == s2")
-                } else */if struct_env.has_variants() {
+                } else if struct_env.has_variants() {
                     self.emit_is_equal_fn_body_for_enum(struct_env);
                 } else {
                     let mut sep = "";
@@ -1451,6 +1451,14 @@ impl<'env> FunctionTranslator<'env> {
                             str_local(src)
                         );
                     },
+                    Fulfilled(_) => {
+                        let reference = srcs[0];
+                        emitln!(
+                            writer,
+                            "assume $Fulfilled({});",
+                            str_local(reference),
+                        );
+                    }
                     WriteRef => {
                         let reference = srcs[0];
                         let value = srcs[1];
@@ -2699,7 +2707,8 @@ impl<'env> FunctionTranslator<'env> {
                 //emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
-                let dst_value = format!("$Dereference($t{})", idx);
+                emitln!(writer, "assume $Fulfilled({});", src_str);
+                /*let dst_value = format!("$Dereference($t{})", idx);
                 let src_value = format!("$Dereference({})", src_str);
 
                 let get_path_index = |offset: usize| {
@@ -2711,6 +2720,7 @@ impl<'env> FunctionTranslator<'env> {
                 };
                 let isBorrowField = match edge{
                     BorrowEdge::Field(memory, variant, offset) =>{
+
                         let memory = memory.to_owned().instantiate(self.type_inst);
                         let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
                         let field_env = if variant.is_none() {
@@ -2722,7 +2732,7 @@ impl<'env> FunctionTranslator<'env> {
                             )
                         };
                         let suffix = boogie_type_suffix(env, &field_env.get_type());
-                        emitln!(writer, "assume $Fulfilled({});", src_str);
+                        //emitln!(writer, "assume $Fulfilled({});", src_str);
                         //emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix, src_str, src_str);
                         true
                     },
@@ -2754,7 +2764,7 @@ impl<'env> FunctionTranslator<'env> {
                         update
                     );
                 }
-
+                */
             },
         }
     }
