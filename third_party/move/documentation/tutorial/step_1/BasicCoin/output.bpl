@@ -3562,7 +3562,7 @@ function {:inline} $IsEqual'$82_Test_Y'(s1: $82_Test_Y, s2: $82_Test_Y): bool {
 }
 var $82_Test_Y_$memory: $Memory $82_Test_Y;
 
-// fun Test::incr [verification] at ./sources/FirstModule.move:19:5+190
+// fun Test::incr [verification] at ./sources/FirstModule.move:19:5+353
 procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
 {
     // declare local variables
@@ -3592,7 +3592,7 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
 
     // bytecode translation starts here
     // assume WellFormed($t0) at ./sources/FirstModule.move:19:5+1
-    assume {:print "$at(2,457,458)"} true;
+    assume {:print "$at(2,455,456)"} true;
     assume $IsValid'address'($t0);
 
     // assume WellFormed($t1) at ./sources/FirstModule.move:19:5+1
@@ -3606,15 +3606,15 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
     assume (forall $a_0: int :: {$ResourceValue($82_Test_Y_$memory, $a_0)}(var $rsc := $ResourceValue($82_Test_Y_$memory, $a_0);
     ($IsValid'$82_Test_Y'($rsc))));
 
-    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:19:5+190
-    // global invariant at ./sources/FirstModule.move:10:9+71
+    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:19:5+353
+    // global invariant at ./sources/FirstModule.move:10:9+70
     assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ($IsEqual'address'(a, 0)));
 
-    // assume forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:19:5+190
-    // global invariant at ./sources/FirstModule.move:12:9+72
+    // assume forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:19:5+353
+    // global invariant at ./sources/FirstModule.move:12:9+71
     assume (forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> ($IsEqual'address'(b, 48)));
 
-    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:19:5+190
+    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:19:5+353
     // global invariant at ./sources/FirstModule.move:14:9+147
     assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
 
@@ -3625,7 +3625,7 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
     assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
     // $t4 := borrow_global<Test::R>($t0) on_abort goto L2 with $t5 at ./sources/FirstModule.move:20:17+17
-    assume {:print "$at(2,527,544)"} true;
+    assume {:print "$at(2,525,542)"} true;
     if (!$ResourceExists($82_Test_R_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -3634,7 +3634,7 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
         $82_Test_R_$memory := $ResourceUpdate($82_Test_R_$memory, $t0, $DereferenceProphecy($t4));
     }
     if ($abort_flag) {
-        assume {:print "$at(2,527,544)"} true;
+        assume {:print "$at(2,525,542)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,0):", $t5} $t5 == $t5;
         goto L2;
@@ -3645,7 +3645,7 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
     assume {:print "$track_local(1,0,2):", $temp_0'$82_Test_R'} $temp_0'$82_Test_R' == $temp_0'$82_Test_R';
 
     // $t6 := get_field<Test::R>.x($t4) at ./sources/FirstModule.move:21:15+3
-    assume {:print "$at(2,566,569)"} true;
+    assume {:print "$at(2,564,567)"} true;
     $t6 := $Dereference($t4)->$x;
 
     // $t7 := 1 at ./sources/FirstModule.move:21:21+1
@@ -3655,7 +3655,7 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
     // $t8 := +($t6, $t7) on_abort goto L2 with $t5 at ./sources/FirstModule.move:21:19+1
     call $t8 := $AddU64($t6, $t7);
     if ($abort_flag) {
-        assume {:print "$at(2,570,571)"} true;
+        assume {:print "$at(2,568,569)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,0):", $t5} $t5 == $t5;
         goto L2;
@@ -3678,20 +3678,20 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
     // write_back[Test::R@]($t4) at ./sources/FirstModule.move:21:9+13
     assume $Dereference($t4) == $DereferenceProphecy($t4);
 
-    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:10:9+71
-    // global invariant at ./sources/FirstModule.move:10:9+71
-    assume {:print "$at(2,137,208)"} true;
-    assert {:msg "assert_failed(2,137,208): global memory invariant does not hold"}
+    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:10:9+70
+    // global invariant at ./sources/FirstModule.move:10:9+70
+    assume {:print "$at(2,137,207)"} true;
+    assert {:msg "assert_failed(2,137,207): global memory invariant does not hold"}
       (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ($IsEqual'address'(a, 0)));
 
     // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:14:9+147
     // global invariant at ./sources/FirstModule.move:14:9+147
-    assume {:print "$at(2,298,445)"} true;
-    assert {:msg "assert_failed(2,298,445): global memory invariant does not hold"}
+    assume {:print "$at(2,296,443)"} true;
+    assert {:msg "assert_failed(2,296,443): global memory invariant does not hold"}
       (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
 
-    // $t10 := borrow_global<Test::Y>($t1) on_abort goto L2 with $t5 at ./sources/FirstModule.move:22:18+17
-    assume {:print "$at(2,592,609)"} true;
+    // $t10 := borrow_global<Test::Y>($t1) on_abort goto L2 with $t5 at ./sources/FirstModule.move:25:18+17
+    assume {:print "$at(2,672,689)"} true;
     if (!$ResourceExists($82_Test_Y_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
@@ -3700,82 +3700,82 @@ procedure {:timeLimit 80} $82_Test_incr$verify(_$t0: int, _$t1: int) returns ()
         $82_Test_Y_$memory := $ResourceUpdate($82_Test_Y_$memory, $t1, $DereferenceProphecy($t10));
     }
     if ($abort_flag) {
-        assume {:print "$at(2,592,609)"} true;
+        assume {:print "$at(2,672,689)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,0):", $t5} $t5 == $t5;
         goto L2;
     }
 
-    // trace_local[r2]($t10) at ./sources/FirstModule.move:22:13+2
+    // trace_local[r2]($t10) at ./sources/FirstModule.move:25:13+2
     $temp_0'$82_Test_Y' := $Dereference($t10);
     assume {:print "$track_local(1,0,3):", $temp_0'$82_Test_Y'} $temp_0'$82_Test_Y' == $temp_0'$82_Test_Y';
 
-    // $t11 := get_field<Test::Y>.x($t10) at ./sources/FirstModule.move:23:16+4
-    assume {:print "$at(2,632,636)"} true;
+    // $t11 := get_field<Test::Y>.x($t10) at ./sources/FirstModule.move:26:16+4
+    assume {:print "$at(2,712,716)"} true;
     $t11 := $Dereference($t10)->$x;
 
-    // $t12 := 1 at ./sources/FirstModule.move:23:23+1
+    // $t12 := 1 at ./sources/FirstModule.move:26:23+1
     $t12 := 1;
     assume $IsValid'u64'($t12);
 
-    // $t13 := +($t11, $t12) on_abort goto L2 with $t5 at ./sources/FirstModule.move:23:21+1
+    // $t13 := +($t11, $t12) on_abort goto L2 with $t5 at ./sources/FirstModule.move:26:21+1
     call $t13 := $AddU64($t11, $t12);
     if ($abort_flag) {
-        assume {:print "$at(2,637,638)"} true;
+        assume {:print "$at(2,717,718)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,0):", $t5} $t5 == $t5;
         goto L2;
     }
 
-    // $t14 := borrow_field<Test::Y>.x($t10) at ./sources/FirstModule.move:23:9+4
+    // $t14 := borrow_field<Test::Y>.x($t10) at ./sources/FirstModule.move:26:9+4
     call $t14 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$x);
     assume $Dereference($t14) == $Dereference($t10)->$x;
     $t10 := $UpdateMutation($t10, $Update'$82_Test_Y'_x($Dereference($t10), $DereferenceProphecy($t14)));
 
-    // fulfilled($t10) at ./sources/FirstModule.move:23:9+4
+    // fulfilled($t10) at ./sources/FirstModule.move:26:9+4
     assume $Fulfilled($t10);
 
-    // write_ref($t14, $t13) at ./sources/FirstModule.move:23:9+15
+    // write_ref($t14, $t13) at ./sources/FirstModule.move:26:9+15
     $t14 := $UpdateMutation($t14, $t13);
 
-    // write_back[Reference($t10).x (u64)]($t14) at ./sources/FirstModule.move:23:9+15
+    // write_back[Reference($t10).x (u64)]($t14) at ./sources/FirstModule.move:26:9+15
     assume $Fulfilled($t14);
 
-    // write_back[Test::Y@]($t10) at ./sources/FirstModule.move:23:9+15
+    // write_back[Test::Y@]($t10) at ./sources/FirstModule.move:26:9+15
     assume $Dereference($t10) == $DereferenceProphecy($t10);
 
-    // assert forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:12:9+72
-    // global invariant at ./sources/FirstModule.move:12:9+72
-    assume {:print "$at(2,217,289)"} true;
-    assert {:msg "assert_failed(2,217,289): global memory invariant does not hold"}
+    // assert forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:12:9+71
+    // global invariant at ./sources/FirstModule.move:12:9+71
+    assume {:print "$at(2,216,287)"} true;
+    assert {:msg "assert_failed(2,216,287): global memory invariant does not hold"}
       (forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> ($IsEqual'address'(b, 48)));
 
     // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:14:9+147
     // global invariant at ./sources/FirstModule.move:14:9+147
-    assume {:print "$at(2,298,445)"} true;
-    assert {:msg "assert_failed(2,298,445): global memory invariant does not hold"}
+    assume {:print "$at(2,296,443)"} true;
+    assert {:msg "assert_failed(2,296,443): global memory invariant does not hold"}
       (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
 
-    // label L1 at ./sources/FirstModule.move:24:5+1
-    assume {:print "$at(2,646,647)"} true;
+    // label L1 at ./sources/FirstModule.move:29:5+1
+    assume {:print "$at(2,807,808)"} true;
 L1:
 
-    // return () at ./sources/FirstModule.move:24:5+1
-    assume {:print "$at(2,646,647)"} true;
+    // return () at ./sources/FirstModule.move:29:5+1
+    assume {:print "$at(2,807,808)"} true;
     return;
 
-    // label L2 at ./sources/FirstModule.move:24:5+1
+    // label L2 at ./sources/FirstModule.move:29:5+1
 L2:
 
-    // abort($t5) at ./sources/FirstModule.move:24:5+1
-    assume {:print "$at(2,646,647)"} true;
+    // abort($t5) at ./sources/FirstModule.move:29:5+1
+    assume {:print "$at(2,807,808)"} true;
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun Test::incr2 [verification] at ./sources/FirstModule.move:25:5+191
+// fun Test::incr2 [verification] at ./sources/FirstModule.move:30:5+265
 procedure {:timeLimit 80} $82_Test_incr2$verify(_$t0: int, _$t1: int) returns ()
 {
     // declare local variables
@@ -3804,41 +3804,41 @@ procedure {:timeLimit 80} $82_Test_incr2$verify(_$t0: int, _$t1: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at ./sources/FirstModule.move:25:5+1
-    assume {:print "$at(2,652,653)"} true;
+    // assume WellFormed($t0) at ./sources/FirstModule.move:30:5+1
+    assume {:print "$at(2,813,814)"} true;
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at ./sources/FirstModule.move:25:5+1
+    // assume WellFormed($t1) at ./sources/FirstModule.move:30:5+1
     assume $IsValid'address'($t1);
 
-    // assume forall $rsc: Test::R: ResourceDomain<Test::R>(): WellFormed($rsc) at ./sources/FirstModule.move:25:5+1
+    // assume forall $rsc: Test::R: ResourceDomain<Test::R>(): WellFormed($rsc) at ./sources/FirstModule.move:30:5+1
     assume (forall $a_0: int :: {$ResourceValue($82_Test_R_$memory, $a_0)}(var $rsc := $ResourceValue($82_Test_R_$memory, $a_0);
     ($IsValid'$82_Test_R'($rsc))));
 
-    // assume forall $rsc: Test::Y: ResourceDomain<Test::Y>(): WellFormed($rsc) at ./sources/FirstModule.move:25:5+1
+    // assume forall $rsc: Test::Y: ResourceDomain<Test::Y>(): WellFormed($rsc) at ./sources/FirstModule.move:30:5+1
     assume (forall $a_0: int :: {$ResourceValue($82_Test_Y_$memory, $a_0)}(var $rsc := $ResourceValue($82_Test_Y_$memory, $a_0);
     ($IsValid'$82_Test_Y'($rsc))));
 
-    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:25:5+191
-    // global invariant at ./sources/FirstModule.move:10:9+71
+    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:30:5+265
+    // global invariant at ./sources/FirstModule.move:10:9+70
     assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ($IsEqual'address'(a, 0)));
 
-    // assume forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:25:5+191
-    // global invariant at ./sources/FirstModule.move:12:9+72
+    // assume forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:30:5+265
+    // global invariant at ./sources/FirstModule.move:12:9+71
     assume (forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> ($IsEqual'address'(b, 48)));
 
-    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:25:5+191
+    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:30:5+265
     // global invariant at ./sources/FirstModule.move:14:9+147
     assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
 
-    // trace_local[a]($t0) at ./sources/FirstModule.move:25:5+1
+    // trace_local[a]($t0) at ./sources/FirstModule.move:30:5+1
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[b]($t1) at ./sources/FirstModule.move:25:5+1
+    // trace_local[b]($t1) at ./sources/FirstModule.move:30:5+1
     assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
 
-    // $t4 := borrow_global<Test::R>($t0) on_abort goto L2 with $t5 at ./sources/FirstModule.move:26:17+17
-    assume {:print "$at(2,723,740)"} true;
+    // $t4 := borrow_global<Test::R>($t0) on_abort goto L2 with $t5 at ./sources/FirstModule.move:31:17+17
+    assume {:print "$at(2,884,901)"} true;
     if (!$ResourceExists($82_Test_R_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -3847,18 +3847,18 @@ procedure {:timeLimit 80} $82_Test_incr2$verify(_$t0: int, _$t1: int) returns ()
         $82_Test_R_$memory := $ResourceUpdate($82_Test_R_$memory, $t0, $DereferenceProphecy($t4));
     }
     if ($abort_flag) {
-        assume {:print "$at(2,723,740)"} true;
+        assume {:print "$at(2,884,901)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,1):", $t5} $t5 == $t5;
         goto L2;
     }
 
-    // trace_local[r]($t4) at ./sources/FirstModule.move:26:13+1
+    // trace_local[r]($t4) at ./sources/FirstModule.move:31:13+1
     $temp_0'$82_Test_R' := $Dereference($t4);
     assume {:print "$track_local(1,1,2):", $temp_0'$82_Test_R'} $temp_0'$82_Test_R' == $temp_0'$82_Test_R';
 
-    // $t6 := borrow_global<Test::Y>($t1) on_abort goto L2 with $t5 at ./sources/FirstModule.move:27:18+17
-    assume {:print "$at(2,765,782)"} true;
+    // $t6 := borrow_global<Test::Y>($t1) on_abort goto L2 with $t5 at ./sources/FirstModule.move:32:18+17
+    assume {:print "$at(2,926,943)"} true;
     if (!$ResourceExists($82_Test_Y_$memory, $t1)) {
         call $ExecFailureAbort();
     } else {
@@ -3867,121 +3867,334 @@ procedure {:timeLimit 80} $82_Test_incr2$verify(_$t0: int, _$t1: int) returns ()
         $82_Test_Y_$memory := $ResourceUpdate($82_Test_Y_$memory, $t1, $DereferenceProphecy($t6));
     }
     if ($abort_flag) {
-        assume {:print "$at(2,765,782)"} true;
+        assume {:print "$at(2,926,943)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,1):", $t5} $t5 == $t5;
         goto L2;
     }
 
-    // trace_local[r2]($t6) at ./sources/FirstModule.move:27:13+2
+    // trace_local[r2]($t6) at ./sources/FirstModule.move:32:13+2
     $temp_0'$82_Test_Y' := $Dereference($t6);
     assume {:print "$track_local(1,1,3):", $temp_0'$82_Test_Y'} $temp_0'$82_Test_Y' == $temp_0'$82_Test_Y';
 
-    // $t7 := get_field<Test::R>.x($t4) at ./sources/FirstModule.move:28:15+3
-    assume {:print "$at(2,804,807)"} true;
+    // $t7 := get_field<Test::R>.x($t4) at ./sources/FirstModule.move:33:15+3
+    assume {:print "$at(2,965,968)"} true;
     $t7 := $Dereference($t4)->$x;
 
-    // $t8 := 1 at ./sources/FirstModule.move:28:21+1
+    // $t8 := 1 at ./sources/FirstModule.move:33:21+1
     $t8 := 1;
     assume $IsValid'u64'($t8);
 
-    // $t9 := +($t7, $t8) on_abort goto L2 with $t5 at ./sources/FirstModule.move:28:19+1
+    // $t9 := +($t7, $t8) on_abort goto L2 with $t5 at ./sources/FirstModule.move:33:19+1
     call $t9 := $AddU64($t7, $t8);
     if ($abort_flag) {
-        assume {:print "$at(2,808,809)"} true;
+        assume {:print "$at(2,969,970)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,1):", $t5} $t5 == $t5;
         goto L2;
     }
 
-    // $t10 := borrow_field<Test::R>.x($t4) at ./sources/FirstModule.move:28:9+3
+    // $t10 := borrow_field<Test::R>.x($t4) at ./sources/FirstModule.move:33:9+3
     call $t10 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$x);
     assume $Dereference($t10) == $Dereference($t4)->$x;
     $t4 := $UpdateMutation($t4, $Update'$82_Test_R'_x($Dereference($t4), $DereferenceProphecy($t10)));
 
-    // fulfilled($t4) at ./sources/FirstModule.move:28:9+3
+    // fulfilled($t4) at ./sources/FirstModule.move:33:9+3
     assume $Fulfilled($t4);
 
-    // write_ref($t10, $t9) at ./sources/FirstModule.move:28:9+13
+    // write_ref($t10, $t9) at ./sources/FirstModule.move:33:9+13
     $t10 := $UpdateMutation($t10, $t9);
 
-    // write_back[Reference($t4).x (u64)]($t10) at ./sources/FirstModule.move:28:9+13
+    // write_back[Reference($t4).x (u64)]($t10) at ./sources/FirstModule.move:33:9+13
     assume $Fulfilled($t10);
 
-    // write_back[Test::R@]($t4) at ./sources/FirstModule.move:28:9+13
+    // write_back[Test::R@]($t4) at ./sources/FirstModule.move:33:9+13
     assume $Dereference($t4) == $DereferenceProphecy($t4);
 
-    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:10:9+71
-    // global invariant at ./sources/FirstModule.move:10:9+71
-    assume {:print "$at(2,137,208)"} true;
-    assert {:msg "assert_failed(2,137,208): global memory invariant does not hold"}
+    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:10:9+70
+    // global invariant at ./sources/FirstModule.move:10:9+70
+    assume {:print "$at(2,137,207)"} true;
+    assert {:msg "assert_failed(2,137,207): global memory invariant does not hold"}
       (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ($IsEqual'address'(a, 0)));
 
     // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:14:9+147
     // global invariant at ./sources/FirstModule.move:14:9+147
-    assume {:print "$at(2,298,445)"} true;
-    assert {:msg "assert_failed(2,298,445): global memory invariant does not hold"}
+    assume {:print "$at(2,296,443)"} true;
+    assert {:msg "assert_failed(2,296,443): global memory invariant does not hold"}
       (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
 
-    // $t11 := get_field<Test::Y>.x($t6) at ./sources/FirstModule.move:29:16+4
-    assume {:print "$at(2,828,832)"} true;
+    // $t11 := get_field<Test::Y>.x($t6) at ./sources/FirstModule.move:36:16+4
+    assume {:print "$at(2,1063,1067)"} true;
     $t11 := $Dereference($t6)->$x;
 
-    // $t12 := 1 at ./sources/FirstModule.move:29:23+1
+    // $t12 := 1 at ./sources/FirstModule.move:36:23+1
     $t12 := 1;
     assume $IsValid'u64'($t12);
 
-    // $t13 := +($t11, $t12) on_abort goto L2 with $t5 at ./sources/FirstModule.move:29:21+1
+    // $t13 := +($t11, $t12) on_abort goto L2 with $t5 at ./sources/FirstModule.move:36:21+1
     call $t13 := $AddU64($t11, $t12);
     if ($abort_flag) {
-        assume {:print "$at(2,833,834)"} true;
+        assume {:print "$at(2,1068,1069)"} true;
         $t5 := $abort_code;
         assume {:print "$track_abort(1,1):", $t5} $t5 == $t5;
         goto L2;
     }
 
-    // $t14 := borrow_field<Test::Y>.x($t6) at ./sources/FirstModule.move:29:9+4
+    // $t14 := borrow_field<Test::Y>.x($t6) at ./sources/FirstModule.move:36:9+4
     call $t14 := $ChildMutationAlt($t6, 0, $Dereference($t6)->$x);
     assume $Dereference($t14) == $Dereference($t6)->$x;
     $t6 := $UpdateMutation($t6, $Update'$82_Test_Y'_x($Dereference($t6), $DereferenceProphecy($t14)));
 
-    // fulfilled($t6) at ./sources/FirstModule.move:29:9+4
+    // fulfilled($t6) at ./sources/FirstModule.move:36:9+4
     assume $Fulfilled($t6);
 
-    // write_ref($t14, $t13) at ./sources/FirstModule.move:29:9+15
+    // write_ref($t14, $t13) at ./sources/FirstModule.move:36:9+15
     $t14 := $UpdateMutation($t14, $t13);
 
-    // write_back[Reference($t6).x (u64)]($t14) at ./sources/FirstModule.move:29:9+15
+    // write_back[Reference($t6).x (u64)]($t14) at ./sources/FirstModule.move:36:9+15
     assume $Fulfilled($t14);
 
-    // write_back[Test::Y@]($t6) at ./sources/FirstModule.move:29:9+15
+    // write_back[Test::Y@]($t6) at ./sources/FirstModule.move:36:9+15
     assume $Dereference($t6) == $DereferenceProphecy($t6);
 
-    // assert forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:12:9+72
-    // global invariant at ./sources/FirstModule.move:12:9+72
-    assume {:print "$at(2,217,289)"} true;
-    assert {:msg "assert_failed(2,217,289): global memory invariant does not hold"}
+    // assert forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:12:9+71
+    // global invariant at ./sources/FirstModule.move:12:9+71
+    assume {:print "$at(2,216,287)"} true;
+    assert {:msg "assert_failed(2,216,287): global memory invariant does not hold"}
       (forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> ($IsEqual'address'(b, 48)));
 
     // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:14:9+147
     // global invariant at ./sources/FirstModule.move:14:9+147
-    assume {:print "$at(2,298,445)"} true;
-    assert {:msg "assert_failed(2,298,445): global memory invariant does not hold"}
+    assume {:print "$at(2,296,443)"} true;
+    assert {:msg "assert_failed(2,296,443): global memory invariant does not hold"}
       (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
 
-    // label L1 at ./sources/FirstModule.move:30:5+1
-    assume {:print "$at(2,842,843)"} true;
+    // label L1 at ./sources/FirstModule.move:37:5+1
+    assume {:print "$at(2,1077,1078)"} true;
 L1:
 
-    // return () at ./sources/FirstModule.move:30:5+1
-    assume {:print "$at(2,842,843)"} true;
+    // return () at ./sources/FirstModule.move:37:5+1
+    assume {:print "$at(2,1077,1078)"} true;
     return;
 
-    // label L2 at ./sources/FirstModule.move:30:5+1
+    // label L2 at ./sources/FirstModule.move:37:5+1
 L2:
 
-    // abort($t5) at ./sources/FirstModule.move:30:5+1
-    assume {:print "$at(2,842,843)"} true;
+    // abort($t5) at ./sources/FirstModule.move:37:5+1
+    assume {:print "$at(2,1077,1078)"} true;
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun Test::incr3 [verification] at ./sources/FirstModule.move:38:5+191
+procedure {:timeLimit 80} $82_Test_incr3$verify(_$t0: int, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: $Mutation ($82_Test_R);
+    var $t3: $Mutation ($82_Test_Y);
+    var $t4: $Mutation ($82_Test_Y);
+    var $t5: int;
+    var $t6: $Mutation ($82_Test_R);
+    var $t7: int;
+    var $t8: int;
+    var $t9: int;
+    var $t10: $Mutation (int);
+    var $t11: int;
+    var $t12: int;
+    var $t13: int;
+    var $t14: $Mutation (int);
+    var $t0: int;
+    var $t1: int;
+    var $temp_0'$82_Test_R': $82_Test_R;
+    var $temp_0'$82_Test_Y': $82_Test_Y;
+    var $temp_0'address': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at ./sources/FirstModule.move:38:5+1
+    assume {:print "$at(2,1083,1084)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at ./sources/FirstModule.move:38:5+1
+    assume $IsValid'address'($t1);
+
+    // assume forall $rsc: Test::R: ResourceDomain<Test::R>(): WellFormed($rsc) at ./sources/FirstModule.move:38:5+1
+    assume (forall $a_0: int :: {$ResourceValue($82_Test_R_$memory, $a_0)}(var $rsc := $ResourceValue($82_Test_R_$memory, $a_0);
+    ($IsValid'$82_Test_R'($rsc))));
+
+    // assume forall $rsc: Test::Y: ResourceDomain<Test::Y>(): WellFormed($rsc) at ./sources/FirstModule.move:38:5+1
+    assume (forall $a_0: int :: {$ResourceValue($82_Test_Y_$memory, $a_0)}(var $rsc := $ResourceValue($82_Test_Y_$memory, $a_0);
+    ($IsValid'$82_Test_Y'($rsc))));
+
+    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:38:5+191
+    // global invariant at ./sources/FirstModule.move:10:9+70
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ($IsEqual'address'(a, 0)));
+
+    // assume forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:38:5+191
+    // global invariant at ./sources/FirstModule.move:12:9+71
+    assume (forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> ($IsEqual'address'(b, 48)));
+
+    // assume forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:38:5+191
+    // global invariant at ./sources/FirstModule.move:14:9+147
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
+
+    // trace_local[a]($t0) at ./sources/FirstModule.move:38:5+1
+    assume {:print "$track_local(1,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[b]($t1) at ./sources/FirstModule.move:38:5+1
+    assume {:print "$track_local(1,2,1):", $t1} $t1 == $t1;
+
+    // $t4 := borrow_global<Test::Y>($t1) on_abort goto L2 with $t5 at ./sources/FirstModule.move:39:18+17
+    assume {:print "$at(2,1155,1172)"} true;
+    if (!$ResourceExists($82_Test_Y_$memory, $t1)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t4 := $MutationAlt($Global($t1), EmptyVec(), $ResourceValue($82_Test_Y_$memory, $t1));
+        assume $ResourceValue($82_Test_Y_$memory, $t1) == $Dereference($t4);
+        $82_Test_Y_$memory := $ResourceUpdate($82_Test_Y_$memory, $t1, $DereferenceProphecy($t4));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1155,1172)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(1,2):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[r2]($t4) at ./sources/FirstModule.move:39:13+2
+    $temp_0'$82_Test_Y' := $Dereference($t4);
+    assume {:print "$track_local(1,2,3):", $temp_0'$82_Test_Y'} $temp_0'$82_Test_Y' == $temp_0'$82_Test_Y';
+
+    // $t6 := borrow_global<Test::R>($t0) on_abort goto L2 with $t5 at ./sources/FirstModule.move:40:17+17
+    assume {:print "$at(2,1196,1213)"} true;
+    if (!$ResourceExists($82_Test_R_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t6 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($82_Test_R_$memory, $t0));
+        assume $ResourceValue($82_Test_R_$memory, $t0) == $Dereference($t6);
+        $82_Test_R_$memory := $ResourceUpdate($82_Test_R_$memory, $t0, $DereferenceProphecy($t6));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1196,1213)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(1,2):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[r]($t6) at ./sources/FirstModule.move:40:13+1
+    $temp_0'$82_Test_R' := $Dereference($t6);
+    assume {:print "$track_local(1,2,2):", $temp_0'$82_Test_R'} $temp_0'$82_Test_R' == $temp_0'$82_Test_R';
+
+    // $t7 := get_field<Test::R>.x($t6) at ./sources/FirstModule.move:41:15+3
+    assume {:print "$at(2,1235,1238)"} true;
+    $t7 := $Dereference($t6)->$x;
+
+    // $t8 := 1 at ./sources/FirstModule.move:41:21+1
+    $t8 := 1;
+    assume $IsValid'u64'($t8);
+
+    // $t9 := +($t7, $t8) on_abort goto L2 with $t5 at ./sources/FirstModule.move:41:19+1
+    call $t9 := $AddU64($t7, $t8);
+    if ($abort_flag) {
+        assume {:print "$at(2,1239,1240)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(1,2):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // $t10 := borrow_field<Test::R>.x($t6) at ./sources/FirstModule.move:41:9+3
+    call $t10 := $ChildMutationAlt($t6, 0, $Dereference($t6)->$x);
+    assume $Dereference($t10) == $Dereference($t6)->$x;
+    $t6 := $UpdateMutation($t6, $Update'$82_Test_R'_x($Dereference($t6), $DereferenceProphecy($t10)));
+
+    // fulfilled($t6) at ./sources/FirstModule.move:41:9+3
+    assume $Fulfilled($t6);
+
+    // write_ref($t10, $t9) at ./sources/FirstModule.move:41:9+13
+    $t10 := $UpdateMutation($t10, $t9);
+
+    // write_back[Reference($t6).x (u64)]($t10) at ./sources/FirstModule.move:41:9+13
+    assume $Fulfilled($t10);
+
+    // write_back[Test::R@]($t6) at ./sources/FirstModule.move:41:9+13
+    assume $Dereference($t6) == $DereferenceProphecy($t6);
+
+    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): Eq<address>(a, 0x0) at ./sources/FirstModule.move:10:9+70
+    // global invariant at ./sources/FirstModule.move:10:9+70
+    assume {:print "$at(2,137,207)"} true;
+    assert {:msg "assert_failed(2,137,207): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ($IsEqual'address'(a, 0)));
+
+    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:14:9+147
+    // global invariant at ./sources/FirstModule.move:14:9+147
+    assume {:print "$at(2,296,443)"} true;
+    assert {:msg "assert_failed(2,296,443): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
+
+    // $t11 := get_field<Test::Y>.x($t4) at ./sources/FirstModule.move:42:16+4
+    assume {:print "$at(2,1259,1263)"} true;
+    $t11 := $Dereference($t4)->$x;
+
+    // $t12 := 1 at ./sources/FirstModule.move:42:23+1
+    $t12 := 1;
+    assume $IsValid'u64'($t12);
+
+    // $t13 := +($t11, $t12) on_abort goto L2 with $t5 at ./sources/FirstModule.move:42:21+1
+    call $t13 := $AddU64($t11, $t12);
+    if ($abort_flag) {
+        assume {:print "$at(2,1264,1265)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(1,2):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // $t14 := borrow_field<Test::Y>.x($t4) at ./sources/FirstModule.move:42:9+4
+    call $t14 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$x);
+    assume $Dereference($t14) == $Dereference($t4)->$x;
+    $t4 := $UpdateMutation($t4, $Update'$82_Test_Y'_x($Dereference($t4), $DereferenceProphecy($t14)));
+
+    // fulfilled($t4) at ./sources/FirstModule.move:42:9+4
+    assume $Fulfilled($t4);
+
+    // write_ref($t14, $t13) at ./sources/FirstModule.move:42:9+15
+    $t14 := $UpdateMutation($t14, $t13);
+
+    // write_back[Reference($t4).x (u64)]($t14) at ./sources/FirstModule.move:42:9+15
+    assume $Fulfilled($t14);
+
+    // write_back[Test::Y@]($t4) at ./sources/FirstModule.move:42:9+15
+    assume $Dereference($t4) == $DereferenceProphecy($t4);
+
+    // assert forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Eq<address>(b, 0x30) at ./sources/FirstModule.move:12:9+71
+    // global invariant at ./sources/FirstModule.move:12:9+71
+    assume {:print "$at(2,216,287)"} true;
+    assert {:msg "assert_failed(2,216,287): global memory invariant does not hold"}
+      (forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> ($IsEqual'address'(b, 48)));
+
+    // assert forall a: address: TypeDomain<address>() where exists<Test::R>(a): forall b: address: TypeDomain<address>() where exists<Test::Y>(b): Ge(select Test::R.x<Test::R>(global<Test::R>(a)), select Test::Y.x<Test::Y>(global<Test::Y>(b))) at ./sources/FirstModule.move:14:9+147
+    // global invariant at ./sources/FirstModule.move:14:9+147
+    assume {:print "$at(2,296,443)"} true;
+    assert {:msg "assert_failed(2,296,443): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($82_Test_R_$memory, a))  ==> ((forall b: int :: $IsValid'address'(b) ==> ($ResourceExists($82_Test_Y_$memory, b))  ==> (($ResourceValue($82_Test_R_$memory, a)->$x >= $ResourceValue($82_Test_Y_$memory, b)->$x)))));
+
+    // label L1 at ./sources/FirstModule.move:43:5+1
+    assume {:print "$at(2,1273,1274)"} true;
+L1:
+
+    // return () at ./sources/FirstModule.move:43:5+1
+    assume {:print "$at(2,1273,1274)"} true;
+    return;
+
+    // label L2 at ./sources/FirstModule.move:43:5+1
+L2:
+
+    // abort($t5) at ./sources/FirstModule.move:43:5+1
+    assume {:print "$at(2,1273,1274)"} true;
     $abort_code := $t5;
     $abort_flag := true;
     return;

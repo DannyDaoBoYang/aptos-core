@@ -35,7 +35,7 @@ module 0x82::Test {
         //Invariant injected here
         r2.x = r2.x + 1;
     }
-    public fun incr2(a: address, b:address) acquires R, Y{
+    public fun incr3(a: address, b:address) acquires R, Y{
         let r2 = borrow_global_mut<Y>(b);
         let r = borrow_global_mut<R>(a);
         r.x = r.x + 1;
