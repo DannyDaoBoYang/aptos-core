@@ -1,0 +1,25 @@
+[INFO] checking specifications
+[INFO] rewriting specifications
+[INFO] preparing module 0x82::Test
+[INFO] transforming bytecode
+[INFO] generating verification conditions
+[INFO] 1 verification conditions
+[INFO] running solver
+[INFO] 0.016s build, 0.002s trafo, 0.008s gen, 0.781s verify, total 0.807s
+error: global memory invariant does not hold
+   ┌─ ./sources/FirstModule.move:10:9
+   │  
+10 │ ╭         invariant update forall a: address where exists<R>(a):
+11 │ │                 global<R>(a).x == old(global<R>(a).x) + 1;
+   │ ╰──────────────────────────────────────────────────────────^
+   │  
+   =     at ./sources/FirstModule.move:14: incr
+   =         a = 0x60e1
+   =     at ./sources/FirstModule.move:15: incr
+   =         r = &Test.R{x = 0}
+   =     at ./sources/FirstModule.move:16: incr
+   =     at ./sources/FirstModule.move:14: incr
+   =     at ./sources/FirstModule.move:16: incr
+   =     at ./sources/FirstModule.move:10
+
+Error: exiting with verification errors

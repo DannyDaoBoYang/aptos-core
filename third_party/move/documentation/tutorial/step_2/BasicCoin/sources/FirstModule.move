@@ -1,17 +1,18 @@
-module 0xCAFE::BasicCoin {
-    struct S has drop{
+module 0x82::Test {
+    struct R has key {
         x: u64,
-        y: u64,
     }
-    public fun ib (a: &mut S): &mut u64{
-        return &mut a.x
+    struct Y has key {
+        x: u64,
     }
-    public fun mint(value1: S, value2: S, cond: bool) {
-        let x = if (cond) {
-            ib(&mut value1)
-        } else {
-            &mut value2.y
-        };
-        *x = 0;
+
+    spec module {
+        invariant update forall a: address where exists<R>(a):
+                global<R>(a).x == old(global<R>(a).x) + 1;
+    }
+
+    public fun incr(a: address) acquires R{
+        let r = borrow_global_mut<R>(a);
+        r.x = r.x + 1;
     }
 }
