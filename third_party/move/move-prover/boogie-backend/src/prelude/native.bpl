@@ -497,9 +497,9 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     } else {
         call dst := $MutationAlt(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
         assume dst->l == m->l;
-        assume dst->l == ExtendVec(m->p, enc_k);
+        assume dst->p == ExtendVec(m->p, enc_k);
         assume dst->v == GetTable(t, enc_k);
-        m' = $UpdateMutation(m, UpdateTable(t, enc_k, $DereferenceProphecy(dst)));
+        m' := m;
     }
 }
 {%- endif %}
@@ -519,13 +519,13 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
         t' := $Dereference(m');
         call dst := $MutationAlt(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k));
         assume dst->l == m'->l;
-        assume dst->l == ExtendVec(m'->p, enc_k);
+        assume dst->p == ExtendVec(m'->p, enc_k);
         assume dst->v == GetTable(t', enc_k);
-        m' = $UpdateMutation(m', UpdateTable(t', enc_k, DereferenceProphecy(dst)));
+        m' := $UpdateMutation(m', UpdateTable(t', enc_k, $DereferenceProphecy(dst)));
     } else {
         call dst := $MutationAlt(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
         assume dst->l == m->l;
-        assume dst->l == ExtendVec(m->p, enc_k);
+        assume dst->p == ExtendVec(m->p, enc_k);
         assume dst->v == GetTable(t, enc_k);
         m' := $UpdateMutation(m', UpdateTable(t', enc_k, $DereferenceProphecy(dst)));
     }
