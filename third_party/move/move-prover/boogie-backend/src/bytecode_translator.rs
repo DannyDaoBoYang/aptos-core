@@ -994,6 +994,10 @@ impl<'env> FunctionTranslator<'env> {
 
         // Generate local variable declarations. They need to appear first in boogie.
         emitln!(writer, "// declare local variables");
+        emitln!(
+            writer,
+            "var $isEntryPoint: bool;"
+        );
         let num_args = fun_target.get_parameter_count();
         let mid = fun_target.func_env.module_env.get_id();
         let fid = fun_target.func_env.get_id();
@@ -1132,7 +1136,7 @@ impl<'env> FunctionTranslator<'env> {
         emitln!(writer, "\n// verification entrypoint assumptions");
 
         // Prelude initialization
-        emitln!(writer, "call $InitVerification();");
+        emitln!(writer, "call $isEntryPoint := $InitVerification();");
 
         // Assume reference parameters to be based on the Param(i) Location, ensuring
         // they are disjoint from all other references. This prevents aliasing and is justified as
@@ -1453,11 +1457,14 @@ impl<'env> FunctionTranslator<'env> {
                     },
                     Fulfilled(_) => {
                         let reference = srcs[0];
+                        //To do: cur_index, but not increasing
                         emitln!(
                             writer,
-                            "assume $Fulfilled({});",
-                            str_local(reference),
+                            "assume $Fulfilled({}, $cur_index);",
+                            str_local(reference)
                         );
+                        //increment cur_index after the batch or after each one?
+                        //definetly after the batch because we compressed the write_backs
                     }
                     WriteRef => {
                         let reference = srcs[0];
@@ -1779,8 +1786,12 @@ impl<'env> FunctionTranslator<'env> {
                             src_str,
                             field_sel,
                         );
-                        emitln!(writer, "assume $Dereference({}) == $Dereference({})->{};",
-                        dest_str, src_str, field_sel);
+                        emitln!(writer, "assume $Dereference({}) == $Dereference({})->{};", dest_str, src_str, field_sel);
+                        emitln!(writer, "{} := $UpdateMutationRToken({}, {});",
+                            src_str,
+                            src_str,
+                            dest_str
+                        );
                         let update_fun = boogie_field_update(field_env, inst);
                         emitln!(
                             writer,
@@ -2707,7 +2718,8 @@ impl<'env> FunctionTranslator<'env> {
                 //emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
-                emitln!(writer, "assume $Fulfilled({});", src_str);
+                //To do: cur_index.
+                emitln!(writer, "assume $Fulfilled({}, $cur_index);", src_str);
                 /*let dst_value = format!("$Dereference($t{})", idx);
                 let src_value = format!("$Dereference({})", src_str);
 
