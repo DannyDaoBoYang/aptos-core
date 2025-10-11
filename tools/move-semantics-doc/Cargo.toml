@@ -1,0 +1,14 @@
+[package]
+name = "move-semantics-doc"
+version = "0.1.0"
+edition = "2021"
+authors = ["Aptos Labs"]
+description = "Tool to generate Move bytecode semantics documentation"
+publish = false
+
+[[bin]]
+name = "move-semantics-doc"
+path = "src/main.rs"
+
+[dependencies]
+move-binary-format = { path = "../../third_party/move/move-binary-format" }
