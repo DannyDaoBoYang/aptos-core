@@ -1,6 +1,44 @@
 # Move Bytecode Semantics
 
-This document describes the semantics of Move bytecode instructions based on the interpreter implementation.
+This document describes the formal semantics of Move bytecode instructions as implemented in the Move VM interpreter.
+
+## Overview
+
+The Move Virtual Machine (VM) executes Move bytecode through an interpreter that operates on a stack-based architecture. Each bytecode instruction has formally defined semantics that specify:
+
+- **Behavior**: What the instruction does (described in pseudocode)
+- **Stack effects**: How it manipulates the operand stack
+- **Static operands**: Parameters encoded in the bytecode
+- **Type safety**: Runtime checks ensuring type correctness
+
+## Notation
+
+The semantics use the following notation:
+
+- `stack >> var` - Pop a value from the operand stack and bind it to `var`
+- `stack << val` - Push `val` onto the operand stack
+- `call_stack >> frame` - Pop a frame from the call stack
+- `call_stack << frame` - Push a frame onto the call stack
+- `current_frame.pc` - Program counter (instruction pointer) of the current frame
+- `ty_stack` - Type stack used for runtime type checking (in paranoid mode)
+- `(*ref)` - Dereference operation on a reference
+
+## Instruction Groups
+
+Bytecode instructions are organized into the following functional groups:
+
+1. **Control Flow** - Branch, call, return, and abort instructions
+2. **Stack and Local** - Stack manipulation and local variable access
+3. **Reference** - Reference creation and manipulation
+4. **Arithmetic** - Integer arithmetic operations
+5. **Casting** - Type conversion between integer types
+6. **Bitwise** - Bitwise logical operations
+7. **Comparison** - Value comparison operations
+8. **Boolean** - Boolean logical operations
+9. **Struct** - Struct operations (pack, unpack, borrow field)
+10. **Variant** - Enum variant operations
+11. **Global** - Global storage operations (move_to, move_from, borrow_global)
+12. **Vector** - Vector operations
 
 ---
 
