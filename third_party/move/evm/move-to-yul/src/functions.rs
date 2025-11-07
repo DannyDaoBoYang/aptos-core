@@ -589,9 +589,11 @@ impl<'a> FunctionGenerator<'a> {
             | Nop(_)
             | SaveMem(_, _, _)
             | SaveSpecVar(_, _, _)
-            | Prop(_, _, _) => {
+            | Prop(_, _, _)
+            | PropWithMem(_, _, _, _) => {
                 // These opcodes are not needed, ignore them
             },
+
         }
     }
 

@@ -443,6 +443,7 @@ pub enum Bytecode {
     SaveMem(AttrId, MemoryLabel, QualifiedInstId<StructId>),
     SaveSpecVar(AttrId, MemoryLabel, QualifiedInstId<SpecVarId>),
     Prop(AttrId, PropKind, Exp),
+    PropWithMem(AttrId, PropKind, Exp, QualifiedInstId<StructId>),
 }
 
 impl Bytecode {
@@ -461,7 +462,8 @@ impl Bytecode {
             | SpecBlock(id, ..)
             | SaveMem(id, ..)
             | SaveSpecVar(id, ..)
-            | Prop(id, ..) => *id,
+            | Prop(id, ..)
+            | PropWithMem(id, ..) => *id,
         }
     }
 
@@ -480,7 +482,8 @@ impl Bytecode {
             | SpecBlock(id, ..)
             | SaveMem(id, ..)
             | SaveSpecVar(id, ..)
-            | Prop(id, ..) => id,
+            | Prop(id, ..)
+            | PropWithMem(id, .. ) => id,
         };
         *id = new_id;
     }
@@ -549,7 +552,8 @@ impl Bytecode {
             // Note that for all spec-only instructions, we currently return no sources.
             Bytecode::SaveMem(_, _, _)
             | Bytecode::SaveSpecVar(_, _, _)
-            | Bytecode::Prop(_, _, _) => {
+            | Bytecode::Prop(_, _, _)
+            | Bytecode::PropWithMem(_, _, _ , _ )=> {
                 unimplemented!("should not be called on spec-only instructions")
             },
         }
@@ -580,7 +584,8 @@ impl Bytecode {
             | Bytecode::SaveMem(_, _, _)
             | Bytecode::SaveSpecVar(_, _, _)
             | Bytecode::SpecBlock(..)
-            | Bytecode::Prop(_, _, _) => Vec::new(),
+            | Bytecode::Prop(_, _, _)
+            | Bytecode::PropWithMem(_, _,_,_ )=> Vec::new(),
         }
     }
 
@@ -1031,6 +1036,14 @@ impl<'env> fmt::Display for BytecodeDisplay<'env> {
                 )?;
             },
             Prop(_, kind, exp) => {
+                let exp_display = exp.display(self.func_target.func_env.module_env.env);
+                match kind {
+                    PropKind::Assume => write!(f, "assume {}", exp_display)?,
+                    PropKind::Assert => write!(f, "assert {}", exp_display)?,
+                    PropKind::Modifies => write!(f, "modifies {}", exp_display)?,
+                }
+            },
+            PropWithMem(_, kind, exp, _) => {
                 let exp_display = exp.display(self.func_target.func_env.module_env.env);
                 match kind {
                     PropKind::Assume => write!(f, "assume {}", exp_display)?,

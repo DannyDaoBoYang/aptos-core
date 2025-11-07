@@ -1236,6 +1236,22 @@ impl<'env> FunctionTranslator<'env> {
             SaveSpecVar(_, _label, _var) => {
                 panic!("spec var snapshot NYI")
             },
+            PropWithMem(id,  kind, exp, mid ) => {
+                emit!(writer, "assert ");
+                    let info = fun_target
+                        .get_vc_info(*id)
+                        .map(|s| s.as_str())
+                        .unwrap_or("unknown assertion failed");
+                    emit!(
+                        writer,
+                        "{{:msg \"assert_failed{}: {}\"}}\n  ",
+                        self.loc_str(&loc),
+                        info
+                    );
+                    emit!(writer, "");
+                    spec_translator.translate(exp, self.type_inst);
+                    emitln!(writer, ";");
+            },
             Prop(id, kind, exp) => match kind {
                 PropKind::Assert => {
                     emit!(writer, "assert ");

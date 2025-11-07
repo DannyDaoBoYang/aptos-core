@@ -369,6 +369,23 @@ impl<'a> Instrumenter<'a> {
         }
 
         match &bc {
+            Call(_, _, BorrowGlobal(mid, sid, inst), ..) => {
+                //To Do, the global specification and borrow global
+                //must be in the same instruction, because I need
+                //the index prophecied to retrieve the value.
+                //Idea: checks occur at place of borrow
+                //values are passed back from the future
+                self.builder.emit(bc.clone());
+                let mem = mid.qualified_inst(*sid, inst.to_owned());
+                self.emit_invariants_for_bytecode(
+                    &bc,
+                    &fun_id,
+                    inv_ana_data,
+                    &mem,
+                    &always_check_invs,
+                );
+
+            },
             Call(_, _, WriteBack(GlobalRoot(mem), ..), ..) => {
                 self.emit_invariants_for_bytecode(
                     &bc,
@@ -534,6 +551,7 @@ impl<'a> Instrumenter<'a> {
                 .collect();
         }
         self.emit_assumes_and_saves_before_bytecode(modified_invariants, entrypoint_invariants);
+        self.emit_assumes_and_saves_before_bytecode_conditioned_on_mem(modified_invariants, entrypoint_invariants, mem);
         // put out the modifying instruction byte code.
         self.builder.emit(bc.clone());
         self.emit_asserts_after_bytecode();

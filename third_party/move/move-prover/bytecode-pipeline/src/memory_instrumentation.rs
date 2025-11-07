@@ -20,7 +20,7 @@ use move_stackless_bytecode::{
         Operation,
     },
 };
-use std::collections::BTreeSet;
+use std::{collections::BTreeSet, iter::Map};
 
 pub struct MemoryInstrumentationProcessor {}
 
@@ -298,6 +298,7 @@ impl<'a> Instrumenter<'a> {
                     None
                 };
 
+
                 // issue a chain of write-back actions
                 for action in chain {
                     // decide if we need a pre-writeback pack-ref (i.e., data structure invariant checking)
@@ -356,37 +357,54 @@ impl<'a> Instrumenter<'a> {
                     self.builder.emit_with(|id| Bytecode::Label(id, label));
                 }
             }
-            //think I need a branch here
-            //Second iteration: reference nodes only
-            //already in the skip_lable
-            /*
+
+        }
+        /*
+        let mut possible_src = Vec::new();
+        let mut possible_dst = Vec::new();
+        let mut possible_edge = Vec::new();
+        let mut processed_src = Vec::new();
+        let mut processed_dst: Map<BorrowNode, Vec<BorrowNode>> = Vec::new();
+        let mut processed_edge: Map<BorrowNode, Vec<BorrowEdge>> = Vec::new();
+        for (node, ancestors) in before.dying_nodes(after) {
             for (chain_index, chain) in ancestors.iter().enumerate() {
-                // sanity check: the src node of the first action must be the node itself
-                assert_eq!(
-                    chain
-                        .first()
-                        .expect("The write-back chain should contain at action")
-                        .src,
-                    node_idx
-                );
-
-                let first_writeBack_is_reference =  match &chain.first().unwrap().dst {
-                    BorrowNode::Reference(..) => true,
-                    _ => false
-                };
-                if !first_writeBack_is_reference {
-                    continue;
-                };
-                // decide on whether we need IsParent checks and how to instrument the checks
-
-                // issue a chain of write-back actions
                 for action in chain {
-                    // decide if we need a pre-writeback pack-ref (i.e., data structure invariant checking)
-                    let pre_writeback_check_opt = match &action.dst {
+                    possible_src.push(action.src.clone());
+                    possible_dst.push(action.dst.clone());
+                    possible_edge.push(action.edge.clone());
+                }
+            }
+        }
+
+        for i in (0..possible_src.len()).rev() {
+            // there should be 1 fulfill/write_back per src
+            // there could be multiple fulfill per dst if:
+            // the 2 edges are parallel in conditional borrow
+            // also remember all address in all branches is locked
+            // after joining
+            let src = possible_src[i].clone();
+            let dst = possible_dst[i].clone();
+            let edge = possible_edge[i].clone();
+            if processed_src.contains(&src) {
+                processed_dst[src].push(dst.clone());
+                processed_edge[src].push(edge.clone());
+                continue;
+            }
+            processed_src.push(src.clone());
+            processed_dst[src] = vec![dst.clone()];
+            processed_edge[src] = vec![edge.clone()];
+        }
+        for i in (0..processed_src.len()).rev(){
+            let src = processed_src[i].clone();
+            let pre_writeback_check_opt = None;
+            for j in (0..processed_des[src].len()).rev(){
+                let dst = processed_dst[src][j].clone();
+                let edge = processed_edge[src][j].clone();
+                pre_writeback_check_opt = match &dst {
                         BorrowNode::LocalRoot(..) | BorrowNode::GlobalRoot(..) => {
                             // On write-back to a root, "pack" the reference, i.e. validate all its invariants.
                             let target = self.builder.get_target();
-                            let ty = target.get_local_type(action.src);
+                            let ty = target.get_local_type(src);
                             if self.is_pack_ref_ty(ty) {
                                 Some(action.src)
                             } else {
@@ -395,44 +413,23 @@ impl<'a> Instrumenter<'a> {
                         },
                         BorrowNode::Reference(..) => None,
                         BorrowNode::ReturnPlaceholder(..) => unreachable!("invalid placeholder"),
-                    };
+                };
                     if let Some(idx) = pre_writeback_check_opt {
                         self.builder.emit_with(|id| {
                             Bytecode::Call(id, vec![], Operation::PackRefDeep, vec![idx], None)
                         });
                     }
-
-                    // emit the write-back
-                    self.builder.emit_with(|id| {
-                        Bytecode::Call(
-                            id,
-                            vec![],
-                            Operation::WriteBack(action.dst.clone(), action.edge.clone()),
-                            vec![action.src],
-                            None,
-                        )
-                    });
-
-                    // add a trace for written back value if it's a user variable.
-                    match action.dst {
-                        BorrowNode::LocalRoot(temp) | BorrowNode::Reference(temp) => {
-                            if temp < self.builder.fun_env.get_local_count().unwrap_or_default() {
-                                self.builder.emit_with(|id| {
-                                    Bytecode::Call(
-                                        id,
-                                        vec![],
-                                        Operation::TraceLocal(temp),
-                                        vec![temp],
-                                        None,
-                                    )
-                                });
-                            }
-                        },
-                        _ => {},
-                    }
-                }
-            }*/
-
+            }
+            self.builder.emit_with(|id| {
+                Bytecode::Call(
+                    id,
+                    vec![],
+                    Operation::Fulfilled(src.clone()),
+                    vec![],
+                    None,
+                )
+            });
         }
+        */
     }
 }

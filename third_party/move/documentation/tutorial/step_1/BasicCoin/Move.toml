@@ -7,3 +7,5 @@ NamedAddr = "0xDEADBEEF"
 
 [dependencies]
 MoveStdlib = { local = "../../../../move-stdlib/", addr_subst = { "std" = "0x1" } }
+MoveTableExtension = {local = "../../../../extensions/move-table-extension", addr_subst = { "extensions" = "0x90" } }
+

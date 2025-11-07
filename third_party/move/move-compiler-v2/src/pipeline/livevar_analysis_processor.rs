@@ -378,6 +378,11 @@ impl<'a> TransferFunctions for LiveVarAnalysis<'a> {
                     state.insert_or_update(idx, self.livevar_info(id, offset), true);
                 }
             },
+            PropWithMem(id, _, exp, _) if self.track_all_usages => {
+                for idx in exp.used_temporaries() {
+                    state.insert_or_update(idx, self.livevar_info(id, offset), true);
+                }
+            },
             SpecBlock(id, spec) if self.track_all_usages => {
                 for idx in spec.used_temporaries() {
                     state.insert_or_update(idx, self.livevar_info(id, offset), true);
