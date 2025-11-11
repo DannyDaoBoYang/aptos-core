@@ -1750,7 +1750,7 @@ impl FunctionTranslator<'_> {
             SaveSpecVar(_, _label, _var) => {
                 panic!("spec var snapshot NYI")
             },
-            PropWithMem(id,  kind, exp, mid ) => {
+            /*PropWithMem(id,  kind, exp, mid ) => {
                 emit!(writer, "assert ");
                     let info = fun_target
                         .get_vc_info(*id)
@@ -1765,7 +1765,7 @@ impl FunctionTranslator<'_> {
                     emit!(writer, "");
                     spec_translator.translate(exp, self.type_inst);
                     emitln!(writer, ";");
-            },
+            },*/
             Prop(id, kind, exp) => match kind {
                 PropKind::Assert => {
                     emit!(writer, "assert ");
@@ -2312,11 +2312,11 @@ impl FunctionTranslator<'_> {
                             field_sel,
                         );
                         emitln!(writer, "assume $Dereference({}) == $Dereference({})->{};", dest_str, src_str, field_sel);
-                        emitln!(writer, "{} := $UpdateMutationRToken({}, {});",
+                        /*emitln!(writer, "{} := $UpdateMutationRToken({}, {});",
                             src_str,
                             src_str,
                             dest_str
-                        );
+                        );*/
                         let update_fun = boogie_field_update(field_env, inst);
                         emitln!(
                             writer,
@@ -3537,7 +3537,7 @@ impl FunctionTranslator<'_> {
                         idx,
                         update
                     );
-                }
+                }*/
             },
         }
     }

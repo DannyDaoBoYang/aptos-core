@@ -348,7 +348,8 @@ impl<'a> FunctionGenerator<'a> {
             | Bytecode::Call(_, _, _, _, Some(_))
             | Bytecode::SaveSpecVar(_, _, _)
             | Bytecode::Prop(_, _, _)
-            | Bytecode::PropWithMem(_,_,_,_ )=> {
+            //| Bytecode::PropWithMem(_,_,_,_ )
+            => {
                 // do nothing -- skip specification ops
             },
         }

@@ -235,22 +235,1033 @@ axiom {:ctor "Table"} (forall<K,V> t: Table K V :: {LenTable(t)}
 // and the above axiom seems to be sufficient.
 
 
-// ============================================================================================
-// Primitive Types
 
+// Uninterpreted function for all types
+
+
+function $Arbitrary_value_of'$42_Test_R'(): $42_Test_R;
+
+
+
+function $Arbitrary_value_of'bool'(): bool;
+
+
+
+function $Arbitrary_value_of'address'(): int;
+
+
+
+function $Arbitrary_value_of'u64'(): int;
+
+
+
+function $Arbitrary_value_of'bv64'(): bv64;
+
+
+
+
+// ============================================================================================
+// Integer Types
+
+// Constants, Instructions, and Procedures needed by both unsigned and signed integers, but defined separately.
+
+
+
+const $MIN_U8: int;
 const $MAX_U8: int;
+axiom $MIN_U8 == 0;
 axiom $MAX_U8 == 255;
+
+function $IsValid'u8'(v: int): bool {
+  v >= $MIN_U8 && v <= $MAX_U8
+}
+
+function {:inline} $IsEqual'u8'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastU8(src: int) returns (dst: int)
+{
+    if (src < $MIN_U8 || src > $MAX_U8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddU8(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_U8 || src1 + src2 < $MIN_U8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddU8_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubU8(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_U8 || src1 - src2 < $MIN_U8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulU8(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_U8 || src1 * src2 < $MIN_U8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_U16: int;
 const $MAX_U16: int;
+axiom $MIN_U16 == 0;
 axiom $MAX_U16 == 65535;
+
+function $IsValid'u16'(v: int): bool {
+  v >= $MIN_U16 && v <= $MAX_U16
+}
+
+function {:inline} $IsEqual'u16'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastU16(src: int) returns (dst: int)
+{
+    if (src < $MIN_U16 || src > $MAX_U16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddU16(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_U16 || src1 + src2 < $MIN_U16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddU16_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubU16(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_U16 || src1 - src2 < $MIN_U16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulU16(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_U16 || src1 * src2 < $MIN_U16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_U32: int;
 const $MAX_U32: int;
+axiom $MIN_U32 == 0;
 axiom $MAX_U32 == 4294967295;
+
+function $IsValid'u32'(v: int): bool {
+  v >= $MIN_U32 && v <= $MAX_U32
+}
+
+function {:inline} $IsEqual'u32'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastU32(src: int) returns (dst: int)
+{
+    if (src < $MIN_U32 || src > $MAX_U32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddU32(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_U32 || src1 + src2 < $MIN_U32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddU32_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubU32(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_U32 || src1 - src2 < $MIN_U32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulU32(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_U32 || src1 * src2 < $MIN_U32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_U64: int;
 const $MAX_U64: int;
+axiom $MIN_U64 == 0;
 axiom $MAX_U64 == 18446744073709551615;
+
+function $IsValid'u64'(v: int): bool {
+  v >= $MIN_U64 && v <= $MAX_U64
+}
+
+function {:inline} $IsEqual'u64'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastU64(src: int) returns (dst: int)
+{
+    if (src < $MIN_U64 || src > $MAX_U64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddU64(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_U64 || src1 + src2 < $MIN_U64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddU64_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubU64(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_U64 || src1 - src2 < $MIN_U64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulU64(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_U64 || src1 * src2 < $MIN_U64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_U128: int;
 const $MAX_U128: int;
+axiom $MIN_U128 == 0;
 axiom $MAX_U128 == 340282366920938463463374607431768211455;
+
+function $IsValid'u128'(v: int): bool {
+  v >= $MIN_U128 && v <= $MAX_U128
+}
+
+function {:inline} $IsEqual'u128'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastU128(src: int) returns (dst: int)
+{
+    if (src < $MIN_U128 || src > $MAX_U128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddU128(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_U128 || src1 + src2 < $MIN_U128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddU128_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubU128(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_U128 || src1 - src2 < $MIN_U128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulU128(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_U128 || src1 * src2 < $MIN_U128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_U256: int;
 const $MAX_U256: int;
+axiom $MIN_U256 == 0;
 axiom $MAX_U256 == 115792089237316195423570985008687907853269984665640564039457584007913129639935;
 
+function $IsValid'u256'(v: int): bool {
+  v >= $MIN_U256 && v <= $MAX_U256
+}
+
+function {:inline} $IsEqual'u256'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastU256(src: int) returns (dst: int)
+{
+    if (src < $MIN_U256 || src > $MAX_U256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddU256(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_U256 || src1 + src2 < $MIN_U256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddU256_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubU256(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_U256 || src1 - src2 < $MIN_U256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulU256(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_U256 || src1 * src2 < $MIN_U256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_I8: int;
+const $MAX_I8: int;
+axiom $MIN_I8 == -128;
+axiom $MAX_I8 == 127;
+
+function $IsValid'i8'(v: int): bool {
+  v >= $MIN_I8 && v <= $MAX_I8
+}
+
+function {:inline} $IsEqual'i8'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastI8(src: int) returns (dst: int)
+{
+    if (src < $MIN_I8 || src > $MAX_I8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddI8(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_I8 || src1 + src2 < $MIN_I8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddI8_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubI8(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_I8 || src1 - src2 < $MIN_I8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulI8(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_I8 || src1 * src2 < $MIN_I8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_I16: int;
+const $MAX_I16: int;
+axiom $MIN_I16 == -32768;
+axiom $MAX_I16 == 32767;
+
+function $IsValid'i16'(v: int): bool {
+  v >= $MIN_I16 && v <= $MAX_I16
+}
+
+function {:inline} $IsEqual'i16'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastI16(src: int) returns (dst: int)
+{
+    if (src < $MIN_I16 || src > $MAX_I16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddI16(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_I16 || src1 + src2 < $MIN_I16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddI16_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubI16(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_I16 || src1 - src2 < $MIN_I16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulI16(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_I16 || src1 * src2 < $MIN_I16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_I32: int;
+const $MAX_I32: int;
+axiom $MIN_I32 == -2147483648;
+axiom $MAX_I32 == 2147483647;
+
+function $IsValid'i32'(v: int): bool {
+  v >= $MIN_I32 && v <= $MAX_I32
+}
+
+function {:inline} $IsEqual'i32'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastI32(src: int) returns (dst: int)
+{
+    if (src < $MIN_I32 || src > $MAX_I32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddI32(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_I32 || src1 + src2 < $MIN_I32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddI32_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubI32(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_I32 || src1 - src2 < $MIN_I32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulI32(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_I32 || src1 * src2 < $MIN_I32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_I64: int;
+const $MAX_I64: int;
+axiom $MIN_I64 == -9223372036854775808;
+axiom $MAX_I64 == 9223372036854775807;
+
+function $IsValid'i64'(v: int): bool {
+  v >= $MIN_I64 && v <= $MAX_I64
+}
+
+function {:inline} $IsEqual'i64'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastI64(src: int) returns (dst: int)
+{
+    if (src < $MIN_I64 || src > $MAX_I64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddI64(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_I64 || src1 + src2 < $MIN_I64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddI64_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubI64(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_I64 || src1 - src2 < $MIN_I64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulI64(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_I64 || src1 * src2 < $MIN_I64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_I128: int;
+const $MAX_I128: int;
+axiom $MIN_I128 == -170141183460469231731687303715884105728;
+axiom $MAX_I128 == 170141183460469231731687303715884105727;
+
+function $IsValid'i128'(v: int): bool {
+  v >= $MIN_I128 && v <= $MAX_I128
+}
+
+function {:inline} $IsEqual'i128'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastI128(src: int) returns (dst: int)
+{
+    if (src < $MIN_I128 || src > $MAX_I128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddI128(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_I128 || src1 + src2 < $MIN_I128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddI128_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubI128(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_I128 || src1 - src2 < $MIN_I128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulI128(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_I128 || src1 * src2 < $MIN_I128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+const $MIN_I256: int;
+const $MAX_I256: int;
+axiom $MIN_I256 == -57896044618658097711785492504343953926634992332820282019728792003956564819968;
+axiom $MAX_I256 == 57896044618658097711785492504343953926634992332820282019728792003956564819967;
+
+function $IsValid'i256'(v: int): bool {
+  v >= $MIN_I256 && v <= $MAX_I256
+}
+
+function {:inline} $IsEqual'i256'(x: int, y: int): bool {
+    x == y
+}
+
+procedure {:inline 1} $CastI256(src: int) returns (dst: int)
+{
+    if (src < $MIN_I256 || src > $MAX_I256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src;
+}
+
+procedure {:inline 1} $AddI256(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 + src2 > $MAX_I256 || src1 + src2 < $MIN_I256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $AddI256_unchecked(src1: int, src2: int) returns (dst: int)
+{
+    dst := src1 + src2;
+}
+
+procedure {:inline 1} $SubI256(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 - src2 > $MAX_I256 || src1 - src2 < $MIN_I256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 - src2;
+}
+
+procedure {:inline 1} $MulI256(src1: int, src2: int) returns (dst: int)
+{
+    if (src1 * src2 > $MAX_I256 || src1 * src2 < $MIN_I256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 * src2;
+}
+
+
+// Instructions and Procedures shared by unsigned and signed integers
+
+// uninterpreted function to return an undefined value.
+function $undefined_int(): int;
+
+procedure {:inline 1} $Div(src1: int, src2: int) returns (dst: int)
+{
+    if (src2 == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 div src2;
+}
+
+procedure {:inline 1} $Mod(src1: int, src2: int) returns (dst: int)
+{
+    if (src2 == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := src1 mod src2;
+}
+
+// Unimplemented binary arithmetic operations; return the dst
+procedure {:inline 1} $ArithBinaryUnimplemented(src1: int, src2: int) returns (dst: int);
+
+// Instructions and Procedures unique to unsigned integers
+
+// Recursive exponentiation function
+// Undefined unless e >=0.  $pow(0,0) is also undefined.
+function $pow(n: int, e: int): int {
+    if n != 0 && e == 0 then 1
+    else if e > 0 then n * $pow(n, e - 1)
+    else $undefined_int()
+}
+
+function $shl(src1: int, p: int): int {
+    src1 * $pow(2, p)
+}
+
+function $shr(src1: int, p: int): int {
+    src1 div $pow(2, p)
+}
+
+procedure {:inline 1} $Shr(src1: int, src2: int) returns (dst: int)
+{
+    var res: int;
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+    dst := $shr(src1, src2);
+}
+
+
+
+
+function $shlU8(src1: int, p: int): int {
+    (src1 * $pow(2, p)) mod ($MAX_U8 + 1)
+}
+
+procedure {:inline 1} $ShlU8(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 8) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shlU8(src1, src2);
+}
+
+procedure {:inline 1} $ShrU8(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 8) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shr(src1, src2);
+}
+
+
+function $shlU16(src1: int, p: int): int {
+    (src1 * $pow(2, p)) mod ($MAX_U16 + 1)
+}
+
+procedure {:inline 1} $ShlU16(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 16) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shlU16(src1, src2);
+}
+
+procedure {:inline 1} $ShrU16(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 16) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shr(src1, src2);
+}
+
+
+function $shlU32(src1: int, p: int): int {
+    (src1 * $pow(2, p)) mod ($MAX_U32 + 1)
+}
+
+procedure {:inline 1} $ShlU32(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 32) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shlU32(src1, src2);
+}
+
+procedure {:inline 1} $ShrU32(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 32) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shr(src1, src2);
+}
+
+
+function $shlU64(src1: int, p: int): int {
+    (src1 * $pow(2, p)) mod ($MAX_U64 + 1)
+}
+
+procedure {:inline 1} $ShlU64(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 64) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shlU64(src1, src2);
+}
+
+procedure {:inline 1} $ShrU64(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 64) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shr(src1, src2);
+}
+
+
+function $shlU128(src1: int, p: int): int {
+    (src1 * $pow(2, p)) mod ($MAX_U128 + 1)
+}
+
+procedure {:inline 1} $ShlU128(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 128) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shlU128(src1, src2);
+}
+
+procedure {:inline 1} $ShrU128(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    if (src2 >= 128) {
+        call $ExecFailureAbort();
+        return;
+    }
+
+    dst := $shr(src1, src2);
+}
+
+
+function $shlU256(src1: int, p: int): int {
+    (src1 * $pow(2, p)) mod ($MAX_U256 + 1)
+}
+
+procedure {:inline 1} $ShlU256(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    dst := $shlU256(src1, src2);
+}
+
+procedure {:inline 1} $ShrU256(src1: int, src2: int) returns (dst: int)
+{
+    // src2 is a u8
+    assume src2 >= 0 && src2 < 256;
+
+    dst := $shr(src1, src2);
+}
+
+
+// Instructions and Procedures unique to signed integers
+
+
+
+
+procedure {:inline 1} $NegateI8(src: int) returns (dst: int)
+{
+     if (src <= $MIN_I8) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := -src;
+}
+
+
+procedure {:inline 1} $NegateI16(src: int) returns (dst: int)
+{
+     if (src <= $MIN_I16) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := -src;
+}
+
+
+procedure {:inline 1} $NegateI32(src: int) returns (dst: int)
+{
+     if (src <= $MIN_I32) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := -src;
+}
+
+
+procedure {:inline 1} $NegateI64(src: int) returns (dst: int)
+{
+     if (src <= $MIN_I64) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := -src;
+}
+
+
+procedure {:inline 1} $NegateI128(src: int) returns (dst: int)
+{
+     if (src <= $MIN_I128) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := -src;
+}
+
+
+procedure {:inline 1} $NegateI256(src: int) returns (dst: int)
+{
+     if (src <= $MIN_I256) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := -src;
+}
+
+
+// ============================================================================================
+// Logical Procedures
+
+procedure {:inline 1} $Lt(src1: int, src2: int) returns (dst: bool)
+{
+    dst := src1 < src2;
+}
+
+procedure {:inline 1} $Gt(src1: int, src2: int) returns (dst: bool)
+{
+    dst := src1 > src2;
+}
+
+procedure {:inline 1} $Le(src1: int, src2: int) returns (dst: bool)
+{
+    dst := src1 <= src2;
+}
+
+procedure {:inline 1} $Ge(src1: int, src2: int) returns (dst: bool)
+{
+    dst := src1 >= src2;
+}
+
+procedure {:inline 1} $And(src1: bool, src2: bool) returns (dst: bool)
+{
+    dst := src1 && src2;
+}
+
+procedure {:inline 1} $Or(src1: bool, src2: bool) returns (dst: bool)
+{
+    dst := src1 || src2;
+}
+
+procedure {:inline 1} $Not(src: bool) returns (dst: bool)
+{
+    dst := !src;
+}
+
+// ============================================================================================
 // Templates for bitvector operations
 
 function {:bvbuiltin "bvand"} $And'Bv8'(bv8,bv8) returns(bv8);
@@ -1011,30 +2022,6 @@ function {:inline} $IsValid'bool'(v: bool): bool {
   true
 }
 
-function $IsValid'u8'(v: int): bool {
-  v >= 0 && v <= $MAX_U8
-}
-
-function $IsValid'u16'(v: int): bool {
-  v >= 0 && v <= $MAX_U16
-}
-
-function $IsValid'u32'(v: int): bool {
-  v >= 0 && v <= $MAX_U32
-}
-
-function $IsValid'u64'(v: int): bool {
-  v >= 0 && v <= $MAX_U64
-}
-
-function $IsValid'u128'(v: int): bool {
-  v >= 0 && v <= $MAX_U128
-}
-
-function $IsValid'u256'(v: int): bool {
-  v >= 0 && v <= $MAX_U256
-}
-
 function $IsValid'num'(v: int): bool {
   true
 }
@@ -1051,31 +2038,6 @@ function {:inline} $IsValidRange(r: $Range): bool {
 // Intentionally not inlined so it serves as a trigger in quantifiers.
 function $InRange(r: $Range, i: int): bool {
    r->lb <= i && i < r->ub
-}
-
-
-function {:inline} $IsEqual'u8'(x: int, y: int): bool {
-    x == y
-}
-
-function {:inline} $IsEqual'u16'(x: int, y: int): bool {
-    x == y
-}
-
-function {:inline} $IsEqual'u32'(x: int, y: int): bool {
-    x == y
-}
-
-function {:inline} $IsEqual'u64'(x: int, y: int): bool {
-    x == y
-}
-
-function {:inline} $IsEqual'u128'(x: int, y: int): bool {
-    x == y
-}
-
-function {:inline} $IsEqual'u256'(x: int, y: int): bool {
-    x == y
 }
 
 function {:inline} $IsEqual'num'(x: int, y: int): bool {
@@ -1112,7 +2074,7 @@ datatype $Location {
 // are single threaded in Move, we can keep them together and treat them as a value
 // during mutation until the point they are stored back to their original location.
 datatype $Mutation<T> {
-    $Mutation(l: $Location, p: Vec int, v: T, v_final: T, r_order: int, r_token: int)
+    $Mutation(l: $Location, p: Vec int, v: T, v_final: T)
 }
 
 // Representation of memory for a given type.
@@ -1130,12 +2092,15 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
+function {:inline} $Fulfilled<T>(ref: $Mutation T, c_index: int): bool {
+    ref->v == ref->v_final
+}
 procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
     var prophecy: T;
     var r_order: int;
     havoc prophecy;
     havoc r_order;
-    result := $Mutation(l, p, v, prophecy, 1, 1);
+    result := $Mutation(l, p, v, prophecy);
     assume result->l == l;
     assume result->p == p;
     assume result->v == v;
@@ -1153,60 +2118,31 @@ function {:inline} $DereferenceProphecy<T>(ref: $Mutation T): T {
 
 // Update the value of a mutation.
 function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
-    $Mutation(m->l, m->p, v, m->v_final, m->r_order, m->r_token)
+    $Mutation(m->l, m->p, v, m->v_final)
 }
-function {:inline} $UpdateMutationRToken<T1, T2>(m: $Mutation T1, mc: $Mutation T2): $Mutation T1 {
-    $Mutation(m->l, m->p, m->v, m->v_final, m->r_order, m->r_token - mc->r_token)
-}
-//prophecy Fullfilled
 
-var $asserts_results: int;
-//For a flow that does not existe:
-//If assert passed, then there's going to be a future assert that fails it
-//If assert failed, then we store both the message
-//The location of write_back is not fixed now. So location of assert is also not fixed.
-var $assertType: int;
-var $asserts_time: int;
-//For global/function/struct invariant injected
-// 2 ways to approach this:
-//1. pass the global states back?? Then have checks happen at time of borrow
-// - additional 2 havoc varibles: before states and after states.
-// global[order-1] and global[order]
-// for each invidivdual value if cur_index > order then return old,
-// if cur_index <= order then return new.
-// assert fail do not result in failure immediately
-//2. Record down all updates, then check at the end? How do I know I hit end though?
-// - explicite entry point functions and explicite inline functions.
-//
-//euler's tour on the borrow graph
-//pass it down the right most edges
-//For loop invariant specified in body
-//ToDo: do the checks at place of borrow with prophecied states. But
-//don't assert, just save result to global var
-//Then at r_order th write back, assume the state to current states.
-//update current states at each write back?
-//assert at very end.
-function {:inline} $Fulfilled<T>(ref: $Mutation T, c_index: int): bool {
-    ref->v == ref->v_final &&
-    ((ref->r_token > 0 && c_index == ref->r_order) ||
-    (ref->r_token == 0 && c_index >= ref->r_order))
+// Havoc the content of the mutation, preserving location and path.
+procedure {:inline 1} $HavocMutation<T>(m: $Mutation T) returns (r: $Mutation T) {
+    r->l := m->l;
+    r->p := m->p;
+    // r->v stays uninitialized, thus havoced
 }
 
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
-    $Mutation(m->l, ExtendVec(m->p, offset), v, v, m->r_order, m->r_token)
+    $Mutation(m->l, ExtendVec(m->p, offset), v, v)
 }
 //functions are pure and deterministic, have to use procedure
 
 procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns (result: $Mutation T2) {
     var prophecy: T2;
-    var r_token: int;
+    //var r_token: int;
     havoc prophecy;
-    havoc r_token;
-    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy, m->r_order, r_token);
+    //havoc r_token;
+    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy);
     assume result->l == m->l;
     assume result->p == ExtendVec(m->p, offset);
     assume result->v == v;
-    assume r_token >= 0 && r_token <= m->r_token;
+    //assume r_token >= 0 && r_token <= m->r_token;
     //if you have the token, you may pass it down.
 }
 
@@ -1390,211 +2326,13 @@ procedure {:inline 1} $InitVerification() returns (isEntryPoint: bool) {
 // Instructions
 
 
-procedure {:inline 1} $CastU8(src: int) returns (dst: int)
-{
-    if (src > $MAX_U8) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src;
-}
-
-procedure {:inline 1} $CastU16(src: int) returns (dst: int)
-{
-    if (src > $MAX_U16) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src;
-}
-
-procedure {:inline 1} $CastU32(src: int) returns (dst: int)
-{
-    if (src > $MAX_U32) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src;
-}
-
-procedure {:inline 1} $CastU64(src: int) returns (dst: int)
-{
-    if (src > $MAX_U64) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src;
-}
-
-procedure {:inline 1} $CastU128(src: int) returns (dst: int)
-{
-    if (src > $MAX_U128) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src;
-}
-
-procedure {:inline 1} $CastU256(src: int) returns (dst: int)
-{
-    if (src > $MAX_U256) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src;
-}
-
-procedure {:inline 1} $AddU8(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 + src2 > $MAX_U8) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU16(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 + src2 > $MAX_U16) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU16_unchecked(src1: int, src2: int) returns (dst: int)
-{
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU32(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 + src2 > $MAX_U32) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU32_unchecked(src1: int, src2: int) returns (dst: int)
-{
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU64(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 + src2 > $MAX_U64) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU64_unchecked(src1: int, src2: int) returns (dst: int)
-{
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU128(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 + src2 > $MAX_U128) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU128_unchecked(src1: int, src2: int) returns (dst: int)
-{
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU256(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 + src2 > $MAX_U256) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $AddU256_unchecked(src1: int, src2: int) returns (dst: int)
-{
-    dst := src1 + src2;
-}
-
-procedure {:inline 1} $Sub(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 < src2) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 - src2;
-}
-
-// uninterpreted function to return an undefined value.
-function $undefined_int(): int;
-
-// Recursive exponentiation function
-// Undefined unless e >=0.  $pow(0,0) is also undefined.
-function $pow(n: int, e: int): int {
-    if n != 0 && e == 0 then 1
-    else if e > 0 then n * $pow(n, e - 1)
-    else $undefined_int()
-}
-
-function $shl(src1: int, p: int): int {
-    src1 * $pow(2, p)
-}
-
-function $shlU8(src1: int, p: int): int {
-    (src1 * $pow(2, p)) mod 256
-}
-
-function $shlU16(src1: int, p: int): int {
-    (src1 * $pow(2, p)) mod 65536
-}
-
-function $shlU32(src1: int, p: int): int {
-    (src1 * $pow(2, p)) mod 4294967296
-}
-
-function $shlU64(src1: int, p: int): int {
-    (src1 * $pow(2, p)) mod 18446744073709551616
-}
-
-function $shlU128(src1: int, p: int): int {
-    (src1 * $pow(2, p)) mod 340282366920938463463374607431768211456
-}
-
-function $shlU256(src1: int, p: int): int {
-    (src1 * $pow(2, p)) mod 115792089237316195423570985008687907853269984665640564039457584007913129639936
-}
-
-function $shr(src1: int, p: int): int {
-    src1 div $pow(2, p)
-}
-
-// We need to know the size of the destination in order to drop bits
-// that have been shifted left more than that, so we have $ShlU8/16/32/64/128/256
-procedure {:inline 1} $ShlU8(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 8) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shlU8(src1, src2);
-}
-
 // Template for cast and shift operations of bitvector types
 
 procedure {:inline 1} $CastBv8to8(src: bv8) returns (dst: bv8)
 {
     dst := src;
 }
+
 
 
 function $shlBv8From8(src1: bv8, src2: bv8) returns (bv8)
@@ -1608,6 +2346,7 @@ procedure {:inline 1} $ShlBv8From8(src1: bv8, src2: bv8) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv8'(src1, src2);
 }
 
@@ -1622,6 +2361,7 @@ procedure {:inline 1} $ShrBv8From8(src1: bv8, src2: bv8) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv8'(src1, src2);
 }
 
@@ -1635,6 +2375,7 @@ procedure {:inline 1} $CastBv16to8(src: bv16) returns (dst: bv8)
 }
 
 
+
 function $shlBv8From16(src1: bv8, src2: bv16) returns (bv8)
 {
     $Shl'Bv8'(src1, src2[8:0])
@@ -1646,6 +2387,7 @@ procedure {:inline 1} $ShlBv8From16(src1: bv8, src2: bv16) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv8'(src1, src2[8:0]);
 }
 
@@ -1660,6 +2402,7 @@ procedure {:inline 1} $ShrBv8From16(src1: bv8, src2: bv16) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv8'(src1, src2[8:0]);
 }
 
@@ -1673,6 +2416,7 @@ procedure {:inline 1} $CastBv32to8(src: bv32) returns (dst: bv8)
 }
 
 
+
 function $shlBv8From32(src1: bv8, src2: bv32) returns (bv8)
 {
     $Shl'Bv8'(src1, src2[8:0])
@@ -1684,6 +2428,7 @@ procedure {:inline 1} $ShlBv8From32(src1: bv8, src2: bv32) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv8'(src1, src2[8:0]);
 }
 
@@ -1698,6 +2443,7 @@ procedure {:inline 1} $ShrBv8From32(src1: bv8, src2: bv32) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv8'(src1, src2[8:0]);
 }
 
@@ -1711,6 +2457,7 @@ procedure {:inline 1} $CastBv64to8(src: bv64) returns (dst: bv8)
 }
 
 
+
 function $shlBv8From64(src1: bv8, src2: bv64) returns (bv8)
 {
     $Shl'Bv8'(src1, src2[8:0])
@@ -1722,6 +2469,7 @@ procedure {:inline 1} $ShlBv8From64(src1: bv8, src2: bv64) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv8'(src1, src2[8:0]);
 }
 
@@ -1736,6 +2484,7 @@ procedure {:inline 1} $ShrBv8From64(src1: bv8, src2: bv64) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv8'(src1, src2[8:0]);
 }
 
@@ -1749,6 +2498,7 @@ procedure {:inline 1} $CastBv128to8(src: bv128) returns (dst: bv8)
 }
 
 
+
 function $shlBv8From128(src1: bv8, src2: bv128) returns (bv8)
 {
     $Shl'Bv8'(src1, src2[8:0])
@@ -1760,6 +2510,7 @@ procedure {:inline 1} $ShlBv8From128(src1: bv8, src2: bv128) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv8'(src1, src2[8:0]);
 }
 
@@ -1774,6 +2525,7 @@ procedure {:inline 1} $ShrBv8From128(src1: bv8, src2: bv128) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv8'(src1, src2[8:0]);
 }
 
@@ -1787,6 +2539,7 @@ procedure {:inline 1} $CastBv256to8(src: bv256) returns (dst: bv8)
 }
 
 
+
 function $shlBv8From256(src1: bv8, src2: bv256) returns (bv8)
 {
     $Shl'Bv8'(src1, src2[8:0])
@@ -1798,6 +2551,7 @@ procedure {:inline 1} $ShlBv8From256(src1: bv8, src2: bv256) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv8'(src1, src2[8:0]);
 }
 
@@ -1812,6 +2566,7 @@ procedure {:inline 1} $ShrBv8From256(src1: bv8, src2: bv256) returns (dst: bv8)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv8'(src1, src2[8:0]);
 }
 
@@ -1819,6 +2574,7 @@ procedure {:inline 1} $CastBv8to16(src: bv8) returns (dst: bv16)
 {
     dst := 0bv8 ++ src;
 }
+
 
 
 function $shlBv16From8(src1: bv16, src2: bv8) returns (bv16)
@@ -1832,6 +2588,7 @@ procedure {:inline 1} $ShlBv16From8(src1: bv16, src2: bv8) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv16'(src1, 0bv8 ++ src2);
 }
 
@@ -1846,6 +2603,7 @@ procedure {:inline 1} $ShrBv16From8(src1: bv16, src2: bv8) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv16'(src1, 0bv8 ++ src2);
 }
 
@@ -1853,6 +2611,7 @@ procedure {:inline 1} $CastBv16to16(src: bv16) returns (dst: bv16)
 {
     dst := src;
 }
+
 
 
 function $shlBv16From16(src1: bv16, src2: bv16) returns (bv16)
@@ -1866,6 +2625,7 @@ procedure {:inline 1} $ShlBv16From16(src1: bv16, src2: bv16) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv16'(src1, src2);
 }
 
@@ -1880,6 +2640,7 @@ procedure {:inline 1} $ShrBv16From16(src1: bv16, src2: bv16) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv16'(src1, src2);
 }
 
@@ -1893,6 +2654,7 @@ procedure {:inline 1} $CastBv32to16(src: bv32) returns (dst: bv16)
 }
 
 
+
 function $shlBv16From32(src1: bv16, src2: bv32) returns (bv16)
 {
     $Shl'Bv16'(src1, src2[16:0])
@@ -1904,6 +2666,7 @@ procedure {:inline 1} $ShlBv16From32(src1: bv16, src2: bv32) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv16'(src1, src2[16:0]);
 }
 
@@ -1918,6 +2681,7 @@ procedure {:inline 1} $ShrBv16From32(src1: bv16, src2: bv32) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv16'(src1, src2[16:0]);
 }
 
@@ -1931,6 +2695,7 @@ procedure {:inline 1} $CastBv64to16(src: bv64) returns (dst: bv16)
 }
 
 
+
 function $shlBv16From64(src1: bv16, src2: bv64) returns (bv16)
 {
     $Shl'Bv16'(src1, src2[16:0])
@@ -1942,6 +2707,7 @@ procedure {:inline 1} $ShlBv16From64(src1: bv16, src2: bv64) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv16'(src1, src2[16:0]);
 }
 
@@ -1956,6 +2722,7 @@ procedure {:inline 1} $ShrBv16From64(src1: bv16, src2: bv64) returns (dst: bv16)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv16'(src1, src2[16:0]);
 }
 
@@ -1969,6 +2736,7 @@ procedure {:inline 1} $CastBv128to16(src: bv128) returns (dst: bv16)
 }
 
 
+
 function $shlBv16From128(src1: bv16, src2: bv128) returns (bv16)
 {
     $Shl'Bv16'(src1, src2[16:0])
@@ -1980,6 +2748,7 @@ procedure {:inline 1} $ShlBv16From128(src1: bv16, src2: bv128) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv16'(src1, src2[16:0]);
 }
 
@@ -1994,6 +2763,7 @@ procedure {:inline 1} $ShrBv16From128(src1: bv16, src2: bv128) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv16'(src1, src2[16:0]);
 }
 
@@ -2007,6 +2777,7 @@ procedure {:inline 1} $CastBv256to16(src: bv256) returns (dst: bv16)
 }
 
 
+
 function $shlBv16From256(src1: bv16, src2: bv256) returns (bv16)
 {
     $Shl'Bv16'(src1, src2[16:0])
@@ -2018,6 +2789,7 @@ procedure {:inline 1} $ShlBv16From256(src1: bv16, src2: bv256) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv16'(src1, src2[16:0]);
 }
 
@@ -2032,6 +2804,7 @@ procedure {:inline 1} $ShrBv16From256(src1: bv16, src2: bv256) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv16'(src1, src2[16:0]);
 }
 
@@ -2039,6 +2812,7 @@ procedure {:inline 1} $CastBv8to32(src: bv8) returns (dst: bv32)
 {
     dst := 0bv24 ++ src;
 }
+
 
 
 function $shlBv32From8(src1: bv32, src2: bv8) returns (bv32)
@@ -2052,6 +2826,7 @@ procedure {:inline 1} $ShlBv32From8(src1: bv32, src2: bv8) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv32'(src1, 0bv24 ++ src2);
 }
 
@@ -2066,6 +2841,7 @@ procedure {:inline 1} $ShrBv32From8(src1: bv32, src2: bv8) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv32'(src1, 0bv24 ++ src2);
 }
 
@@ -2073,6 +2849,7 @@ procedure {:inline 1} $CastBv16to32(src: bv16) returns (dst: bv32)
 {
     dst := 0bv16 ++ src;
 }
+
 
 
 function $shlBv32From16(src1: bv32, src2: bv16) returns (bv32)
@@ -2086,6 +2863,7 @@ procedure {:inline 1} $ShlBv32From16(src1: bv32, src2: bv16) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv32'(src1, 0bv16 ++ src2);
 }
 
@@ -2100,6 +2878,7 @@ procedure {:inline 1} $ShrBv32From16(src1: bv32, src2: bv16) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv32'(src1, 0bv16 ++ src2);
 }
 
@@ -2107,6 +2886,7 @@ procedure {:inline 1} $CastBv32to32(src: bv32) returns (dst: bv32)
 {
     dst := src;
 }
+
 
 
 function $shlBv32From32(src1: bv32, src2: bv32) returns (bv32)
@@ -2120,6 +2900,7 @@ procedure {:inline 1} $ShlBv32From32(src1: bv32, src2: bv32) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv32'(src1, src2);
 }
 
@@ -2134,6 +2915,7 @@ procedure {:inline 1} $ShrBv32From32(src1: bv32, src2: bv32) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv32'(src1, src2);
 }
 
@@ -2147,6 +2929,7 @@ procedure {:inline 1} $CastBv64to32(src: bv64) returns (dst: bv32)
 }
 
 
+
 function $shlBv32From64(src1: bv32, src2: bv64) returns (bv32)
 {
     $Shl'Bv32'(src1, src2[32:0])
@@ -2158,6 +2941,7 @@ procedure {:inline 1} $ShlBv32From64(src1: bv32, src2: bv64) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv32'(src1, src2[32:0]);
 }
 
@@ -2172,6 +2956,7 @@ procedure {:inline 1} $ShrBv32From64(src1: bv32, src2: bv64) returns (dst: bv32)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv32'(src1, src2[32:0]);
 }
 
@@ -2185,6 +2970,7 @@ procedure {:inline 1} $CastBv128to32(src: bv128) returns (dst: bv32)
 }
 
 
+
 function $shlBv32From128(src1: bv32, src2: bv128) returns (bv32)
 {
     $Shl'Bv32'(src1, src2[32:0])
@@ -2196,6 +2982,7 @@ procedure {:inline 1} $ShlBv32From128(src1: bv32, src2: bv128) returns (dst: bv3
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv32'(src1, src2[32:0]);
 }
 
@@ -2210,6 +2997,7 @@ procedure {:inline 1} $ShrBv32From128(src1: bv32, src2: bv128) returns (dst: bv3
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv32'(src1, src2[32:0]);
 }
 
@@ -2223,6 +3011,7 @@ procedure {:inline 1} $CastBv256to32(src: bv256) returns (dst: bv32)
 }
 
 
+
 function $shlBv32From256(src1: bv32, src2: bv256) returns (bv32)
 {
     $Shl'Bv32'(src1, src2[32:0])
@@ -2234,6 +3023,7 @@ procedure {:inline 1} $ShlBv32From256(src1: bv32, src2: bv256) returns (dst: bv3
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv32'(src1, src2[32:0]);
 }
 
@@ -2248,6 +3038,7 @@ procedure {:inline 1} $ShrBv32From256(src1: bv32, src2: bv256) returns (dst: bv3
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv32'(src1, src2[32:0]);
 }
 
@@ -2255,6 +3046,7 @@ procedure {:inline 1} $CastBv8to64(src: bv8) returns (dst: bv64)
 {
     dst := 0bv56 ++ src;
 }
+
 
 
 function $shlBv64From8(src1: bv64, src2: bv8) returns (bv64)
@@ -2268,6 +3060,7 @@ procedure {:inline 1} $ShlBv64From8(src1: bv64, src2: bv8) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv64'(src1, 0bv56 ++ src2);
 }
 
@@ -2282,6 +3075,7 @@ procedure {:inline 1} $ShrBv64From8(src1: bv64, src2: bv8) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv64'(src1, 0bv56 ++ src2);
 }
 
@@ -2289,6 +3083,7 @@ procedure {:inline 1} $CastBv16to64(src: bv16) returns (dst: bv64)
 {
     dst := 0bv48 ++ src;
 }
+
 
 
 function $shlBv64From16(src1: bv64, src2: bv16) returns (bv64)
@@ -2302,6 +3097,7 @@ procedure {:inline 1} $ShlBv64From16(src1: bv64, src2: bv16) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv64'(src1, 0bv48 ++ src2);
 }
 
@@ -2316,6 +3112,7 @@ procedure {:inline 1} $ShrBv64From16(src1: bv64, src2: bv16) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv64'(src1, 0bv48 ++ src2);
 }
 
@@ -2323,6 +3120,7 @@ procedure {:inline 1} $CastBv32to64(src: bv32) returns (dst: bv64)
 {
     dst := 0bv32 ++ src;
 }
+
 
 
 function $shlBv64From32(src1: bv64, src2: bv32) returns (bv64)
@@ -2336,6 +3134,7 @@ procedure {:inline 1} $ShlBv64From32(src1: bv64, src2: bv32) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv64'(src1, 0bv32 ++ src2);
 }
 
@@ -2350,12 +3149,19 @@ procedure {:inline 1} $ShrBv64From32(src1: bv64, src2: bv32) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv64'(src1, 0bv32 ++ src2);
 }
 
 procedure {:inline 1} $CastBv64to64(src: bv64) returns (dst: bv64)
 {
     dst := src;
+}
+
+
+function $castBv64to64(src: bv64) returns (bv64)
+{
+    src
 }
 
 
@@ -2370,6 +3176,7 @@ procedure {:inline 1} $ShlBv64From64(src1: bv64, src2: bv64) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv64'(src1, src2);
 }
 
@@ -2384,6 +3191,7 @@ procedure {:inline 1} $ShrBv64From64(src1: bv64, src2: bv64) returns (dst: bv64)
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv64'(src1, src2);
 }
 
@@ -2397,6 +3205,7 @@ procedure {:inline 1} $CastBv128to64(src: bv128) returns (dst: bv64)
 }
 
 
+
 function $shlBv64From128(src1: bv64, src2: bv128) returns (bv64)
 {
     $Shl'Bv64'(src1, src2[64:0])
@@ -2408,6 +3217,7 @@ procedure {:inline 1} $ShlBv64From128(src1: bv64, src2: bv128) returns (dst: bv6
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv64'(src1, src2[64:0]);
 }
 
@@ -2422,6 +3232,7 @@ procedure {:inline 1} $ShrBv64From128(src1: bv64, src2: bv128) returns (dst: bv6
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv64'(src1, src2[64:0]);
 }
 
@@ -2435,6 +3246,7 @@ procedure {:inline 1} $CastBv256to64(src: bv256) returns (dst: bv64)
 }
 
 
+
 function $shlBv64From256(src1: bv64, src2: bv256) returns (bv64)
 {
     $Shl'Bv64'(src1, src2[64:0])
@@ -2446,6 +3258,7 @@ procedure {:inline 1} $ShlBv64From256(src1: bv64, src2: bv256) returns (dst: bv6
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv64'(src1, src2[64:0]);
 }
 
@@ -2460,6 +3273,7 @@ procedure {:inline 1} $ShrBv64From256(src1: bv64, src2: bv256) returns (dst: bv6
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv64'(src1, src2[64:0]);
 }
 
@@ -2467,6 +3281,7 @@ procedure {:inline 1} $CastBv8to128(src: bv8) returns (dst: bv128)
 {
     dst := 0bv120 ++ src;
 }
+
 
 
 function $shlBv128From8(src1: bv128, src2: bv8) returns (bv128)
@@ -2480,6 +3295,7 @@ procedure {:inline 1} $ShlBv128From8(src1: bv128, src2: bv8) returns (dst: bv128
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv128'(src1, 0bv120 ++ src2);
 }
 
@@ -2494,6 +3310,7 @@ procedure {:inline 1} $ShrBv128From8(src1: bv128, src2: bv8) returns (dst: bv128
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv128'(src1, 0bv120 ++ src2);
 }
 
@@ -2501,6 +3318,7 @@ procedure {:inline 1} $CastBv16to128(src: bv16) returns (dst: bv128)
 {
     dst := 0bv112 ++ src;
 }
+
 
 
 function $shlBv128From16(src1: bv128, src2: bv16) returns (bv128)
@@ -2514,6 +3332,7 @@ procedure {:inline 1} $ShlBv128From16(src1: bv128, src2: bv16) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv128'(src1, 0bv112 ++ src2);
 }
 
@@ -2528,6 +3347,7 @@ procedure {:inline 1} $ShrBv128From16(src1: bv128, src2: bv16) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv128'(src1, 0bv112 ++ src2);
 }
 
@@ -2535,6 +3355,7 @@ procedure {:inline 1} $CastBv32to128(src: bv32) returns (dst: bv128)
 {
     dst := 0bv96 ++ src;
 }
+
 
 
 function $shlBv128From32(src1: bv128, src2: bv32) returns (bv128)
@@ -2548,6 +3369,7 @@ procedure {:inline 1} $ShlBv128From32(src1: bv128, src2: bv32) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv128'(src1, 0bv96 ++ src2);
 }
 
@@ -2562,6 +3384,7 @@ procedure {:inline 1} $ShrBv128From32(src1: bv128, src2: bv32) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv128'(src1, 0bv96 ++ src2);
 }
 
@@ -2569,6 +3392,7 @@ procedure {:inline 1} $CastBv64to128(src: bv64) returns (dst: bv128)
 {
     dst := 0bv64 ++ src;
 }
+
 
 
 function $shlBv128From64(src1: bv128, src2: bv64) returns (bv128)
@@ -2582,6 +3406,7 @@ procedure {:inline 1} $ShlBv128From64(src1: bv128, src2: bv64) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv128'(src1, 0bv64 ++ src2);
 }
 
@@ -2596,6 +3421,7 @@ procedure {:inline 1} $ShrBv128From64(src1: bv128, src2: bv64) returns (dst: bv1
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv128'(src1, 0bv64 ++ src2);
 }
 
@@ -2603,6 +3429,7 @@ procedure {:inline 1} $CastBv128to128(src: bv128) returns (dst: bv128)
 {
     dst := src;
 }
+
 
 
 function $shlBv128From128(src1: bv128, src2: bv128) returns (bv128)
@@ -2616,6 +3443,7 @@ procedure {:inline 1} $ShlBv128From128(src1: bv128, src2: bv128) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv128'(src1, src2);
 }
 
@@ -2630,6 +3458,7 @@ procedure {:inline 1} $ShrBv128From128(src1: bv128, src2: bv128) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv128'(src1, src2);
 }
 
@@ -2643,6 +3472,7 @@ procedure {:inline 1} $CastBv256to128(src: bv256) returns (dst: bv128)
 }
 
 
+
 function $shlBv128From256(src1: bv128, src2: bv256) returns (bv128)
 {
     $Shl'Bv128'(src1, src2[128:0])
@@ -2654,6 +3484,7 @@ procedure {:inline 1} $ShlBv128From256(src1: bv128, src2: bv256) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv128'(src1, src2[128:0]);
 }
 
@@ -2668,6 +3499,7 @@ procedure {:inline 1} $ShrBv128From256(src1: bv128, src2: bv256) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv128'(src1, src2[128:0]);
 }
 
@@ -2677,6 +3509,7 @@ procedure {:inline 1} $CastBv8to256(src: bv8) returns (dst: bv256)
 }
 
 
+
 function $shlBv256From8(src1: bv256, src2: bv8) returns (bv256)
 {
     $Shl'Bv256'(src1, 0bv248 ++ src2)
@@ -2684,10 +3517,7 @@ function $shlBv256From8(src1: bv256, src2: bv8) returns (bv256)
 
 procedure {:inline 1} $ShlBv256From8(src1: bv256, src2: bv8) returns (dst: bv256)
 {
-    if ($Ge'Bv8'(src2, 256bv8)) {
-        call $ExecFailureAbort();
-        return;
-    }
+    assume $bv2int.8(src2) >= 0 && $bv2int.8(src2) < 256;
     dst := $Shl'Bv256'(src1, 0bv248 ++ src2);
 }
 
@@ -2698,10 +3528,7 @@ function $shrBv256From8(src1: bv256, src2: bv8) returns (bv256)
 
 procedure {:inline 1} $ShrBv256From8(src1: bv256, src2: bv8) returns (dst: bv256)
 {
-    if ($Ge'Bv8'(src2, 256bv8)) {
-        call $ExecFailureAbort();
-        return;
-    }
+    assume $bv2int.8(src2) >= 0 && $bv2int.8(src2) < 256;
     dst := $Shr'Bv256'(src1, 0bv248 ++ src2);
 }
 
@@ -2709,6 +3536,7 @@ procedure {:inline 1} $CastBv16to256(src: bv16) returns (dst: bv256)
 {
     dst := 0bv240 ++ src;
 }
+
 
 
 function $shlBv256From16(src1: bv256, src2: bv16) returns (bv256)
@@ -2722,6 +3550,7 @@ procedure {:inline 1} $ShlBv256From16(src1: bv256, src2: bv16) returns (dst: bv2
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv256'(src1, 0bv240 ++ src2);
 }
 
@@ -2736,6 +3565,7 @@ procedure {:inline 1} $ShrBv256From16(src1: bv256, src2: bv16) returns (dst: bv2
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv256'(src1, 0bv240 ++ src2);
 }
 
@@ -2743,6 +3573,7 @@ procedure {:inline 1} $CastBv32to256(src: bv32) returns (dst: bv256)
 {
     dst := 0bv224 ++ src;
 }
+
 
 
 function $shlBv256From32(src1: bv256, src2: bv32) returns (bv256)
@@ -2756,6 +3587,7 @@ procedure {:inline 1} $ShlBv256From32(src1: bv256, src2: bv32) returns (dst: bv2
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv256'(src1, 0bv224 ++ src2);
 }
 
@@ -2770,6 +3602,7 @@ procedure {:inline 1} $ShrBv256From32(src1: bv256, src2: bv32) returns (dst: bv2
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv256'(src1, 0bv224 ++ src2);
 }
 
@@ -2777,6 +3610,7 @@ procedure {:inline 1} $CastBv64to256(src: bv64) returns (dst: bv256)
 {
     dst := 0bv192 ++ src;
 }
+
 
 
 function $shlBv256From64(src1: bv256, src2: bv64) returns (bv256)
@@ -2790,6 +3624,7 @@ procedure {:inline 1} $ShlBv256From64(src1: bv256, src2: bv64) returns (dst: bv2
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv256'(src1, 0bv192 ++ src2);
 }
 
@@ -2804,6 +3639,7 @@ procedure {:inline 1} $ShrBv256From64(src1: bv256, src2: bv64) returns (dst: bv2
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv256'(src1, 0bv192 ++ src2);
 }
 
@@ -2811,6 +3647,7 @@ procedure {:inline 1} $CastBv128to256(src: bv128) returns (dst: bv256)
 {
     dst := 0bv128 ++ src;
 }
+
 
 
 function $shlBv256From128(src1: bv256, src2: bv128) returns (bv256)
@@ -2824,6 +3661,7 @@ procedure {:inline 1} $ShlBv256From128(src1: bv256, src2: bv128) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv256'(src1, 0bv128 ++ src2);
 }
 
@@ -2838,6 +3676,7 @@ procedure {:inline 1} $ShrBv256From128(src1: bv256, src2: bv128) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv256'(src1, 0bv128 ++ src2);
 }
 
@@ -2845,6 +3684,7 @@ procedure {:inline 1} $CastBv256to256(src: bv256) returns (dst: bv256)
 {
     dst := src;
 }
+
 
 
 function $shlBv256From256(src1: bv256, src2: bv256) returns (bv256)
@@ -2858,6 +3698,7 @@ procedure {:inline 1} $ShlBv256From256(src1: bv256, src2: bv256) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shl'Bv256'(src1, src2);
 }
 
@@ -2872,248 +3713,8 @@ procedure {:inline 1} $ShrBv256From256(src1: bv256, src2: bv256) returns (dst: b
         call $ExecFailureAbort();
         return;
     }
+
     dst := $Shr'Bv256'(src1, src2);
-}
-
-procedure {:inline 1} $ShlU16(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 16) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shlU16(src1, src2);
-}
-
-procedure {:inline 1} $ShlU32(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 32) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shlU32(src1, src2);
-}
-
-procedure {:inline 1} $ShlU64(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 64) {
-       call $ExecFailureAbort();
-       return;
-    }
-    dst := $shlU64(src1, src2);
-}
-
-procedure {:inline 1} $ShlU128(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 128) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shlU128(src1, src2);
-}
-
-procedure {:inline 1} $ShlU256(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    dst := $shlU256(src1, src2);
-}
-
-procedure {:inline 1} $Shr(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $ShrU8(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 8) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $ShrU16(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 16) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $ShrU32(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 32) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $ShrU64(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 64) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $ShrU128(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    if (src2 >= 128) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $ShrU256(src1: int, src2: int) returns (dst: int)
-{
-    var res: int;
-    // src2 is a u8
-    assume src2 >= 0 && src2 < 256;
-    dst := $shr(src1, src2);
-}
-
-procedure {:inline 1} $MulU8(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 * src2 > $MAX_U8) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 * src2;
-}
-
-procedure {:inline 1} $MulU16(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 * src2 > $MAX_U16) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 * src2;
-}
-
-procedure {:inline 1} $MulU32(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 * src2 > $MAX_U32) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 * src2;
-}
-
-procedure {:inline 1} $MulU64(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 * src2 > $MAX_U64) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 * src2;
-}
-
-procedure {:inline 1} $MulU128(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 * src2 > $MAX_U128) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 * src2;
-}
-
-procedure {:inline 1} $MulU256(src1: int, src2: int) returns (dst: int)
-{
-    if (src1 * src2 > $MAX_U256) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 * src2;
-}
-
-procedure {:inline 1} $Div(src1: int, src2: int) returns (dst: int)
-{
-    if (src2 == 0) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 div src2;
-}
-
-procedure {:inline 1} $Mod(src1: int, src2: int) returns (dst: int)
-{
-    if (src2 == 0) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := src1 mod src2;
-}
-
-procedure {:inline 1} $ArithBinaryUnimplemented(src1: int, src2: int) returns (dst: int);
-
-procedure {:inline 1} $Lt(src1: int, src2: int) returns (dst: bool)
-{
-    dst := src1 < src2;
-}
-
-procedure {:inline 1} $Gt(src1: int, src2: int) returns (dst: bool)
-{
-    dst := src1 > src2;
-}
-
-procedure {:inline 1} $Le(src1: int, src2: int) returns (dst: bool)
-{
-    dst := src1 <= src2;
-}
-
-procedure {:inline 1} $Ge(src1: int, src2: int) returns (dst: bool)
-{
-    dst := src1 >= src2;
-}
-
-procedure {:inline 1} $And(src1: bool, src2: bool) returns (dst: bool)
-{
-    dst := src1 && src2;
-}
-
-procedure {:inline 1} $Or(src1: bool, src2: bool) returns (dst: bool)
-{
-    dst := src1 || src2;
-}
-
-procedure {:inline 1} $Not(src: bool) returns (dst: bool)
-{
-    dst := !src;
 }
 
 // Pack and Unpack are auto-generated for each type T
@@ -3535,13 +4136,25 @@ procedure {:inline 1} $1_Account_create_signer(
 // Native Signer
 
 datatype $signer {
-    $signer($addr: int)
+    $signer($addr: int),
+    $permissioned_signer($addr: int, $permission_addr: int)
 }
+
 function {:inline} $IsValid'signer'(s: $signer): bool {
-    $IsValid'address'(s->$addr)
+    if s is $signer then
+        $IsValid'address'(s->$addr)
+    else
+        $IsValid'address'(s->$addr) &&
+        $IsValid'address'(s->$permission_addr)
 }
+
 function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
-    s1 == s2
+    if s1 is $signer && s2 is $signer then
+        s1 == s2
+    else if s1 is $permissioned_signer && s2 is $permissioned_signer then
+        s1 == s2
+    else
+        false
 }
 
 procedure {:inline 1} $1_signer_borrow_address(signer: $signer) returns (res: int) {
@@ -3593,6 +4206,10 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
+// Native from_bcs::from_bytes
+
+
+// ==================================================================================
 // Native Event module
 
 
@@ -3611,6 +4228,12 @@ datatype $TypeParamInfo {
     $TypeParamU64(),
     $TypeParamU128(),
     $TypeParamU256(),
+    $TypeParamI8(),
+    $TypeParamI16(),
+    $TypeParamI32(),
+    $TypeParamI64(),
+    $TypeParamI128(),
+    $TypeParamI256(),
     $TypeParamAddress(),
     $TypeParamSigner(),
     $TypeParamVector(e: $TypeParamInfo),
@@ -3645,21 +4268,20 @@ function {:inline} $IsEqual'$42_Test_R'(s1: $42_Test_R, s2: $42_Test_R): bool {
     s1 == s2
 }
 var $42_Test_R_$memory: $Memory $42_Test_R;
-var $42_Test_R_$memoryPair: $MemoryPair $42_Test_R;
+
 // fun Test::bor [verification] at ./sources/FirstModule.move:9:5+171
-procedure {:timeLimit 80} $42_Test_bor$verify(_$t0: int, _$t1: int, _$t2: bool, _$t3: bool) returns ()
+procedure {:timeLimit 40} $42_Test_bor$verify(_$t0: int, _$t1: int, _$t2: bool, _$t3: bool) returns ()
 {
     // declare local variables
     var $isEntryPoint: bool;
     var $t4: $Mutation ($42_Test_R);
     var $t5: $Mutation ($42_Test_R);
     var $t6: $Mutation ($42_Test_R);
-    var $t7: $Mutation ($42_Test_R);
+    var $t7: int;
     var $t8: int;
     var $t9: int;
     var $t10: int;
-    var $t11: int;
-    var $t12: $Mutation (int);
+    var $t11: $Mutation (int);
     var $t0: int;
     var $t1: int;
     var $t2: bool;
@@ -3669,7 +4291,6 @@ procedure {:timeLimit 80} $42_Test_bor$verify(_$t0: int, _$t1: int, _$t2: bool, 
     var $temp_0'bool': bool;
     var $42_Test_R_$memory#1: $Memory $42_Test_R;
     var $42_Test_R_$memory#2: $Memory $42_Test_R;
-    var $tempresult: bool;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -3692,18 +4313,16 @@ procedure {:timeLimit 80} $42_Test_bor$verify(_$t0: int, _$t1: int, _$t2: bool, 
     // assume WellFormed($t3) at ./sources/FirstModule.move:9:5+1
     assume $IsValid'bool'($t3);
 
-    // assume forall $rsc: Test::R: ResourceDomain<Test::R>(): WellFormed($rsc) at ./sources/FirstModule.move:9:5+1
+    // assume forall $rsc: 0x42::Test::R: ResourceDomain<0x42::Test::R>(): WellFormed($rsc) at ./sources/FirstModule.move:9:5+1
     assume (forall $a_0: int :: {$ResourceValue($42_Test_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_Test_R_$memory, $a_0);
     ($IsValid'$42_Test_R'($rsc))));
 
-    $42_Test_R_$memoryPair := $MemoryPair($42_Test_R_$memory, $42_Test_R_$memory, 0);
+    // uninit($t5) at <internal>:1:1+10
+    assume {:print "$at(1,0,10)"} true;
+    assume $t5->l == $Uninitialized();
 
     // uninit($t6) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
     assume $t6->l == $Uninitialized();
-
-    // uninit($t7) at <internal>:1:1+10
-    assume $t7->l == $Uninitialized();
 
     // trace_local[a]($t0) at ./sources/FirstModule.move:9:5+1
     assume {:print "$at(2,200,201)"} true;
@@ -3722,194 +4341,169 @@ procedure {:timeLimit 80} $42_Test_bor$verify(_$t0: int, _$t1: int, _$t2: bool, 
     assume {:print "$at(2,281,341)"} true;
     if ($t3) { goto L5; } else { goto L6; }
 
-    // label L1 at ./sources/FirstModule.move:10:46+1
+    // label L1 at ./sources/FirstModule.move:10:25+23
 L1:
 
-    // $t6 := borrow_global<Test::R>($t0) on_abort goto L4 with $t8 at ./sources/FirstModule.move:10:25+17
-    assume {:print "$at(2,289,306)"} true;
+    // $t5 := borrow_global<0x42::Test::R>($t0) on_abort goto L4 with $t7 at ./sources/FirstModule.move:10:25+23
+    assume {:print "$at(2,289,312)"} true;
     if (!$ResourceExists($42_Test_R_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        call $t6 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($42_Test_R_$memory, $t0));
-        assume $ResourceValue($42_Test_R_$memory, $t0) == $Dereference($t6);
-        $42_Test_R_$memory#1 := $42_Test_R_$memory;
-        $42_Test_R_$memory := $ResourceUpdate($42_Test_R_$memory, $t0, $DereferenceProphecy($t6));
-        $42_Test_R_$memoryPair := $MemoryPair ($42_Test_R_$Memory#1, $42_Test_R_$Memory, $t6->r_order);
-        //compute result
-        // assert forall addr: address: TypeDomain<address>() where exists[@1]<Test::R>(addr): exists<Test::R>(addr) at ./sources/FirstModule.move:7:9+82
-        // global invariant at ./sources/FirstModule.move:7:9+82
-        assume {:print "$at(2,107,189)"} true;
-        $tempresult := (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExistsMP($42_Test_R_$memoryPair, addr, $6->r_order - 1))  ==> ($ResourceExistsMP($42_Test_R_$memoryPair, addr, $6->r_order)));
-        if (!$tempresult && ($asserts_results || $t6->r_order < $asserts_time)) {
-            $assertType := 1;
-            $asserts_time := $t6->r_order;
-        }
+        call $t5 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($42_Test_R_$memory, $t0));
+        assume $ResourceValue($42_Test_R_$memory, $t0) == $Dereference($t5);
+        $42_Test_R_$memory := $ResourceUpdate($42_Test_R_$memory, $t0, $DereferenceProphecy($t5));
     }
     if ($abort_flag) {
-        assume {:print "$at(2,289,306)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        assume {:print "$at(2,289,312)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t7} $t7 == $t7;
         goto L4;
     }
 
-    // $t4 := $t6 at ./sources/FirstModule.move:10:17+60
-    $t4 := $t6;
+    // $t4 := $t5 at ./sources/FirstModule.move:10:25+23
+    $t4 := $t5;
 
-    // fulfilled($t6) at ./sources/FirstModule.move:10:17+60
-    assume $Fulfilled($t6, $cur_index);
-    $cur_index := $cur_index + 1;
+    // trace_local[c]($t5) at ./sources/FirstModule.move:10:25+23
+    $temp_0'$42_Test_R' := $Dereference($t5);
+    assume {:print "$track_local(1,0,4):", $temp_0'$42_Test_R'} $temp_0'$42_Test_R' == $temp_0'$42_Test_R';
 
-    // goto L2 at ./sources/FirstModule.move:10:17+60
-    goto L2;
+    // fulfilled($t5) at ./sources/FirstModule.move:10:25+23
+    assume $Fulfilled($t5, $cur_index);
 
-    // label L0 at ./sources/FirstModule.move:10:75+1
-L0:
-
-    // $t7 := borrow_global<Test::R>($t0) on_abort goto L4 with $t8 at ./sources/FirstModule.move:10:54+17
-    assume {:print "$at(2,318,335)"} true;
-    if (!$ResourceExists($42_Test_R_$memory, $t0)) {
-        call $ExecFailureAbort();
-    } else {
-        call $t7 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($42_Test_R_$memory, $t0));
-        //following line is not needed but acts as a sanity check. 
-        assume $ResourceValue($42_Test_R_$memory, $t0) == $Dereference($t7);
-        $42_Test_R_$memory#1 := $42_Test_R_$memory;
-        $42_Test_R_$memory := $ResourceUpdate($42_Test_R_$memory, $t0, $DereferenceProphecy($t7));
-        $42_Test_R_$memoryPair := $MemoryPair ($42_Test_R_$Memory#1, $42_Test_R_$Memory, $t6->r_order);
-        //compute result
-        // assert forall addr: address: TypeDomain<address>() where exists[@1]<Test::R>(addr): exists<Test::R>(addr) at ./sources/FirstModule.move:7:9+82
-        // global invariant at ./sources/FirstModule.move:7:9+82
-        assume {:print "$at(2,107,189)"} true;
-        $tempresult := (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExistsMP($42_Test_R_$memoryPair, addr, $7->r_order - 1))  ==> ($ResourceExistsMP($42_Test_R_$memoryPair, addr, $7->r_order)));
-        if (!$tempresult && ($asserts_results || $t7->r_order < $asserts_time)) {
-            $assertType := 1;
-            $asserts_time := $t7->r_order;
-        }
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,318,335)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
-        goto L4;
-    }
-
-    // $t4 := $t7 at ./sources/FirstModule.move:10:17+60
-    $t4 := $t7;
-
-    // fulfilled($t7) at ./sources/FirstModule.move:10:17+60
-    assume $Fulfilled($t7, $cur_index);
-    $cur_index := $cur_index + 1;
-
-    // label L2 at ./sources/FirstModule.move:10:17+60
+    // label L2 at ./sources/FirstModule.move:11:16+4
+    assume {:print "$at(2,358,362)"} true;
 L2:
 
-    // trace_local[c]($t4) at ./sources/FirstModule.move:10:13+1
-    assume {:print "$at(2,277,278)"} true;
-    $temp_0'$42_Test_R' := $Dereference($t4);
-    assume {:print "$track_local(1,0,5):", $temp_0'$42_Test_R'} $temp_0'$42_Test_R' == $temp_0'$42_Test_R';
-
-    // $t9 := get_field<Test::R>.v1($t4) at ./sources/FirstModule.move:11:16+4
+    // $t8 := get_field<0x42::Test::R>.v1($t4) at ./sources/FirstModule.move:11:16+4
     assume {:print "$at(2,358,362)"} true;
-    $t9 := $Dereference($t4)->$v1;
+    $t8 := $Dereference($t4)->$v1;
 
-    // $t10 := 1 at ./sources/FirstModule.move:11:21+1
-    $t10 := 1;
-    assume $IsValid'u64'($t10);
+    // $t9 := 1 at ./sources/FirstModule.move:11:21+1
+    $t9 := 1;
+    assume $IsValid'u64'($t9);
 
-    // $t11 := +($t9, $t10) on_abort goto L4 with $t8 at ./sources/FirstModule.move:11:20+1
-    call $t11 := $AddU64($t9, $t10);
+    // $t10 := +($t8, $t9) on_abort goto L4 with $t7 at ./sources/FirstModule.move:11:16+6
+    call $t10 := $AddU64($t8, $t9);
     if ($abort_flag) {
-        assume {:print "$at(2,362,363)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        assume {:print "$at(2,358,364)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t7} $t7 == $t7;
         goto L4;
     }
 
-    // $t12 := borrow_field<Test::R>.v1($t4) at ./sources/FirstModule.move:11:9+4
-    call $t12 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$v1);
-    assume $Dereference($t12) == $Dereference($t4)->$v1;
-    $t4 := $UpdateMutationRToken($t4, $t12);
-    $t4 := $UpdateMutation($t4, $Update'$42_Test_R'_v1($Dereference($t4), $DereferenceProphecy($t12)));
+    // $t11 := borrow_field<0x42::Test::R>.v1($t4) at ./sources/FirstModule.move:11:9+4
+    call $t11 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$v1);
+    assume $Dereference($t11) == $Dereference($t4)->$v1;
+    $t4 := $UpdateMutation($t4, $Update'$42_Test_R'_v1($Dereference($t4), $DereferenceProphecy($t11)));
 
     // fulfilled($t4) at ./sources/FirstModule.move:11:9+4
     assume $Fulfilled($t4, $cur_index);
-    $cur_index := $cur_index + 1;
 
-    // write_ref($t12, $t11) at ./sources/FirstModule.move:11:9+13
-    $t12 := $UpdateMutation($t12, $t11);
+    // write_ref($t11, $t10) at ./sources/FirstModule.move:11:9+13
+    $t11 := $UpdateMutation($t11, $t10);
 
-    // write_back[Reference($t4).v1 (u64)]($t12) at ./sources/FirstModule.move:11:9+13
-    assume $Fulfilled($t12, $cur_index);
-    $cur_index := $cur_index + 1;
+    // write_back[Reference($t4).v1 (u64)]($t11) at ./sources/FirstModule.move:11:9+13
+    assume $Fulfilled($t11, $cur_index);
 
-    // trace_local[tmp#$4]($t4) at ./sources/FirstModule.move:11:9+13
+    // trace_local[c]($t4) at ./sources/FirstModule.move:11:9+13
     $temp_0'$42_Test_R' := $Dereference($t4);
     assume {:print "$track_local(1,0,4):", $temp_0'$42_Test_R'} $temp_0'$42_Test_R' == $temp_0'$42_Test_R';
 
-    // write_back[Reference($t6)@]($t4) at ./sources/FirstModule.move:11:9+13
+    // write_back[Reference($t5)@]($t4) at ./sources/FirstModule.move:11:9+13
     assume $Fulfilled($t4, $cur_index);
-    $cur_index := $cur_index + 1;
 
     // @1 := save_mem(Test::R) at ./sources/FirstModule.move:9:5+171
     // state save for global update invariants
     assume {:print "$at(2,200,371)"} true;
     $42_Test_R_$memory#1 := $42_Test_R_$memory;
 
-    // write_back[Test::R@]($t6) at ./sources/FirstModule.move:11:9+13
+    // write_back[0x42::Test::R@]($t5) at ./sources/FirstModule.move:11:9+13
     assume {:print "$at(2,351,364)"} true;
-    assume $Dereference($t6) == $DereferenceProphecy($t6);
+    assume $Dereference($t5) == $DereferenceProphecy($t5);
 
-    // assert forall addr: address: TypeDomain<address>() where exists[@1]<Test::R>(addr): exists<Test::R>(addr) at ./sources/FirstModule.move:7:9+82
+    // assert forall addr: address: TypeDomain<address>() where exists[@1]<0x42::Test::R>(addr): exists<0x42::Test::R>(addr) at ./sources/FirstModule.move:7:9+82
     // global invariant at ./sources/FirstModule.move:7:9+82
     assume {:print "$at(2,107,189)"} true;
     assert {:msg "assert_failed(2,107,189): global memory invariant does not hold"}
       (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_Test_R_$memory#1, addr))  ==> ($ResourceExists($42_Test_R_$memory, addr)));
 
-    // write_back[Reference($t4).v1 (u64)]($t12) at ./sources/FirstModule.move:11:9+13
+    // write_back[Reference($t4).v1 (u64)]($t11) at ./sources/FirstModule.move:11:9+13
     assume {:print "$at(2,351,364)"} true;
-    assume $Fulfilled($t12, $cur_index);
-    $cur_index := $cur_index + 1;
+    assume $Fulfilled($t11, $cur_index);
 
-    // trace_local[tmp#$4]($t4) at ./sources/FirstModule.move:11:9+13
+    // trace_local[c]($t4) at ./sources/FirstModule.move:11:9+13
     $temp_0'$42_Test_R' := $Dereference($t4);
     assume {:print "$track_local(1,0,4):", $temp_0'$42_Test_R'} $temp_0'$42_Test_R' == $temp_0'$42_Test_R';
 
-    // write_back[Reference($t7)@]($t4) at ./sources/FirstModule.move:11:9+13
+    // write_back[Reference($t6)@]($t4) at ./sources/FirstModule.move:11:9+13
     assume $Fulfilled($t4, $cur_index);
-    $cur_index := $cur_index + 1;
 
     // @2 := save_mem(Test::R) at ./sources/FirstModule.move:7:9+82
     // state save for global update invariants
     assume {:print "$at(2,107,189)"} true;
     $42_Test_R_$memory#2 := $42_Test_R_$memory;
 
-    // write_back[Test::R@]($t7) at ./sources/FirstModule.move:11:9+13
+    // write_back[0x42::Test::R@]($t6) at ./sources/FirstModule.move:11:9+13
     assume {:print "$at(2,351,364)"} true;
-    assume $Fullfilled($t7, $cur_index);
-    $cur_index := $cur_index + 1;
+    assume $Dereference($t6) == $DereferenceProphecy($t6);
+
+    // assert forall addr: address: TypeDomain<address>() where exists[@2]<0x42::Test::R>(addr): exists<0x42::Test::R>(addr) at ./sources/FirstModule.move:7:9+82
+    // global invariant at ./sources/FirstModule.move:7:9+82
+    assume {:print "$at(2,107,189)"} true;
+    assert {:msg "assert_failed(2,107,189): global memory invariant does not hold"}
+      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_Test_R_$memory#2, addr))  ==> ($ResourceExists($42_Test_R_$memory, addr)));
+
+    // goto L3 at ./sources/FirstModule.move:9:68+108
+    assume {:print "$at(2,263,371)"} true;
+    goto L3;
+
+    // label L0 at ./sources/FirstModule.move:10:54+23
+    assume {:print "$at(2,318,341)"} true;
+L0:
+
+    // $t6 := borrow_global<0x42::Test::R>($t0) on_abort goto L4 with $t7 at ./sources/FirstModule.move:10:54+23
+    assume {:print "$at(2,318,341)"} true;
+    if (!$ResourceExists($42_Test_R_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        call $t6 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($42_Test_R_$memory, $t0));
+        assume $ResourceValue($42_Test_R_$memory, $t0) == $Dereference($t6);
+        $42_Test_R_$memory := $ResourceUpdate($42_Test_R_$memory, $t0, $DereferenceProphecy($t6));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,318,341)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t7} $t7 == $t7;
+        goto L4;
+    }
+
+    // $t4 := $t6 at ./sources/FirstModule.move:10:54+23
+    $t4 := $t6;
+
+    // trace_local[c]($t6) at ./sources/FirstModule.move:10:54+23
+    $temp_0'$42_Test_R' := $Dereference($t6);
+    assume {:print "$track_local(1,0,4):", $temp_0'$42_Test_R'} $temp_0'$42_Test_R' == $temp_0'$42_Test_R';
+
+    // fulfilled($t6) at ./sources/FirstModule.move:10:54+23
+    assume $Fulfilled($t6, $cur_index);
+
+    // goto L2 at ./sources/FirstModule.move:10:54+23
+    goto L2;
 
     // label L3 at ./sources/FirstModule.move:12:5+1
     assume {:print "$at(2,370,371)"} true;
 L3:
 
     // return () at ./sources/FirstModule.move:12:5+1
-    if ($isEntryPoint){
-        var $i: int;
-        if($asserts_results){
-            if ($assertType == 1){
-                assert {:msg "assert_failed(2,107,189): global memory invariant does not hold"} false;
-            }
-        }
-    }
     assume {:print "$at(2,370,371)"} true;
     return;
 
     // label L4 at ./sources/FirstModule.move:12:5+1
 L4:
 
-    // abort($t8) at ./sources/FirstModule.move:12:5+1
+    // abort($t7) at ./sources/FirstModule.move:12:5+1
     assume {:print "$at(2,370,371)"} true;
-    $abort_code := $t8;
+    $abort_code := $t7;
     $abort_flag := true;
     return;
 
@@ -3917,7 +4511,7 @@ L4:
     assume {:print "$at(1,0,10)"} true;
 L5:
 
-    // drop($t6) at <internal>:1:1+10
+    // drop($t5) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
 
     // goto L1 at <internal>:1:1+10
@@ -3926,7 +4520,7 @@ L5:
     // label L6 at <internal>:1:1+10
 L6:
 
-    // drop($t7) at <internal>:1:1+10
+    // drop($t6) at <internal>:1:1+10
     assume {:print "$at(1,0,10)"} true;
 
     // goto L0 at <internal>:1:1+10

@@ -452,7 +452,7 @@ datatype $Location {
 // are single threaded in Move, we can keep them together and treat them as a value
 // during mutation until the point they are stored back to their original location.
 datatype $Mutation<T> {
-    $Mutation(l: $Location, p: Vec int, v: T, v_final: T, r_order: int, r_token: int)
+    $Mutation(l: $Location, p: Vec int, v: T, v_final: T)
 }
 
 // Representation of memory for a given type.
@@ -470,12 +470,15 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
+function {:inline} $Fulfilled<T>(ref: $Mutation T, c_index: int): bool {
+    ref->v == ref->v_final
+}
 procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
     var prophecy: T;
     var r_order: int;
     havoc prophecy;
     havoc r_order;
-    result := $Mutation(l, p, v, prophecy, 1, 1);
+    result := $Mutation(l, p, v, prophecy);
     assume result->l == l;
     assume result->p == p;
     assume result->v == v;
@@ -493,7 +496,7 @@ function {:inline} $DereferenceProphecy<T>(ref: $Mutation T): T {
 
 // Update the value of a mutation.
 function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
-    $Mutation(m->l, m->p, v)
+    $Mutation(m->l, m->p, v, m->v_final)
 }
 
 // Havoc the content of the mutation, preserving location and path.
@@ -504,20 +507,20 @@ procedure {:inline 1} $HavocMutation<T>(m: $Mutation T) returns (r: $Mutation T)
 }
 
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
-    $Mutation(m->l, ExtendVec(m->p, offset), v, v, m->r_order, m->r_token)
+    $Mutation(m->l, ExtendVec(m->p, offset), v, v)
 }
 //functions are pure and deterministic, have to use procedure
 
 procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns (result: $Mutation T2) {
     var prophecy: T2;
-    var r_token: int;
+    //var r_token: int;
     havoc prophecy;
-    havoc r_token;
-    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy, m->r_order, r_token);
+    //havoc r_token;
+    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy);
     assume result->l == m->l;
     assume result->p == ExtendVec(m->p, offset);
     assume result->v == v;
-    assume r_token >= 0 && r_token <= m->r_token; 
+    //assume r_token >= 0 && r_token <= m->r_token; 
     //if you have the token, you may pass it down.
 }
 

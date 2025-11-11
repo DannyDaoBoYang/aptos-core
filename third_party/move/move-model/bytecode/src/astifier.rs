@@ -1169,6 +1169,9 @@ impl Generator {
                 );
                 self.add_stm(stm)
             },
+            Fulfilled(TempIndex) => {
+                panic!("Fulfilled operation not supported in bytecode AST generation")
+            },
             FreezeRef(explicit) => {
                 self.gen_call_stm(ctx, None, dests, Operation::Freeze(*explicit), srcs)
             },

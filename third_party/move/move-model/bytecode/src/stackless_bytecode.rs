@@ -516,7 +516,7 @@ pub enum Bytecode {
     SaveMem(AttrId, MemoryLabel, QualifiedInstId<StructId>),
     SaveSpecVar(AttrId, MemoryLabel, QualifiedInstId<SpecVarId>),
     Prop(AttrId, PropKind, Exp),
-    PropWithMem(AttrId, PropKind, Exp, QualifiedInstId<StructId>),
+    //PropWithMem(AttrId, PropKind, Exp, QualifiedInstId<StructId>),
 }
 
 impl Bytecode {
@@ -535,8 +535,8 @@ impl Bytecode {
             | SpecBlock(id, ..)
             | SaveMem(id, ..)
             | SaveSpecVar(id, ..)
-            | Prop(id, ..)
-            | PropWithMem(id, ..) => *id,
+            | Prop(id, ..) => *id,
+           // | PropWithMem(id, ..) => *id,
         }
     }
 
@@ -555,8 +555,8 @@ impl Bytecode {
             | SpecBlock(id, ..)
             | SaveMem(id, ..)
             | SaveSpecVar(id, ..)
-            | Prop(id, ..)
-            | PropWithMem(id, .. ) => id,
+            | Prop(id, ..) => id,
+            //| PropWithMem(id, .. ) => id,
         };
         *id = new_id;
     }
@@ -633,7 +633,8 @@ impl Bytecode {
             Bytecode::SaveMem(_, _, _)
             | Bytecode::SaveSpecVar(_, _, _)
             | Bytecode::Prop(_, _, _)
-            | Bytecode::PropWithMem(_, _, _ , _ )=> {
+            //| Bytecode::PropWithMem(_, _, _ , _ )
+            => {
                 unimplemented!("should not be called on spec-only instructions")
             },
         }
@@ -664,8 +665,8 @@ impl Bytecode {
             | Bytecode::SaveMem(_, _, _)
             | Bytecode::SaveSpecVar(_, _, _)
             | Bytecode::SpecBlock(..)
-            | Bytecode::Prop(_, _, _)
-            | Bytecode::PropWithMem(_, _,_,_ )=> Vec::new(),
+            | Bytecode::Prop(_, _, _) => Vec::new(),
+            //| Bytecode::PropWithMem(_, _,_,_ )=> Vec::new(),
         }
     }
 
@@ -1123,14 +1124,14 @@ impl fmt::Display for BytecodeDisplay<'_> {
                     PropKind::Modifies => write!(f, "modifies {}", exp_display)?,
                 }
             },
-            PropWithMem(_, kind, exp, _) => {
+            /*PropWithMem(_, kind, exp, _) => {
                 let exp_display = exp.display(self.func_target.func_env.module_env.env);
                 match kind {
                     PropKind::Assume => write!(f, "assume {}", exp_display)?,
                     PropKind::Assert => write!(f, "assert {}", exp_display)?,
                     PropKind::Modifies => write!(f, "modifies {}", exp_display)?,
                 }
-            },
+            },*/
         }
         Ok(())
     }
@@ -1257,9 +1258,6 @@ impl fmt::Display for OperationDisplay<'_> {
             },
 
             // Borrow
-            Fulfilled(_)=>{
-                write!(f, "fulfilled")?;
-            }
             BorrowLoc => {
                 write!(f, "borrow_local")?;
             },
@@ -1457,6 +1455,7 @@ impl fmt::Display for OperationDisplay<'_> {
             Neq => write!(f, "!=")?,
 
             // Debugging
+            Fulfilled(TempIndex) => write!(f, "fulfilled")?,
             TraceLocal(l) => {
                 let name = self.func_target.get_local_name(*l);
                 write!(
