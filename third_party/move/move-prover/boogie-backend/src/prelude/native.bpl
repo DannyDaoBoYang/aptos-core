@@ -255,8 +255,14 @@ returns (dst: $Mutation ({{T}}), m': $Mutation (Vec ({{T}})))
         call $ExecFailureAbort();
         return;
     }
-    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index));
-    m' := m;
+    //Todo: this is where it is borrowed.
+    
+    call dst := $MutationAlt(m->l, ExtendVec(m->p, index), ReadVec(v, index));
+    assume dst->l == m->l;
+    assume dst->p == ExtendVec(m->p, index);
+    assume dst->v == ReadVec(v, index);
+    m' := $UpdateMutation(m, UpdateVec(v, index, $DereferenceProphecy(dst))); 
+    
 }
 
 function {:inline} $1_vector_$borrow_mut{{S}}(v: Vec ({{T}}), i: int): {{T}} {
@@ -483,12 +489,16 @@ procedure {:inline 2} {{impl.fun_borrow_mut}}{{S}}(m: $Mutation ({{Self}}), k: {
 returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     var enc_k: int;
     var t: {{Self}};
+    var tf: {{Self}};
     enc_k := {{ENC}}(k);
     t := $Dereference(m);
     if (!ContainsTable(t, enc_k)) {
         call $Abort($StdError(7/*INVALID_ARGUMENTS*/, 101/*ENOT_FOUND*/));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
+        call dst := $MutationAlt(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
+        assume dst->l == m->l;
+        assume dst->p == ExtendVec(m->p, enc_k);
+        assume dst->v == GetTable(t, enc_k);
         m' := m;
     }
 }
@@ -500,15 +510,24 @@ returns (dst: $Mutation ({{V}}), m': $Mutation ({{Self}})) {
     var enc_k: int;
     var t: {{Self}};
     var t': {{Self}};
+    var tf: {{Self}};
+    var tf': {{Self}};
     enc_k := {{ENC}}(k);
     t := $Dereference(m);
     if (!ContainsTable(t, enc_k)) {
         m' := $UpdateMutation(m, AddTable(t, enc_k, default));
         t' := $Dereference(m');
-        dst := $Mutation(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k));
+        call dst := $MutationAlt(m'->l, ExtendVec(m'->p, enc_k), GetTable(t', enc_k));
+        assume dst->l == m'->l;
+        assume dst->p == ExtendVec(m'->p, enc_k);
+        assume dst->v == GetTable(t', enc_k);
+        m' := $UpdateMutation(m', UpdateTable(t', enc_k, $DereferenceProphecy(dst)));
     } else {
-        dst := $Mutation(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
-        m' := m;
+        call dst := $MutationAlt(m->l, ExtendVec(m->p, enc_k), GetTable(t, enc_k));
+        assume dst->l == m->l;
+        assume dst->p == ExtendVec(m->p, enc_k);
+        assume dst->v == GetTable(t, enc_k);
+        m' := $UpdateMutation(m', UpdateTable(t', enc_k, $DereferenceProphecy(dst)));
     }
 }
 {%- endif %}

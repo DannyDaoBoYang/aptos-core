@@ -347,7 +347,8 @@ impl<'a> FunctionGenerator<'a> {
             Bytecode::SaveMem(_, _, _)
             | Bytecode::Call(_, _, _, _, Some(_))
             | Bytecode::SaveSpecVar(_, _, _)
-            | Bytecode::Prop(_, _, _) => {
+            | Bytecode::Prop(_, _, _)
+            | Bytecode::PropWithMem(_,_,_,_ )=> {
                 // do nothing -- skip specification ops
             },
         }
@@ -586,6 +587,9 @@ impl<'a> FunctionGenerator<'a> {
                 // Move bytecode does not process release, values are released indirectly
                 // when the borrowed head of the borrow chain is destroyed
             },
+            Operation::Fulfilled(_) =>{
+                //This is for verification only
+            }
             Operation::Drop => {
                 // Currently Destroy is only translated for references. It may also make
                 // sense for other values, as we may figure later. Its known to be required

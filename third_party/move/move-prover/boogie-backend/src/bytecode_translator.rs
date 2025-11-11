@@ -306,6 +306,16 @@ impl<'env> BoogieTranslator<'env> {
                 param_type,
                 param_type
             );
+            /* we definetly need custom havoc for map and tables.
+            //custom havoc
+            emitln!(
+                writer,
+                "function {{:inline}} $Havoc'{}'(): {} {{ havoc x; }}",
+                suffix,
+                param_type,
+                param_type,
+                param_type
+            );*/
             emitln!(
                 writer,
                 "function {{:inline}} $IsValid'{}'(x: {}): bool {{ true }}",
@@ -1498,6 +1508,10 @@ impl FunctionTranslator<'_> {
 
         // Generate local variable declarations. They need to appear first in boogie.
         emitln!(writer, "// declare local variables");
+        emitln!(
+            writer,
+            "var $isEntryPoint: bool;"
+        );
         let num_args = fun_target.get_parameter_count();
         let mid = fun_target.func_env.module_env.get_id();
         let fid = fun_target.func_env.get_id();
@@ -1636,7 +1650,7 @@ impl FunctionTranslator<'_> {
         emitln!(writer, "\n// verification entrypoint assumptions");
 
         // Prelude initialization
-        emitln!(writer, "call $InitVerification();");
+        emitln!(writer, "call $isEntryPoint := $InitVerification();");
 
         // Assume reference parameters to be based on the Param(i) Location, ensuring
         // they are disjoint from all other references. This prevents aliasing and is justified as
@@ -1735,6 +1749,22 @@ impl FunctionTranslator<'_> {
             },
             SaveSpecVar(_, _label, _var) => {
                 panic!("spec var snapshot NYI")
+            },
+            PropWithMem(id,  kind, exp, mid ) => {
+                emit!(writer, "assert ");
+                    let info = fun_target
+                        .get_vc_info(*id)
+                        .map(|s| s.as_str())
+                        .unwrap_or("unknown assertion failed");
+                    emit!(
+                        writer,
+                        "{{:msg \"assert_failed{}: {}\"}}\n  ",
+                        self.loc_str(&loc),
+                        info
+                    );
+                    emit!(writer, "");
+                    spec_translator.translate(exp, self.type_inst);
+                    emitln!(writer, ";");
             },
             Prop(id, kind, exp) => match kind {
                 PropKind::Assert => {
@@ -1932,10 +1962,23 @@ impl FunctionTranslator<'_> {
                         let dest = dests[0];
                         emitln!(
                             writer,
-                            "{} := $Mutation($Local({}), EmptyVec(), {});",
+                            "call {} := $MutationAlt($Local({}), EmptyVec(), {});",
                             str_local(dest),
                             src,
                             str_local(src)
+                        );
+                        //honestly no idea why this fixed the issue or even had an effect.
+                        emitln!(
+                            writer,
+                            "assume $Dereference({}) == {};",
+                            str_local(dest),
+                            str_local(src)
+                        );
+                        emitln!(
+                            writer,
+                            "{} := $DereferenceProphecy({});",
+                            str_local(src),
+                            str_local(dest)
                         );
                     },
                     ReadRef => {
@@ -1948,6 +1991,17 @@ impl FunctionTranslator<'_> {
                             str_local(src)
                         );
                     },
+                    Fulfilled(_) => {
+                        let reference = srcs[0];
+                        //To do: cur_index, but not increasing
+                        emitln!(
+                            writer,
+                            "assume $Fulfilled({}, $cur_index);",
+                            str_local(reference)
+                        );
+                        //increment cur_index after the batch or after each one?
+                        //definetly after the batch because we compressed the write_backs
+                    }
                     WriteRef => {
                         let reference = srcs[0];
                         let value = srcs[1];
@@ -2240,7 +2294,8 @@ impl FunctionTranslator<'_> {
                         }
                         emitln!(writer, "} else { call $ExecFailureAbort(); }");
                     },
-                    BorrowField(mid, sid, _, field_offset) => {
+                    BorrowField(mid, sid, inst, field_offset) => {
+                        let inst = &self.inst_slice(inst);
                         let src_str = str_local(srcs[0]);
                         let dest_str = str_local(dests[0]);
                         let struct_env = env.get_module(*mid).into_struct(*sid);
@@ -2249,12 +2304,28 @@ impl FunctionTranslator<'_> {
                         let field_sel = boogie_field_sel(field_env);
                         emitln!(
                             writer,
-                            "{} := $ChildMutation({}, {}, $Dereference({})->{});",
+                            "call {} := $ChildMutationAlt({}, {}, $Dereference({})->{});",
                             dest_str,
                             src_str,
                             field_offset,
                             src_str,
                             field_sel,
+                        );
+                        emitln!(writer, "assume $Dereference({}) == $Dereference({})->{};", dest_str, src_str, field_sel);
+                        emitln!(writer, "{} := $UpdateMutationRToken({}, {});",
+                            src_str,
+                            src_str,
+                            dest_str
+                        );
+                        let update_fun = boogie_field_update(field_env, inst);
+                        emitln!(
+                            writer,
+                            "{} := $UpdateMutation({}, {}($Dereference({}), $DereferenceProphecy({})));",
+                            src_str,
+                            src_str,
+                            update_fun,
+                            src_str,
+                            dest_str
                         );
                     },
                     BorrowVariantField(mid, sid, variants, inst, field_offset) => {
@@ -2367,13 +2438,33 @@ impl FunctionTranslator<'_> {
                         writer.with_indent(|| {
                             emitln!(
                                 writer,
-                                "{} := $Mutation($Global({}), EmptyVec(), $ResourceValue({}, {}));",
+                                "call {} := $MutationAlt($Global({}), EmptyVec(), $ResourceValue({}, {}));",
                                 dest_str,
                                 addr_str,
                                 memory,
                                 addr_str
                             );
                         });
+                        writer.with_indent(|| {
+                            emitln!(
+                                writer,
+                                "assume $ResourceValue({}, {}) == $Dereference({});",
+                                memory,
+                                addr_str,
+                                dest_str
+                            );
+                        });
+                        writer.with_indent(|| {
+                            emitln!(
+                                writer,
+                                "{} := $ResourceUpdate({}, {}, $DereferenceProphecy({}));",
+                                memory,
+                                memory,
+                                addr_str,
+                                dest_str
+                            );
+                        });
+                        //emitln!(writer, "assume {{:print \"\", $DereferenceProphecy({})}} $t1 == $t1;", dest_str);
                         emitln!(writer, "}");
                     },
                     GetGlobal(mid, sid, inst) => {
@@ -3179,7 +3270,12 @@ impl FunctionTranslator<'_> {
                     Uninit => {
                         emitln!(writer, "assume $t{}->l == $Uninitialized();", srcs[0]);
                     },
-                    Drop | Release => {},
+                    Drop | Release => {
+                        //TODO: drop should assume prophecy to original
+                        //let src_str = str_local(srcs[0]);
+                        //no it should be v_final == v_original
+                        //emitln!(writer, "assume $Fulfilled({});", src_str);
+                    },
                     TraceLocal(idx) => {
                         let num_oper = global_state
                             .get_temp_index_oper(mid, fid, srcs[0], baseline_flag)
@@ -3373,7 +3469,11 @@ impl FunctionTranslator<'_> {
                 assert!(matches!(edge, BorrowEdge::Direct));
                 let memory = &memory.to_owned().instantiate(self.type_inst);
                 let memory_name = boogie_resource_memory_name(env, memory, &None);
-                emitln!(
+                let struct_env = &self.parent.env.get_struct_qid(memory.to_qualified_id());
+                let suffix = boogie_type_suffix_for_struct(struct_env, self.type_inst, false);
+                emitln!(writer, "assume $Dereference({}) == $DereferenceProphecy({});", src_str, src_str)
+                //emitln!(writer, "assume $IsEqual'{}'($Dereference({}), $DereferenceProphecy({}));", suffix , src_str, src_str);
+                /*emitln!(
                     writer,
                     "{} := $ResourceUpdate({}, $GlobalLocationAddress({}),\n    \
                                      $Dereference({}));",
@@ -3381,15 +3481,28 @@ impl FunctionTranslator<'_> {
                     memory_name,
                     src_str,
                     src_str
-                );
+                );*/
             },
             LocalRoot(idx) => {
                 assert!(matches!(edge, BorrowEdge::Direct));
-                emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
+                let bv_flag = false;
+                //Danny: Todo, let's skip type for now
+                let oper = format!(
+                    "$IsEqual'{}'",
+                    boogie_type_suffix_bv(env, &self.get_local_type(*idx), bv_flag)
+                );
+                emitln!(writer, "assume {}($Dereference({}), $DereferenceProphecy({}));",
+                    oper,
+                    src_str,
+                    src_str);
+                //emitln!(writer, "$t{} := $Dereference({});", idx, src_str);
             },
             Reference(idx) => {
-                let dst_value = format!("$Dereference($t{})", idx);
+                //To do: cur_index.
+                emitln!(writer, "assume $Fulfilled({}, $cur_index);", src_str);
+                /*let dst_value = format!("$Dereference($t{})", idx);
                 let src_value = format!("$Dereference({})", src_str);
+
                 let get_path_index = |offset: usize| {
                     if offset == 0 {
                         format!("ReadVec({}->p, LenVec($t{}->p))", src_str, idx)
@@ -3756,6 +3869,7 @@ fn struct_has_native_equality(
 ) -> bool {
     if options.native_equality {
         // Everything has native equality
+        //Danny: No struct should be using native equality
         return true;
     }
     if struct_env.has_variants() {

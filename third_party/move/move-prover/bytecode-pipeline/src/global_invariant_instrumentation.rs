@@ -208,8 +208,9 @@ impl<'env> Instrumenter<'env> {
         //         For update invariants, instrument state snapshots before the bytecode.
         for (code_offset, bc) in old_code.into_iter().enumerate() {
             let code_offset = code_offset as CodeOffset;
-
             // pre-instrumentation for state snapshots
+            //everything here needs to be wrapped in if conditions that check if the current
+            // position is the same as the prophecied time.
             if let Some(xlated) = xlated_for_opaque_begin
                 .get(&code_offset)
                 .map(|offset| xlated_inlined.get(offset).unwrap())

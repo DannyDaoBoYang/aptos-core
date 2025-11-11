@@ -234,6 +234,7 @@ pub enum Operation {
     /// Indicates that the value is no longer borrowed.
     Release,
 
+
     ReadRef,
     WriteRef, // arguments: (reference, value)
     FreezeRef(/*explicit*/ bool),
@@ -309,6 +310,7 @@ pub enum Operation {
     TraceAbort,
     TraceExp(TraceKind, NodeId),
     TraceGlobalMem(QualifiedInstId<StructId>),
+    Fulfilled(TempIndex),
 
     // Event
     EmitEvent,
@@ -341,6 +343,7 @@ impl Operation {
             Operation::GetGlobal(_, _, _) => true,
             Operation::Uninit => false,
             Operation::Drop => false,
+            Operation::Fulfilled(_) => false,
             Operation::Release => false,
             Operation::ReadRef => false,
             Operation::WriteRef => false,
@@ -513,6 +516,7 @@ pub enum Bytecode {
     SaveMem(AttrId, MemoryLabel, QualifiedInstId<StructId>),
     SaveSpecVar(AttrId, MemoryLabel, QualifiedInstId<SpecVarId>),
     Prop(AttrId, PropKind, Exp),
+    PropWithMem(AttrId, PropKind, Exp, QualifiedInstId<StructId>),
 }
 
 impl Bytecode {
@@ -531,7 +535,8 @@ impl Bytecode {
             | SpecBlock(id, ..)
             | SaveMem(id, ..)
             | SaveSpecVar(id, ..)
-            | Prop(id, ..) => *id,
+            | Prop(id, ..)
+            | PropWithMem(id, ..) => *id,
         }
     }
 
@@ -550,7 +555,8 @@ impl Bytecode {
             | SpecBlock(id, ..)
             | SaveMem(id, ..)
             | SaveSpecVar(id, ..)
-            | Prop(id, ..) => id,
+            | Prop(id, ..)
+            | PropWithMem(id, .. ) => id,
         };
         *id = new_id;
     }
@@ -626,7 +632,8 @@ impl Bytecode {
             // Note that for all spec-only instructions, we currently return no sources.
             Bytecode::SaveMem(_, _, _)
             | Bytecode::SaveSpecVar(_, _, _)
-            | Bytecode::Prop(_, _, _) => {
+            | Bytecode::Prop(_, _, _)
+            | Bytecode::PropWithMem(_, _, _ , _ )=> {
                 unimplemented!("should not be called on spec-only instructions")
             },
         }
@@ -657,7 +664,8 @@ impl Bytecode {
             | Bytecode::SaveMem(_, _, _)
             | Bytecode::SaveSpecVar(_, _, _)
             | Bytecode::SpecBlock(..)
-            | Bytecode::Prop(_, _, _) => Vec::new(),
+            | Bytecode::Prop(_, _, _)
+            | Bytecode::PropWithMem(_, _,_,_ )=> Vec::new(),
         }
     }
 
@@ -1115,6 +1123,14 @@ impl fmt::Display for BytecodeDisplay<'_> {
                     PropKind::Modifies => write!(f, "modifies {}", exp_display)?,
                 }
             },
+            PropWithMem(_, kind, exp, _) => {
+                let exp_display = exp.display(self.func_target.func_env.module_env.env);
+                match kind {
+                    PropKind::Assume => write!(f, "assume {}", exp_display)?,
+                    PropKind::Assert => write!(f, "assert {}", exp_display)?,
+                    PropKind::Modifies => write!(f, "modifies {}", exp_display)?,
+                }
+            },
         }
         Ok(())
     }
@@ -1241,6 +1257,9 @@ impl fmt::Display for OperationDisplay<'_> {
             },
 
             // Borrow
+            Fulfilled(_)=>{
+                write!(f, "fulfilled")?;
+            }
             BorrowLoc => {
                 write!(f, "borrow_local")?;
             },

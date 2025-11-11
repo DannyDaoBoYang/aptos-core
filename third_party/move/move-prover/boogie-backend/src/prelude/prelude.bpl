@@ -452,12 +452,17 @@ datatype $Location {
 // are single threaded in Move, we can keep them together and treat them as a value
 // during mutation until the point they are stored back to their original location.
 datatype $Mutation<T> {
-    $Mutation(l: $Location, p: Vec int, v: T)
+    $Mutation(l: $Location, p: Vec int, v: T, v_final: T, r_order: int, r_token: int)
 }
 
 // Representation of memory for a given type.
+
 datatype $Memory<T> {
     $Memory(domain: [int]bool, contents: [int]T)
+}
+
+datatype $MemoryPair<T> {
+    $MemoryPair(prev: $Memory T, curr: $Memory T, times: [int]int)
 }
 
 function {:builtin "MapConst"} $ConstMemoryDomain(v: bool): [int]bool;
@@ -465,10 +470,25 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
+procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
+    var prophecy: T;
+    var r_order: int;
+    havoc prophecy;
+    havoc r_order;
+    result := $Mutation(l, p, v, prophecy, 1, 1);
+    assume result->l == l;
+    assume result->p == p;
+    assume result->v == v;
+}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {
     ref->v
+}
+
+// Dereferences a mutation.
+function {:inline} $DereferenceProphecy<T>(ref: $Mutation T): T {
+    ref->v_final
 }
 
 // Update the value of a mutation.
@@ -484,7 +504,21 @@ procedure {:inline 1} $HavocMutation<T>(m: $Mutation T) returns (r: $Mutation T)
 }
 
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
-    $Mutation(m->l, ExtendVec(m->p, offset), v)
+    $Mutation(m->l, ExtendVec(m->p, offset), v, v, m->r_order, m->r_token)
+}
+//functions are pure and deterministic, have to use procedure
+
+procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns (result: $Mutation T2) {
+    var prophecy: T2;
+    var r_token: int;
+    havoc prophecy;
+    havoc r_token;
+    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy, m->r_order, r_token);
+    assume result->l == m->l;
+    assume result->p == ExtendVec(m->p, offset);
+    assume result->v == v;
+    assume r_token >= 0 && r_token <= m->r_token; 
+    //if you have the token, you may pass it down.
 }
 
 // Return true if two mutations share the location and path
@@ -549,15 +583,38 @@ function {:inline} $GlobalLocationAddress<T>(m: $Mutation T): int {
 function {:inline} $ResourceExists<T>(m: $Memory T, addr: int): bool {
     m->domain[addr]
 }
+//individual timestamp for all address
+function {:inline} $ResourceExistsMP<T>(mp: $MemoryPair T, addr: int, c_index: int): bool {
+    if c_index >= mp->times[addr] then 
+        mp->curr->domain[addr]
+    else
+        mp->prev->domain[addr]
+}
 
 // Obtains Value of given resource.
 function {:inline} $ResourceValue<T>(m: $Memory T, addr: int): T {
     m->contents[addr]
 }
 
+function {:inline} $ResourceValueMP<T>(mp: $MemoryPair T, addr: int, c_index: int): T {
+    if c_index >= mp->times[addr] then 
+        mp->curr->contents[addr]
+    else
+        mp->prev->contents[addr]
+}
+
 // Update resource.
 function {:inline} $ResourceUpdate<T>(m: $Memory T, a: int, v: T): $Memory T {
     $Memory(m->domain[a := true], m->contents[a := v])
+}
+function {:inline} $ResourceUpdateMP<T>(mp: $MemoryPair T, a: int, v: T, proph_index: int): $MemoryPair T {
+    $MemoryPair(
+        // old: gets domain and value from new for this address
+        $Memory(mp->prev->domain[a:= mp->curr->domain[a]], mp->prev->contents[a:= mp->curr->contents[a]]),
+        $Memory(mp->curr->domain[a:= true], mp->curr->contents[a:= v]),
+        //update times
+        mp->times[a := proph_index]
+    )
 }
 
 // Remove resource.
@@ -565,11 +622,31 @@ function {:inline} $ResourceRemove<T>(m: $Memory T, a: int): $Memory T {
     $Memory(m->domain[a := false], m->contents)
 }
 
+function {:inline} $ResourceRemoveMP<T>(mp: $MemoryPair T, a: int, proph_index: int): $MemoryPair T {
+    $MemoryPair(
+        $Memory(mp->prev->domain[a := mp->curr->domain[a]], mp->prev->contents[a:= mp->curr->contents[a]]),
+        $Memory(mp->curr->domain[a := false], mp->curr->contents),
+        //update times
+        mp->times[a := proph_index]
+    )
+}
+
 // Copies resource from memory s to m.
 function {:inline} $ResourceCopy<T>(m: $Memory T, s: $Memory T, a: int): $Memory T {
     $Memory(m->domain[a := s->domain[a]],
             m->contents[a := s->contents[a]])
 }
+
+function {:inline} $ResourceCopyMP<T>(m: $MemoryPair T, s: $MemoryPair T, a: int, c_index: int): $MemoryPair T {
+    $MemoryPair(
+    $Memory(m->prev->domain[a := s->curr->domain[a]],
+            m->prev->contents[a := s->curr->contents[a]]),
+    $Memory(m->curr->domain[a := $ResourceExistsMP(s, a, c_index)],
+            m->curr->contents[a := $ResourceValueMP(s, a, c_index)]),
+    m->times
+    )
+}
+
 
 // ============================================================================================
 // Abort Handling
@@ -600,13 +677,24 @@ procedure {:inline 1} $Abort(code: int) {
 function {:inline} $StdError(cat: int, reason: int): int {
     reason * 256 + cat
 }
+var $cur_index: int; //default is initialized to 0
+var $cur_index_initialized: bool;
 
-procedure {:inline 1} $InitVerification() {
+procedure {:inline 1} $InitVerification() returns (isEntryPoint: bool) {
     // Set abort_flag to false, and havoc abort_code
+    // returns whether the current function is entry point function.
     $abort_flag := false;
     havoc $abort_code;
     // Initialize event store
     call $InitEventStore();
+    if (!$cur_index_initialized){
+        $cur_index := 0;
+        $cur_index_initialized := true;
+        isEntryPoint := true;
+    }
+    else{
+        isEntryPoint := false;
+    }
 }
 
 // ============================================================================================

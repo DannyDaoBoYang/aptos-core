@@ -1,0 +1,47 @@
+[INFO] checking specifications
+[INFO] rewriting specifications
+[INFO] preparing module 0x82::Test
+[INFO] transforming bytecode
+[INFO] generating verification conditions
+[INFO] 3 verification conditions
+[INFO] running solver
+[INFO] 0.014s build, 0.004s trafo, 0.010s gen, 0.844s verify, total 0.873s
+error: global memory invariant does not hold
+   ┌─ ./sources/FirstModule.move:14:9
+   │  
+14 │ ╭         invariant forall a: address where exists<R>(a):
+15 │ │             forall b: address where exists<Y>(b):
+16 │ │                 global<R>(a).x >= global<Y>(b).x;
+   │ ╰─────────────────────────────────────────────────^
+   │  
+   =     at ./sources/FirstModule.move:30: incr2
+   =         a = 0x0
+   =         b = 0x30
+   =     at ./sources/FirstModule.move:31: incr2
+   =         r = &Test.R{x = 0}
+   =     at ./sources/FirstModule.move:32: incr2
+   =         r2 = &Test.Y{x = 0}
+   =     at ./sources/FirstModule.move:33: incr2
+   =     at ./sources/FirstModule.move:10
+   =     at ./sources/FirstModule.move:14
+
+error: global memory invariant does not hold
+   ┌─ ./sources/FirstModule.move:14:9
+   │  
+14 │ ╭         invariant forall a: address where exists<R>(a):
+15 │ │             forall b: address where exists<Y>(b):
+16 │ │                 global<R>(a).x >= global<Y>(b).x;
+   │ ╰─────────────────────────────────────────────────^
+   │  
+   =     at ./sources/FirstModule.move:38: incr3
+   =         a = 0x0
+   =         b = 0x30
+   =     at ./sources/FirstModule.move:39: incr3
+   =         r2 = &Test.Y{x = 0}
+   =     at ./sources/FirstModule.move:40: incr3
+   =         r = &Test.R{x = 0}
+   =     at ./sources/FirstModule.move:41: incr3
+   =     at ./sources/FirstModule.move:10
+   =     at ./sources/FirstModule.move:14
+
+Error: exiting with verification errors
