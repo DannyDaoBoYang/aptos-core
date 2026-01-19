@@ -2106,17 +2106,12 @@ datatype $Location {
 // are single threaded in Move, we can keep them together and treat them as a value
 // during mutation until the point they are stored back to their original location.
 datatype $Mutation<T> {
-    $Mutation(l: $Location, p: Vec int, v: T, v_final: T)
+    $Mutation(l: $Location, p: Vec int, v: T)
 }
 
 // Representation of memory for a given type.
-
 datatype $Memory<T> {
     $Memory(domain: [int]bool, contents: [int]T)
-}
-
-datatype $MemoryPair<T> {
-    $MemoryPair(prev: $Memory T, curr: $Memory T, times: [int]int)
 }
 
 function {:builtin "MapConst"} $ConstMemoryDomain(v: bool): [int]bool;
@@ -2124,33 +2119,15 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
-function {:inline} $Fulfilled<T>(ref: $Mutation T, c_index: int): bool {
-    ref->v == ref->v_final
-}
-procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
-    var prophecy: T;
-    var r_order: int;
-    havoc prophecy;
-    havoc r_order;
-    result := $Mutation(l, p, v, prophecy);
-    assume result->l == l;
-    assume result->p == p;
-    assume result->v == v;
-}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {
     ref->v
 }
 
-// Dereferences a mutation.
-function {:inline} $DereferenceProphecy<T>(ref: $Mutation T): T {
-    ref->v_final
-}
-
 // Update the value of a mutation.
 function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
-    $Mutation(m->l, m->p, v, m->v_final)
+    $Mutation(m->l, m->p, v)
 }
 
 // Havoc the content of the mutation, preserving location and path.
@@ -2161,21 +2138,7 @@ procedure {:inline 1} $HavocMutation<T>(m: $Mutation T) returns (r: $Mutation T)
 }
 
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
-    $Mutation(m->l, ExtendVec(m->p, offset), v, v)
-}
-//functions are pure and deterministic, have to use procedure
-
-procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns (result: $Mutation T2) {
-    var prophecy: T2;
-    //var r_token: int;
-    havoc prophecy;
-    //havoc r_token;
-    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy);
-    assume result->l == m->l;
-    assume result->p == ExtendVec(m->p, offset);
-    assume result->v == v;
-    //assume r_token >= 0 && r_token <= m->r_token;
-    //if you have the token, you may pass it down.
+    $Mutation(m->l, ExtendVec(m->p, offset), v)
 }
 
 // Return true if two mutations share the location and path
@@ -2240,38 +2203,15 @@ function {:inline} $GlobalLocationAddress<T>(m: $Mutation T): int {
 function {:inline} $ResourceExists<T>(m: $Memory T, addr: int): bool {
     m->domain[addr]
 }
-//individual timestamp for all address
-function {:inline} $ResourceExistsMP<T>(mp: $MemoryPair T, addr: int, c_index: int): bool {
-    if c_index >= mp->times[addr] then
-        mp->curr->domain[addr]
-    else
-        mp->prev->domain[addr]
-}
 
 // Obtains Value of given resource.
 function {:inline} $ResourceValue<T>(m: $Memory T, addr: int): T {
     m->contents[addr]
 }
 
-function {:inline} $ResourceValueMP<T>(mp: $MemoryPair T, addr: int, c_index: int): T {
-    if c_index >= mp->times[addr] then
-        mp->curr->contents[addr]
-    else
-        mp->prev->contents[addr]
-}
-
 // Update resource.
 function {:inline} $ResourceUpdate<T>(m: $Memory T, a: int, v: T): $Memory T {
     $Memory(m->domain[a := true], m->contents[a := v])
-}
-function {:inline} $ResourceUpdateMP<T>(mp: $MemoryPair T, a: int, v: T, proph_index: int): $MemoryPair T {
-    $MemoryPair(
-        // old: gets domain and value from new for this address
-        $Memory(mp->prev->domain[a:= mp->curr->domain[a]], mp->prev->contents[a:= mp->curr->contents[a]]),
-        $Memory(mp->curr->domain[a:= true], mp->curr->contents[a:= v]),
-        //update times
-        mp->times[a := proph_index]
-    )
 }
 
 // Remove resource.
@@ -2279,31 +2219,11 @@ function {:inline} $ResourceRemove<T>(m: $Memory T, a: int): $Memory T {
     $Memory(m->domain[a := false], m->contents)
 }
 
-function {:inline} $ResourceRemoveMP<T>(mp: $MemoryPair T, a: int, proph_index: int): $MemoryPair T {
-    $MemoryPair(
-        $Memory(mp->prev->domain[a := mp->curr->domain[a]], mp->prev->contents[a:= mp->curr->contents[a]]),
-        $Memory(mp->curr->domain[a := false], mp->curr->contents),
-        //update times
-        mp->times[a := proph_index]
-    )
-}
-
 // Copies resource from memory s to m.
 function {:inline} $ResourceCopy<T>(m: $Memory T, s: $Memory T, a: int): $Memory T {
     $Memory(m->domain[a := s->domain[a]],
             m->contents[a := s->contents[a]])
 }
-
-function {:inline} $ResourceCopyMP<T>(m: $MemoryPair T, s: $MemoryPair T, a: int, c_index: int): $MemoryPair T {
-    $MemoryPair(
-    $Memory(m->prev->domain[a := s->curr->domain[a]],
-            m->prev->contents[a := s->curr->contents[a]]),
-    $Memory(m->curr->domain[a := $ResourceExistsMP(s, a, c_index)],
-            m->curr->contents[a := $ResourceValueMP(s, a, c_index)]),
-    m->times
-    )
-}
-
 
 // ============================================================================================
 // Abort Handling
@@ -2334,24 +2254,13 @@ procedure {:inline 1} $Abort(code: int) {
 function {:inline} $StdError(cat: int, reason: int): int {
     reason * 256 + cat
 }
-var $cur_index: int; //default is initialized to 0
-var $cur_index_initialized: bool;
 
-procedure {:inline 1} $InitVerification() returns (isEntryPoint: bool) {
+procedure {:inline 1} $InitVerification() {
     // Set abort_flag to false, and havoc abort_code
-    // returns whether the current function is entry point function.
     $abort_flag := false;
     havoc $abort_code;
     // Initialize event store
     call $InitEventStore();
-    if (!$cur_index_initialized){
-        $cur_index := 0;
-        $cur_index_initialized := true;
-        isEntryPoint := true;
-    }
-    else{
-        isEntryPoint := false;
-    }
 }
 
 // ============================================================================================
@@ -4038,14 +3947,8 @@ returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
         call $ExecFailureAbort();
         return;
     }
-    //Todo: this is where it is borrowed.
-
-    call dst := $MutationAlt(m->l, ExtendVec(m->p, index), ReadVec(v, index));
-    assume dst->l == m->l;
-    assume dst->p == ExtendVec(m->p, index);
-    assume dst->v == ReadVec(v, index);
-    m' := $UpdateMutation(m, UpdateVec(v, index, $DereferenceProphecy(dst)));
-
+    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index));
+    m' := m;
 }
 
 function {:inline} $1_vector_$borrow_mut'u8'(v: Vec (int), i: int): int {
@@ -4375,7 +4278,6 @@ var #0_$memory: $Memory #0;
 procedure {:inline 1} $1_error_already_exists(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t1: int;
     var $t2: int;
     var $t3: int;
@@ -4427,7 +4329,6 @@ L2:
 procedure {:inline 1} $1_error_canonical(_$t0: int, _$t1: int) returns ($ret0: int)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: int;
     var $t4: int;
@@ -4501,7 +4402,6 @@ function {:inline} $1_signer_$address_of(s: $signer): int {
 procedure {:inline 1} $1_signer_address_of(_$t0: $signer) returns ($ret0: int)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t1: int;
     var $t2: int;
     var $t0: $signer;
@@ -4580,7 +4480,6 @@ function {:inline} $IsEqual'$bc_BasicCoin_Coin'#0''(s1: $bc_BasicCoin_Coin'#0', 
 procedure {:inline 1} $bc_BasicCoin_balance_of'#0'(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t1: $bc_BasicCoin_Balance'#0';
     var $t2: int;
     var $t3: $bc_BasicCoin_Coin'#0';
@@ -4642,7 +4541,6 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_balance_of$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t1: $bc_BasicCoin_Balance'#0';
     var $t2: int;
     var $t3: $bc_BasicCoin_Coin'#0';
@@ -4654,7 +4552,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_balance_of$verify(_$t0: int) returns ($r
     $t0 := _$t0;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:66:5+1
@@ -4727,7 +4625,6 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_burn$verify(_$t0: int, _$t1: int, _$t2: #0) returns ()
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t3: int;
     var $t4: $bc_BasicCoin_Coin'#0';
     var $t5: int;
@@ -4743,7 +4640,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_burn$verify(_$t0: int, _$t1: int, _$t2: 
     $t2 := _$t2;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:56:5+1
@@ -4811,7 +4708,6 @@ L2:
 procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_Coin'#0') returns ()
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: $Mutation (int);
     var $t4: int;
@@ -4863,9 +4759,7 @@ procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_C
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
-        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
-        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
     }
     if ($abort_flag) {
         assume {:print "$at(2,4622,4664)"} true;
@@ -4875,20 +4769,10 @@ procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_C
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:123:32+47
-    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
-    assume $Dereference($t10) == $Dereference($t9)->$coin;
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
-
-    // fulfilled($t9) at .\sources\BasicCoin.move:123:32+47
-    assume $Fulfilled($t9, $cur_index);
+    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:123:27+58
-    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
-    assume $Dereference($t11) == $Dereference($t10)->$value;
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
-
-    // fulfilled($t10) at .\sources\BasicCoin.move:123:27+58
-    assume $Fulfilled($t10, $cur_index);
+    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
 
     // $t12 := unpack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:124:13+14
     assume {:print "$at(2,4689,4703)"} true;
@@ -4915,13 +4799,14 @@ procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_C
     $t11 := $UpdateMutation($t11, $t13);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:125:9+30
-    assume $Fulfilled($t11, $cur_index);
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:125:9+30
-    assume $Fulfilled($t10, $cur_index);
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:125:9+30
-    assume $Dereference($t9) == $DereferenceProphecy($t9);
+    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
 
     // label L1 at .\sources\BasicCoin.move:126:5+1
     assume {:print "$at(2,4757,4758)"} true;
@@ -4946,7 +4831,6 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_BasicCoin_Coin'#0') returns ()
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: $Mutation (int);
     var $t4: int;
@@ -4970,7 +4854,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     $t1 := _$t1;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:121:5+1
@@ -5017,9 +4901,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
-        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
-        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
     }
     if ($abort_flag) {
         assume {:print "$at(2,4622,4664)"} true;
@@ -5029,20 +4911,10 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:123:32+47
-    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
-    assume $Dereference($t10) == $Dereference($t9)->$coin;
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
-
-    // fulfilled($t9) at .\sources\BasicCoin.move:123:32+47
-    assume $Fulfilled($t9, $cur_index);
+    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:123:27+58
-    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
-    assume $Dereference($t11) == $Dereference($t10)->$value;
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
-
-    // fulfilled($t10) at .\sources\BasicCoin.move:123:27+58
-    assume $Fulfilled($t10, $cur_index);
+    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
 
     // $t12 := unpack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:124:13+14
     assume {:print "$at(2,4689,4703)"} true;
@@ -5069,13 +4941,14 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     $t11 := $UpdateMutation($t11, $t13);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:125:9+30
-    assume $Fulfilled($t11, $cur_index);
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:125:9+30
-    assume $Fulfilled($t10, $cur_index);
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:125:9+30
-    assume $Dereference($t9) == $DereferenceProphecy($t9);
+    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
 
     // label L1 at .\sources\BasicCoin.move:126:5+1
     assume {:print "$at(2,4757,4758)"} true;
@@ -5123,7 +4996,6 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_mint$verify(_$t0: int, _$t1: int, _$t2: #0) returns ()
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t3: int;
     var $t4: $bc_BasicCoin_Coin'#0';
     var $t5: int;
@@ -5142,7 +5014,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_mint$verify(_$t0: int, _$t1: int, _$t2: 
     $t2 := _$t2;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:45:5+1
@@ -5244,7 +5116,6 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_publish_balance$verify(_$t0: $signer) returns ()
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t1: $bc_BasicCoin_Coin'#0';
     var $t2: int;
     var $t3: $bc_BasicCoin_Coin'#0';
@@ -5262,7 +5133,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_publish_balance$verify(_$t0: $signer) re
     $t0 := _$t0;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:21:5+1
@@ -5405,7 +5276,6 @@ L3:
 procedure {:timeLimit 40} $bc_BasicCoin_transfer$verify(_$t0: $signer, _$t1: int, _$t2: int, _$t3: #0) returns ()
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t4: int;
     var $t5: $bc_BasicCoin_Coin'#0';
     var $t6: int;
@@ -5437,7 +5307,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_transfer$verify(_$t0: $signer, _$t1: int
     $t3 := _$t3;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:77:5+1
@@ -5637,7 +5507,6 @@ L3:
 procedure {:inline 1} $bc_BasicCoin_withdraw'#0'(_$t0: int, _$t1: int) returns ($ret0: $bc_BasicCoin_Coin'#0')
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: int;
     var $t4: $Mutation (int);
@@ -5700,9 +5569,7 @@ L1:
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
-        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
-        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
     }
     if ($abort_flag) {
         assume {:print "$at(2,3946,3988)"} true;
@@ -5712,20 +5579,10 @@ L1:
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:105:32+47
-    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
-    assume $Dereference($t10) == $Dereference($t9)->$coin;
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
-
-    // fulfilled($t9) at .\sources\BasicCoin.move:105:32+47
-    assume $Fulfilled($t9, $cur_index);
+    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:105:27+58
-    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
-    assume $Dereference($t11) == $Dereference($t10)->$value;
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
-
-    // fulfilled($t10) at .\sources\BasicCoin.move:105:27+58
-    assume $Fulfilled($t10, $cur_index);
+    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
 
     // $t12 := -($t6, $t1) on_abort goto L3 with $t7 at .\sources\BasicCoin.move:106:24+16
     assume {:print "$at(2,4024,4040)"} true;
@@ -5748,13 +5605,14 @@ L1:
     $t11 := $UpdateMutation($t11, $t12);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:106:9+31
-    assume $Fulfilled($t11, $cur_index);
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:106:9+31
-    assume $Fulfilled($t10, $cur_index);
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:106:9+31
-    assume $Dereference($t9) == $DereferenceProphecy($t9);
+    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
 
     // $t13 := pack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:107:9+32
     assume {:print "$at(2,4050,4082)"} true;
@@ -5810,7 +5668,6 @@ L3:
 procedure {:timeLimit 40} $bc_BasicCoin_withdraw$verify(_$t0: int, _$t1: int) returns ($ret0: $bc_BasicCoin_Coin'#0')
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: int;
     var $t4: $Mutation (int);
@@ -5835,7 +5692,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_withdraw$verify(_$t0: int, _$t1: int) re
     $t1 := _$t1;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:102:5+1
@@ -5892,9 +5749,7 @@ L1:
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
-        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
-        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
+        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
     }
     if ($abort_flag) {
         assume {:print "$at(2,3946,3988)"} true;
@@ -5904,20 +5759,10 @@ L1:
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:105:32+47
-    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
-    assume $Dereference($t10) == $Dereference($t9)->$coin;
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
-
-    // fulfilled($t9) at .\sources\BasicCoin.move:105:32+47
-    assume $Fulfilled($t9, $cur_index);
+    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:105:27+58
-    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
-    assume $Dereference($t11) == $Dereference($t10)->$value;
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
-
-    // fulfilled($t10) at .\sources\BasicCoin.move:105:27+58
-    assume $Fulfilled($t10, $cur_index);
+    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
 
     // $t12 := -($t6, $t1) on_abort goto L3 with $t7 at .\sources\BasicCoin.move:106:24+16
     assume {:print "$at(2,4024,4040)"} true;
@@ -5940,13 +5785,14 @@ L1:
     $t11 := $UpdateMutation($t11, $t12);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:106:9+31
-    assume $Fulfilled($t11, $cur_index);
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:106:9+31
-    assume $Fulfilled($t10, $cur_index);
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:106:9+31
-    assume $Dereference($t9) == $DereferenceProphecy($t9);
+    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
+        $Dereference($t9));
 
     // $t13 := pack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:107:9+32
     assume {:print "$at(2,4050,4082)"} true;
@@ -6026,123 +5872,58 @@ L3:
 
 }
 
-// struct ProphecyBenchmark::Node at .\sources\ConditionalBorrowChain.move:4:5+125
+// struct ProphecyBenchmark::Node at .\sources\ConditionalBorrowChain.move:4:5+51
 datatype $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node($v0: int, $v1: int, $v2: int, $v3: int, $v4: int, $v5: int, $v6: int, $v7: int)
+    $bc_ProphecyBenchmark_Node($v0: int)
 }
 function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v0(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(x, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v1(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, x, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v2(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, s->$v1, x, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v3(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, s->$v1, s->$v2, x, s->$v4, s->$v5, s->$v6, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v4(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, s->$v1, s->$v2, s->$v3, x, s->$v5, s->$v6, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v5(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, x, s->$v6, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v6(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, x, s->$v7)
-}
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v7(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, x)
+    $bc_ProphecyBenchmark_Node(x)
 }
 function $IsValid'$bc_ProphecyBenchmark_Node'(s: $bc_ProphecyBenchmark_Node): bool {
     $IsValid'u64'(s->$v0)
-      && $IsValid'u64'(s->$v1)
-      && $IsValid'u64'(s->$v2)
-      && $IsValid'u64'(s->$v3)
-      && $IsValid'u64'(s->$v4)
-      && $IsValid'u64'(s->$v5)
-      && $IsValid'u64'(s->$v6)
-      && $IsValid'u64'(s->$v7)
 }
 function {:inline} $IsEqual'$bc_ProphecyBenchmark_Node'(s1: $bc_ProphecyBenchmark_Node, s2: $bc_ProphecyBenchmark_Node): bool {
     s1 == s2
 }
 
-// fun ProphecyBenchmark::new_node [verification] at .\sources\ConditionalBorrowChain.move:10:5+109
+// fun ProphecyBenchmark::new_node [verification] at .\sources\ConditionalBorrowChain.move:9:5+58
 procedure {:timeLimit 40} $bc_ProphecyBenchmark_new_node$verify() returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t0: int;
-    var $t1: int;
-    var $t2: int;
-    var $t3: int;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: int;
-    var $t8: $bc_ProphecyBenchmark_Node;
+    var $t1: $bc_ProphecyBenchmark_Node;
     var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 0 at .\sources\ConditionalBorrowChain.move:11:20+1
-    assume {:print "$at(3,333,334)"} true;
+    // $t0 := 0 at .\sources\ConditionalBorrowChain.move:10:20+1
+    assume {:print "$at(3,252,253)"} true;
     $t0 := 0;
     assume $IsValid'u64'($t0);
 
-    // $t1 := 0 at .\sources\ConditionalBorrowChain.move:11:27+1
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // $t1 := pack 0xbc::ProphecyBenchmark::Node($t0) at .\sources\ConditionalBorrowChain.move:10:9+14
+    $t1 := $bc_ProphecyBenchmark_Node($t0);
 
-    // $t2 := 0 at .\sources\ConditionalBorrowChain.move:11:34+1
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
+    // trace_return[0]($t1) at .\sources\ConditionalBorrowChain.move:10:9+14
+    assume {:print "$track_return(4,0,0):", $t1} $t1 == $t1;
 
-    // $t3 := 0 at .\sources\ConditionalBorrowChain.move:11:41+1
-    $t3 := 0;
-    assume $IsValid'u64'($t3);
-
-    // $t4 := 0 at .\sources\ConditionalBorrowChain.move:11:48+1
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := 0 at .\sources\ConditionalBorrowChain.move:11:55+1
-    $t5 := 0;
-    assume $IsValid'u64'($t5);
-
-    // $t6 := 0 at .\sources\ConditionalBorrowChain.move:11:62+1
-    $t6 := 0;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := 0 at .\sources\ConditionalBorrowChain.move:11:69+1
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := pack 0xbc::ProphecyBenchmark::Node($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7) at .\sources\ConditionalBorrowChain.move:11:9+63
-    $t8 := $bc_ProphecyBenchmark_Node($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7);
-
-    // trace_return[0]($t8) at .\sources\ConditionalBorrowChain.move:11:9+63
-    assume {:print "$track_return(4,0,0):", $t8} $t8 == $t8;
-
-    // label L1 at .\sources\ConditionalBorrowChain.move:12:5+1
-    assume {:print "$at(3,391,392)"} true;
+    // label L1 at .\sources\ConditionalBorrowChain.move:11:5+1
+    assume {:print "$at(3,260,261)"} true;
 L1:
 
-    // return $t8 at .\sources\ConditionalBorrowChain.move:12:5+1
-    assume {:print "$at(3,391,392)"} true;
-    $ret0 := $t8;
+    // return $t1 at .\sources\ConditionalBorrowChain.move:11:5+1
+    assume {:print "$at(3,260,261)"} true;
+    $ret0 := $t1;
     return;
 
 }
 
-// fun ProphecyBenchmark::stress_test_10 [verification] at .\sources\ConditionalBorrowChain.move:60:5+546
+// fun ProphecyBenchmark::stress_test_10 [verification] at .\sources\ConditionalBorrowChain.move:42:5+439
 procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int, _$t2: int, _$t3: int, _$t4: int, _$t5: int, _$t6: int, _$t7: int, _$t8: int, _$t9: int, _$t10: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
-    var $isEntryPoint: bool;
     var $t11: $bc_ProphecyBenchmark_Node;
     var $t12: int;
     var $t13: $bc_ProphecyBenchmark_Node;
@@ -6151,9 +5932,6 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_
     var $t16: $bc_ProphecyBenchmark_Node;
     var $t17: $bc_ProphecyBenchmark_Node;
     var $t18: $bc_ProphecyBenchmark_Node;
-    var $t19: $bc_ProphecyBenchmark_Node;
-    var $t20: $bc_ProphecyBenchmark_Node;
-    var $t21: $bc_ProphecyBenchmark_Node;
     var $t0: $bc_ProphecyBenchmark_Node;
     var $t1: int;
     var $t2: int;
@@ -6180,403 +5958,227 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_
     $t10 := _$t10;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:60:5+1
-    assume {:print "$at(3,2518,2519)"} true;
+    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:42:5+1
+    assume {:print "$at(3,1484,1485)"} true;
     assume $IsValid'$bc_ProphecyBenchmark_Node'($t0);
 
-    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t1);
 
-    // assume WellFormed($t2) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t2) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t2);
 
-    // assume WellFormed($t3) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t3) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t3);
 
-    // assume WellFormed($t4) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t4) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t4);
 
-    // assume WellFormed($t5) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t5) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t5);
 
-    // assume WellFormed($t6) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t6) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t6);
 
-    // assume WellFormed($t7) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t7) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t7);
 
-    // assume WellFormed($t8) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t8) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t8);
 
-    // assume WellFormed($t9) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t9) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t9);
 
-    // assume WellFormed($t10) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // assume WellFormed($t10) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume $IsValid'u64'($t10);
 
-    // assume And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:80:9+58
-    assume {:print "$at(3,3168,3226)"} true;
-    assume ((($IsEqual'u64'($t0->$v0, 0) && $IsEqual'u64'($t0->$v1, 0)) && $IsEqual'u64'($t0->$v2, 0)) && $IsEqual'u64'($t0->$v3, 0));
+    // assume Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 0) at .\sources\ConditionalBorrowChain.move:59:6+19
+    assume {:print "$at(3,2020,2039)"} true;
+    assume $IsEqual'u64'($t0->$v0, 0);
 
-    // assume And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:81:9+58
-    assume {:print "$at(3,3237,3295)"} true;
-    assume ((($IsEqual'u64'($t0->$v4, 0) && $IsEqual'u64'($t0->$v5, 0)) && $IsEqual'u64'($t0->$v6, 0)) && $IsEqual'u64'($t0->$v7, 0));
-
-    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:60:5+1
-    assume {:print "$at(3,2518,2519)"} true;
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:42:5+1
+    assume {:print "$at(3,1484,1485)"} true;
     assume {:print "$track_local(4,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[c0]($t1) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c0]($t1) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,1):", $t1} $t1 == $t1;
 
-    // trace_local[c1]($t2) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c1]($t2) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,2):", $t2} $t2 == $t2;
 
-    // trace_local[c2]($t3) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c2]($t3) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,3):", $t3} $t3 == $t3;
 
-    // trace_local[c3]($t4) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c3]($t4) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,4):", $t4} $t4 == $t4;
 
-    // trace_local[c4]($t5) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c4]($t5) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,5):", $t5} $t5 == $t5;
 
-    // trace_local[c5]($t6) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c5]($t6) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,6):", $t6} $t6 == $t6;
 
-    // trace_local[c6]($t7) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c6]($t7) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,7):", $t7} $t7 == $t7;
 
-    // trace_local[c7]($t8) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c7]($t8) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,8):", $t8} $t8 == $t8;
 
-    // trace_local[c8]($t9) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c8]($t9) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,9):", $t9} $t9 == $t9;
 
-    // trace_local[c9]($t10) at .\sources\ConditionalBorrowChain.move:60:5+1
+    // trace_local[c9]($t10) at .\sources\ConditionalBorrowChain.move:42:5+1
     assume {:print "$track_local(4,1,10):", $t10} $t10 == $t10;
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t0->$v0, 0) && $IsEqual'u64'($t0->$v1, 0)) && $IsEqual'u64'($t0->$v2, 0)) && $IsEqual'u64'($t0->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t0->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t0->$v4, 0) && $IsEqual'u64'($t0->$v5, 0)) && $IsEqual'u64'($t0->$v6, 0)) && $IsEqual'u64'($t0->$v7, 0));
-
-    // $t11 := ProphecyBenchmark::update_one($t0, $t1) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:65:17+17
-    assume {:print "$at(3,2704,2721)"} true;
+    // $t11 := ProphecyBenchmark::update_one($t0, $t1) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:47:18+17
+    assume {:print "$at(3,1666,1683)"} true;
     call $t11 := $bc_ProphecyBenchmark_update_one($t0, $t1);
     if ($abort_flag) {
-        assume {:print "$at(3,2704,2721)"} true;
+        assume {:print "$at(3,1666,1683)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t11), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t11), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t11), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t11), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t11->$v0, 0) && $IsEqual'u64'($t11->$v1, 0)) && $IsEqual'u64'($t11->$v2, 0)) && $IsEqual'u64'($t11->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t11), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t11->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t11), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t11), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t11), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t11), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t11->$v4, 0) && $IsEqual'u64'($t11->$v5, 0)) && $IsEqual'u64'($t11->$v6, 0)) && $IsEqual'u64'($t11->$v7, 0));
-
-    // $t13 := ProphecyBenchmark::update_one($t11, $t2) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:66:17+17
-    assume {:print "$at(3,2740,2757)"} true;
+    // $t13 := ProphecyBenchmark::update_one($t11, $t2) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:48:18+18
+    assume {:print "$at(3,1702,1720)"} true;
     call $t13 := $bc_ProphecyBenchmark_update_one($t11, $t2);
     if ($abort_flag) {
-        assume {:print "$at(3,2740,2757)"} true;
+        assume {:print "$at(3,1702,1720)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t13), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t13), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t13), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t13), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t13->$v0, 0) && $IsEqual'u64'($t13->$v1, 0)) && $IsEqual'u64'($t13->$v2, 0)) && $IsEqual'u64'($t13->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t13), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t13->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t13), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t13), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t13), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t13), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t13->$v4, 0) && $IsEqual'u64'($t13->$v5, 0)) && $IsEqual'u64'($t13->$v6, 0)) && $IsEqual'u64'($t13->$v7, 0));
-
-    // $t14 := ProphecyBenchmark::update_one($t13, $t3) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:67:17+17
-    assume {:print "$at(3,2776,2793)"} true;
+    // $t14 := ProphecyBenchmark::update_one($t13, $t3) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:49:18+18
+    assume {:print "$at(3,1739,1757)"} true;
     call $t14 := $bc_ProphecyBenchmark_update_one($t13, $t3);
     if ($abort_flag) {
-        assume {:print "$at(3,2776,2793)"} true;
+        assume {:print "$at(3,1739,1757)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t14), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t14), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t14), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t14), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t14->$v0, 0) && $IsEqual'u64'($t14->$v1, 0)) && $IsEqual'u64'($t14->$v2, 0)) && $IsEqual'u64'($t14->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t14), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t14->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t14), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t14), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t14), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t14), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t14->$v4, 0) && $IsEqual'u64'($t14->$v5, 0)) && $IsEqual'u64'($t14->$v6, 0)) && $IsEqual'u64'($t14->$v7, 0));
-
-    // $t15 := ProphecyBenchmark::update_one($t14, $t4) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:68:17+17
-    assume {:print "$at(3,2812,2829)"} true;
+    // $t15 := ProphecyBenchmark::update_one($t14, $t4) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:50:18+18
+    assume {:print "$at(3,1776,1794)"} true;
     call $t15 := $bc_ProphecyBenchmark_update_one($t14, $t4);
     if ($abort_flag) {
-        assume {:print "$at(3,2812,2829)"} true;
+        assume {:print "$at(3,1776,1794)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t15), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t15), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t15), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t15), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t15->$v0, 0) && $IsEqual'u64'($t15->$v1, 0)) && $IsEqual'u64'($t15->$v2, 0)) && $IsEqual'u64'($t15->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t15), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t15->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t15), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t15), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t15), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t15), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t15->$v4, 0) && $IsEqual'u64'($t15->$v5, 0)) && $IsEqual'u64'($t15->$v6, 0)) && $IsEqual'u64'($t15->$v7, 0));
-
-    // $t16 := ProphecyBenchmark::update_one($t15, $t5) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:69:17+17
-    assume {:print "$at(3,2848,2865)"} true;
+    // $t16 := ProphecyBenchmark::update_one($t15, $t5) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:51:18+18
+    assume {:print "$at(3,1813,1831)"} true;
     call $t16 := $bc_ProphecyBenchmark_update_one($t15, $t5);
     if ($abort_flag) {
-        assume {:print "$at(3,2848,2865)"} true;
+        assume {:print "$at(3,1813,1831)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t16), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t16), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t16), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t16), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t16->$v0, 0) && $IsEqual'u64'($t16->$v1, 0)) && $IsEqual'u64'($t16->$v2, 0)) && $IsEqual'u64'($t16->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t16), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t16->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t16), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t16), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t16), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t16), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t16->$v4, 0) && $IsEqual'u64'($t16->$v5, 0)) && $IsEqual'u64'($t16->$v6, 0)) && $IsEqual'u64'($t16->$v7, 0));
-
-    // $t17 := ProphecyBenchmark::update_one($t16, $t6) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:70:17+17
-    assume {:print "$at(3,2884,2901)"} true;
+    // $t17 := ProphecyBenchmark::update_one($t16, $t6) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:52:18+18
+    assume {:print "$at(3,1850,1868)"} true;
     call $t17 := $bc_ProphecyBenchmark_update_one($t16, $t6);
     if ($abort_flag) {
-        assume {:print "$at(3,2884,2901)"} true;
+        assume {:print "$at(3,1850,1868)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t17), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t17), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t17), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t17), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t17->$v0, 0) && $IsEqual'u64'($t17->$v1, 0)) && $IsEqual'u64'($t17->$v2, 0)) && $IsEqual'u64'($t17->$v3, 0));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t17), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
+      ($t17->$v0 <= 100);
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t17), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t17), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t17), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t17), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t17->$v4, 0) && $IsEqual'u64'($t17->$v5, 0)) && $IsEqual'u64'($t17->$v6, 0)) && $IsEqual'u64'($t17->$v7, 0));
-
-    // $t18 := ProphecyBenchmark::update_one($t17, $t7) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:71:17+17
-    assume {:print "$at(3,2920,2937)"} true;
+    // $t18 := ProphecyBenchmark::update_one($t17, $t7) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:53:18+18
+    assume {:print "$at(3,1887,1905)"} true;
     call $t18 := $bc_ProphecyBenchmark_update_one($t17, $t7);
     if ($abort_flag) {
-        assume {:print "$at(3,2920,2937)"} true;
+        assume {:print "$at(3,1887,1905)"} true;
         $t12 := $abort_code;
         assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
         goto L2;
     }
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t18), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t18), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t18), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t18), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t18->$v0, 0) && $IsEqual'u64'($t18->$v1, 0)) && $IsEqual'u64'($t18->$v2, 0)) && $IsEqual'u64'($t18->$v3, 0));
+    // trace_return[0]($t18) at .\sources\ConditionalBorrowChain.move:54:9+2
+    assume {:print "$at(3,1915,1917)"} true;
+    assume {:print "$track_return(4,1,0):", $t18} $t18 == $t18;
 
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t18), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t18), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t18), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t18), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t18->$v4, 0) && $IsEqual'u64'($t18->$v5, 0)) && $IsEqual'u64'($t18->$v6, 0)) && $IsEqual'u64'($t18->$v7, 0));
-
-    // $t19 := ProphecyBenchmark::update_one($t18, $t8) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:72:17+17
-    assume {:print "$at(3,2956,2973)"} true;
-    call $t19 := $bc_ProphecyBenchmark_update_one($t18, $t8);
-    if ($abort_flag) {
-        assume {:print "$at(3,2956,2973)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t19), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t19), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t19), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t19), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t19->$v0, 0) && $IsEqual'u64'($t19->$v1, 0)) && $IsEqual'u64'($t19->$v2, 0)) && $IsEqual'u64'($t19->$v3, 0));
-
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t19), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t19), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t19), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t19), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t19->$v4, 0) && $IsEqual'u64'($t19->$v5, 0)) && $IsEqual'u64'($t19->$v6, 0)) && $IsEqual'u64'($t19->$v7, 0));
-
-    // $t20 := ProphecyBenchmark::update_one($t19, $t9) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:73:17+17
-    assume {:print "$at(3,2992,3009)"} true;
-    call $t20 := $bc_ProphecyBenchmark_update_one($t19, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(3,2992,3009)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t20), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t20), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t20), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t20), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assert {:msg "assert_failed(3,1365,1435): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t20->$v0, 0) && $IsEqual'u64'($t20->$v1, 0)) && $IsEqual'u64'($t20->$v2, 0)) && $IsEqual'u64'($t20->$v3, 0));
-
-    // assert And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t20), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t20), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t20), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t20), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assert {:msg "assert_failed(3,1445,1515): precondition does not hold at this call"}
-      ((($IsEqual'u64'($t20->$v4, 0) && $IsEqual'u64'($t20->$v5, 0)) && $IsEqual'u64'($t20->$v6, 0)) && $IsEqual'u64'($t20->$v7, 0));
-
-    // $t21 := ProphecyBenchmark::update_one($t20, $t10) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:74:17+17
-    assume {:print "$at(3,3028,3045)"} true;
-    call $t21 := $bc_ProphecyBenchmark_update_one($t20, $t10);
-    if ($abort_flag) {
-        assume {:print "$at(3,3028,3045)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // trace_return[0]($t21) at .\sources\ConditionalBorrowChain.move:75:9+1
-    assume {:print "$at(3,3056,3057)"} true;
-    assume {:print "$track_return(4,1,0):", $t21} $t21 == $t21;
-
-    // label L1 at .\sources\ConditionalBorrowChain.move:76:5+1
-    assume {:print "$at(3,3063,3064)"} true;
+    // label L1 at .\sources\ConditionalBorrowChain.move:55:5+1
+    assume {:print "$at(3,1922,1923)"} true;
 L1:
 
-    // assert Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t21), Add(Add(Add(Add(Add(Add(Add(Add(Add(if Eq<u64>($t1, 0) {
-    //   1
-    // } else {
-    //   0
-    // }, if Eq<u64>($t2, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t3, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t4, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t5, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t6, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t7, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t8, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t9, 0) {
-    //   1
-    // } else {
-    //   0
-    // }), if Eq<u64>($t10, 0) {
-    //   1
-    // } else {
-    //   0
-    // })) at .\sources\ConditionalBorrowChain.move:84:9+439
-    assume {:print "$at(3,3414,3853)"} true;
-    assert {:msg "assert_failed(3,3414,3853): post-condition does not hold"}
-      $IsEqual'u64'($t21->$v0, ((((((((((if ($IsEqual'u64'($t1, 0)) then (1) else (0)) + (if ($IsEqual'u64'($t2, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t3, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t4, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t5, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t6, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t7, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t8, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t9, 0)) then (1) else (0))) + (if ($IsEqual'u64'($t10, 0)) then (1) else (0))));
+    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t18), 10) at .\sources\ConditionalBorrowChain.move:62:9+24
+    assume {:print "$at(3,2151,2175)"} true;
+    assert {:msg "assert_failed(3,2151,2175): post-condition does not hold"}
+      ($t18->$v0 <= 10);
 
-    // return $t21 at .\sources\ConditionalBorrowChain.move:84:9+439
-    $ret0 := $t21;
+    // return $t18 at .\sources\ConditionalBorrowChain.move:62:9+24
+    $ret0 := $t18;
     return;
 
-    // label L2 at .\sources\ConditionalBorrowChain.move:76:5+1
-    assume {:print "$at(3,3063,3064)"} true;
+    // label L2 at .\sources\ConditionalBorrowChain.move:55:5+1
+    assume {:print "$at(3,1922,1923)"} true;
 L2:
 
-    // abort($t12) at .\sources\ConditionalBorrowChain.move:76:5+1
-    assume {:print "$at(3,3063,3064)"} true;
+    // abort($t12) at .\sources\ConditionalBorrowChain.move:55:5+1
+    assume {:print "$at(3,1922,1923)"} true;
     $abort_code := $t12;
     $abort_flag := true;
     return;
 
 }
 
-// fun ProphecyBenchmark::update_one [baseline] at .\sources\ConditionalBorrowChain.move:15:5+781
+// fun ProphecyBenchmark::update_one [baseline] at .\sources\ConditionalBorrowChain.move:14:5+412
 procedure {:inline 1} $bc_ProphecyBenchmark_update_one(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
-    var $isEntryPoint: bool;
-    var $t2: $Mutation ($bc_ProphecyBenchmark_Node);
-    var $t3: $Mutation (int);
+    var $t2: $Mutation (int);
+    var $t3: $Mutation ($bc_ProphecyBenchmark_Node);
     var $t4: $Mutation (int);
-    var $t5: $Mutation (int);
-    var $t6: $Mutation (int);
-    var $t7: $Mutation (int);
-    var $t8: $Mutation (int);
-    var $t9: $Mutation (int);
-    var $t10: $Mutation (int);
-    var $t11: $Mutation (int);
-    var $t12: $Mutation ($bc_ProphecyBenchmark_Node);
-    var $t13: int;
-    var $t14: int;
-    var $t15: int;
-    var $t16: int;
-    var $t17: bool;
-    var $t18: int;
-    var $t19: int;
-    var $t20: int;
-    var $t21: $bc_ProphecyBenchmark_Node;
-    var $t22: int;
-    var $t23: int;
-    var $t24: int;
-    var $t25: bool;
-    var $t26: int;
-    var $t27: int;
-    var $t28: int;
-    var $t29: bool;
-    var $t30: int;
-    var $t31: int;
-    var $t32: int;
-    var $t33: bool;
-    var $t34: int;
-    var $t35: int;
-    var $t36: int;
-    var $t37: bool;
-    var $t38: int;
-    var $t39: int;
-    var $t40: int;
-    var $t41: bool;
-    var $t42: int;
-    var $t43: int;
-    var $t44: int;
-    var $t45: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: $bc_ProphecyBenchmark_Node;
     var $t0: $bc_ProphecyBenchmark_Node;
     var $t1: int;
     var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
@@ -6585,720 +6187,99 @@ procedure {:inline 1} $bc_ProphecyBenchmark_update_one(_$t0: $bc_ProphecyBenchma
     $t1 := _$t1;
 
     // bytecode translation starts here
-    // uninit($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-    assume $t4->l == $Uninitialized();
+    // assume Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assume ($t0->$v0 <= 100);
 
-    // uninit($t5) at <internal>:1:1+10
-    assume $t5->l == $Uninitialized();
-
-    // uninit($t6) at <internal>:1:1+10
-    assume $t6->l == $Uninitialized();
-
-    // uninit($t7) at <internal>:1:1+10
-    assume $t7->l == $Uninitialized();
-
-    // uninit($t8) at <internal>:1:1+10
-    assume $t8->l == $Uninitialized();
-
-    // uninit($t9) at <internal>:1:1+10
-    assume $t9->l == $Uninitialized();
-
-    // uninit($t10) at <internal>:1:1+10
-    assume $t10->l == $Uninitialized();
-
-    // uninit($t11) at <internal>:1:1+10
-    assume $t11->l == $Uninitialized();
-
-    // assume And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assume ((($IsEqual'u64'($t0->$v0, 0) && $IsEqual'u64'($t0->$v1, 0)) && $IsEqual'u64'($t0->$v2, 0)) && $IsEqual'u64'($t0->$v3, 0));
-
-    // assume And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assume ((($IsEqual'u64'($t0->$v4, 0) && $IsEqual'u64'($t0->$v5, 0)) && $IsEqual'u64'($t0->$v6, 0)) && $IsEqual'u64'($t0->$v7, 0));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:15:5+1
-    assume {:print "$at(3,477,478)"} true;
+    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
+    assume {:print "$at(3,343,344)"} true;
     assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
 
-    // trace_local[choice]($t1) at .\sources\ConditionalBorrowChain.move:15:5+1
+    // trace_local[choice]($t1) at .\sources\ConditionalBorrowChain.move:14:5+1
     assume {:print "$track_local(4,2,1):", $t1} $t1 == $t1;
 
-    // $t12 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:17:21+9
-    assume {:print "$at(3,622,631)"} true;
-    call $t12 := $MutationAlt($Local(0), EmptyVec(), $t0);
-    assume $Dereference($t12) == $t0;
-    $t0 := $DereferenceProphecy($t12);
+    // $t3 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:16:21+9
+    assume {:print "$at(3,486,495)"} true;
+    $t3 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // trace_local[n_ref]($t12) at .\sources\ConditionalBorrowChain.move:17:21+9
-    $temp_0'$bc_ProphecyBenchmark_Node' := $Dereference($t12);
-    assume {:print "$track_local(4,2,2):", $temp_0'$bc_ProphecyBenchmark_Node'} $temp_0'$bc_ProphecyBenchmark_Node' == $temp_0'$bc_ProphecyBenchmark_Node';
+    // $t4 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t3) at .\sources\ConditionalBorrowChain.move:19:22+13
+    assume {:print "$at(3,629,642)"} true;
+    $t4 := $ChildMutation($t3, 0, $Dereference($t3)->$v0);
 
-    // $t13 := 8 at .\sources\ConditionalBorrowChain.move:20:33+1
-    assume {:print "$at(3,777,778)"} true;
-    $t13 := 8;
-    assume $IsValid'u64'($t13);
+    // trace_local[target]($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
+    $temp_0'u64' := $Dereference($t4);
+    assume {:print "$track_local(4,2,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t14 := %($t1, $t13) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:20:26+8
-    call $t14 := $Mod($t1, $t13);
+    // $t5 := read_ref($t4) at .\sources\ConditionalBorrowChain.move:21:19+7
+    assume {:print "$at(3,686,693)"} true;
+    $t5 := $Dereference($t4);
+
+    // $t6 := 1 at .\sources\ConditionalBorrowChain.move:21:29+1
+    $t6 := 1;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := +($t5, $t6) on_abort goto L2 with $t8 at .\sources\ConditionalBorrowChain.move:21:19+11
+    call $t7 := $AddU64($t5, $t6);
     if ($abort_flag) {
-        assume {:print "$at(3,770,778)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
+        assume {:print "$at(3,686,697)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t8} $t8 == $t8;
+        goto L2;
     }
 
-    // $t16 := 0 at .\sources\ConditionalBorrowChain.move:20:38+1
-    $t16 := 0;
-    assume $IsValid'u64'($t16);
+    // write_ref($t4, $t7) at .\sources\ConditionalBorrowChain.move:21:9+21
+    $t4 := $UpdateMutation($t4, $t7);
 
-    // $t17 := ==($t14, $t16) at .\sources\ConditionalBorrowChain.move:20:26+13
-    $t17 := $IsEqual'u64'($t14, $t16);
+    // write_back[Reference($t3).v0 (u64)]($t4) at .\sources\ConditionalBorrowChain.move:21:9+21
+    $t3 := $UpdateMutation($t3, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t3), $Dereference($t4)));
 
-    // if ($t17) goto L17 else goto L0 at .\sources\ConditionalBorrowChain.move:20:22+374
-    if ($t17) { goto L17; } else { goto L0; }
+    // write_back[LocalRoot($t0)@]($t3) at .\sources\ConditionalBorrowChain.move:21:9+21
+    $t0 := $Dereference($t3);
 
-    // label L1 at .\sources\ConditionalBorrowChain.move:20:43+13
+    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:21:9+21
+    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
+
+    // $t9 := move($t0) at .\sources\ConditionalBorrowChain.move:23:9+4
+    assume {:print "$at(3,745,749)"} true;
+    $t9 := $t0;
+
+    // trace_return[0]($t9) at .\sources\ConditionalBorrowChain.move:14:58+359
+    assume {:print "$at(3,396,755)"} true;
+    assume {:print "$track_return(4,2,0):", $t9} $t9 == $t9;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:24:5+1
+    assume {:print "$at(3,754,755)"} true;
 L1:
 
-    // $t4 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t12) at .\sources\ConditionalBorrowChain.move:20:43+13
-    assume {:print "$at(3,787,800)"} true;
-    call $t4 := $ChildMutationAlt($t12, 0, $Dereference($t12)->$v0);
-    assume $Dereference($t4) == $Dereference($t12)->$v0;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t12), $DereferenceProphecy($t4)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:20:43+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t4 at .\sources\ConditionalBorrowChain.move:20:43+13
-    $t3 := $t4;
-
-    // trace_local[target]($t4) at .\sources\ConditionalBorrowChain.move:20:43+13
-    $temp_0'u64' := $Dereference($t4);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t4) at .\sources\ConditionalBorrowChain.move:20:43+13
-    assume $Fulfilled($t4, $cur_index);
-
-    // label L4 at .\sources\ConditionalBorrowChain.move:29:19+7
-    assume {:print "$at(3,1186,1193)"} true;
-L4:
-
-    // $t18 := read_ref($t3) at .\sources\ConditionalBorrowChain.move:29:19+7
-    assume {:print "$at(3,1186,1193)"} true;
-    $t18 := $Dereference($t3);
-
-    // $t19 := 1 at .\sources\ConditionalBorrowChain.move:29:29+1
-    $t19 := 1;
-    assume $IsValid'u64'($t19);
-
-    // $t20 := +($t18, $t19) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:29:19+11
-    call $t20 := $AddU64($t18, $t19);
-    if ($abort_flag) {
-        assume {:print "$at(3,1186,1197)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // write_ref($t3, $t20) at .\sources\ConditionalBorrowChain.move:29:9+21
-    $t3 := $UpdateMutation($t3, $t20);
-
-    // write_back[Reference($t4)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v0 (u64)]($t4) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t4, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t5)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v1 (u64)]($t5) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t5, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t6)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v2 (u64)]($t6) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t6, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t7)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v3 (u64)]($t7) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t7, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t8)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v4 (u64)]($t8) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t8, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t9)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v5 (u64)]($t9) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t9, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t10)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v6 (u64)]($t10) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t10, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t11)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t12).v7 (u64)]($t11) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t11, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t12) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t12), $DereferenceProphecy($t12));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // $t21 := move($t0) at .\sources\ConditionalBorrowChain.move:31:9+4
-    assume {:print "$at(3,1247,1251)"} true;
-    $t21 := $t0;
-
-    // trace_return[0]($t21) at .\sources\ConditionalBorrowChain.move:15:58+728
-    assume {:print "$at(3,530,1258)"} true;
-    assume {:print "$track_return(4,2,0):", $t21} $t21 == $t21;
-
-    // goto L15 at .\sources\ConditionalBorrowChain.move:15:58+728
-    goto L15;
-
-    // label L0 at .\sources\ConditionalBorrowChain.move:21:18+6
-    assume {:print "$at(3,821,827)"} true;
-L0:
-
-    // $t22 := 8 at .\sources\ConditionalBorrowChain.move:21:25+1
-    assume {:print "$at(3,828,829)"} true;
-    $t22 := 8;
-    assume $IsValid'u64'($t22);
-
-    // $t23 := %($t1, $t22) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:21:18+8
-    call $t23 := $Mod($t1, $t22);
-    if ($abort_flag) {
-        assume {:print "$at(3,821,829)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // $t24 := 1 at .\sources\ConditionalBorrowChain.move:21:30+1
-    $t24 := 1;
-    assume $IsValid'u64'($t24);
-
-    // $t25 := ==($t23, $t24) at .\sources\ConditionalBorrowChain.move:21:18+13
-    $t25 := $IsEqual'u64'($t23, $t24);
-
-    // if ($t25) goto L18 else goto L2 at .\sources\ConditionalBorrowChain.move:21:14+323
-    if ($t25) { goto L18; } else { goto L2; }
-
-    // label L3 at .\sources\ConditionalBorrowChain.move:21:35+13
-L3:
-
-    // $t5 := borrow_field<0xbc::ProphecyBenchmark::Node>.v1($t12) at .\sources\ConditionalBorrowChain.move:21:35+13
-    assume {:print "$at(3,838,851)"} true;
-    call $t5 := $ChildMutationAlt($t12, 1, $Dereference($t12)->$v1);
-    assume $Dereference($t5) == $Dereference($t12)->$v1;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v1($Dereference($t12), $DereferenceProphecy($t5)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:21:35+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t5 at .\sources\ConditionalBorrowChain.move:21:35+13
-    $t3 := $t5;
-
-    // trace_local[target]($t5) at .\sources\ConditionalBorrowChain.move:21:35+13
-    $temp_0'u64' := $Dereference($t5);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t5) at .\sources\ConditionalBorrowChain.move:21:35+13
-    assume $Fulfilled($t5, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:21:35+13
-    goto L4;
-
-    // label L2 at .\sources\ConditionalBorrowChain.move:22:18+6
-    assume {:print "$at(3,872,878)"} true;
-L2:
-
-    // $t26 := 8 at .\sources\ConditionalBorrowChain.move:22:25+1
-    assume {:print "$at(3,879,880)"} true;
-    $t26 := 8;
-    assume $IsValid'u64'($t26);
-
-    // $t27 := %($t1, $t26) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:22:18+8
-    call $t27 := $Mod($t1, $t26);
-    if ($abort_flag) {
-        assume {:print "$at(3,872,880)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // $t28 := 2 at .\sources\ConditionalBorrowChain.move:22:30+1
-    $t28 := 2;
-    assume $IsValid'u64'($t28);
-
-    // $t29 := ==($t27, $t28) at .\sources\ConditionalBorrowChain.move:22:18+13
-    $t29 := $IsEqual'u64'($t27, $t28);
-
-    // if ($t29) goto L19 else goto L5 at .\sources\ConditionalBorrowChain.move:22:14+272
-    if ($t29) { goto L19; } else { goto L5; }
-
-    // label L6 at .\sources\ConditionalBorrowChain.move:22:35+13
-L6:
-
-    // $t6 := borrow_field<0xbc::ProphecyBenchmark::Node>.v2($t12) at .\sources\ConditionalBorrowChain.move:22:35+13
-    assume {:print "$at(3,889,902)"} true;
-    call $t6 := $ChildMutationAlt($t12, 2, $Dereference($t12)->$v2);
-    assume $Dereference($t6) == $Dereference($t12)->$v2;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v2($Dereference($t12), $DereferenceProphecy($t6)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:22:35+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t6 at .\sources\ConditionalBorrowChain.move:22:35+13
-    $t3 := $t6;
-
-    // trace_local[target]($t6) at .\sources\ConditionalBorrowChain.move:22:35+13
-    $temp_0'u64' := $Dereference($t6);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t6) at .\sources\ConditionalBorrowChain.move:22:35+13
-    assume $Fulfilled($t6, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:22:35+13
-    goto L4;
-
-    // label L5 at .\sources\ConditionalBorrowChain.move:23:18+6
-    assume {:print "$at(3,923,929)"} true;
-L5:
-
-    // $t30 := 8 at .\sources\ConditionalBorrowChain.move:23:25+1
-    assume {:print "$at(3,930,931)"} true;
-    $t30 := 8;
-    assume $IsValid'u64'($t30);
-
-    // $t31 := %($t1, $t30) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:23:18+8
-    call $t31 := $Mod($t1, $t30);
-    if ($abort_flag) {
-        assume {:print "$at(3,923,931)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // $t32 := 3 at .\sources\ConditionalBorrowChain.move:23:30+1
-    $t32 := 3;
-    assume $IsValid'u64'($t32);
-
-    // $t33 := ==($t31, $t32) at .\sources\ConditionalBorrowChain.move:23:18+13
-    $t33 := $IsEqual'u64'($t31, $t32);
-
-    // if ($t33) goto L20 else goto L7 at .\sources\ConditionalBorrowChain.move:23:14+221
-    if ($t33) { goto L20; } else { goto L7; }
-
-    // label L8 at .\sources\ConditionalBorrowChain.move:23:35+13
-L8:
-
-    // $t7 := borrow_field<0xbc::ProphecyBenchmark::Node>.v3($t12) at .\sources\ConditionalBorrowChain.move:23:35+13
-    assume {:print "$at(3,940,953)"} true;
-    call $t7 := $ChildMutationAlt($t12, 3, $Dereference($t12)->$v3);
-    assume $Dereference($t7) == $Dereference($t12)->$v3;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v3($Dereference($t12), $DereferenceProphecy($t7)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:23:35+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t7 at .\sources\ConditionalBorrowChain.move:23:35+13
-    $t3 := $t7;
-
-    // trace_local[target]($t7) at .\sources\ConditionalBorrowChain.move:23:35+13
-    $temp_0'u64' := $Dereference($t7);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t7) at .\sources\ConditionalBorrowChain.move:23:35+13
-    assume $Fulfilled($t7, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:23:35+13
-    goto L4;
-
-    // label L7 at .\sources\ConditionalBorrowChain.move:24:18+6
-    assume {:print "$at(3,974,980)"} true;
-L7:
-
-    // $t34 := 8 at .\sources\ConditionalBorrowChain.move:24:25+1
-    assume {:print "$at(3,981,982)"} true;
-    $t34 := 8;
-    assume $IsValid'u64'($t34);
-
-    // $t35 := %($t1, $t34) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:24:18+8
-    call $t35 := $Mod($t1, $t34);
-    if ($abort_flag) {
-        assume {:print "$at(3,974,982)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // $t36 := 4 at .\sources\ConditionalBorrowChain.move:24:30+1
-    $t36 := 4;
-    assume $IsValid'u64'($t36);
-
-    // $t37 := ==($t35, $t36) at .\sources\ConditionalBorrowChain.move:24:18+13
-    $t37 := $IsEqual'u64'($t35, $t36);
-
-    // if ($t37) goto L21 else goto L9 at .\sources\ConditionalBorrowChain.move:24:14+170
-    if ($t37) { goto L21; } else { goto L9; }
-
-    // label L10 at .\sources\ConditionalBorrowChain.move:24:35+13
-L10:
-
-    // $t8 := borrow_field<0xbc::ProphecyBenchmark::Node>.v4($t12) at .\sources\ConditionalBorrowChain.move:24:35+13
-    assume {:print "$at(3,991,1004)"} true;
-    call $t8 := $ChildMutationAlt($t12, 4, $Dereference($t12)->$v4);
-    assume $Dereference($t8) == $Dereference($t12)->$v4;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v4($Dereference($t12), $DereferenceProphecy($t8)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:24:35+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t8 at .\sources\ConditionalBorrowChain.move:24:35+13
-    $t3 := $t8;
-
-    // trace_local[target]($t8) at .\sources\ConditionalBorrowChain.move:24:35+13
-    $temp_0'u64' := $Dereference($t8);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t8) at .\sources\ConditionalBorrowChain.move:24:35+13
-    assume $Fulfilled($t8, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:24:35+13
-    goto L4;
-
-    // label L9 at .\sources\ConditionalBorrowChain.move:25:18+6
-    assume {:print "$at(3,1025,1031)"} true;
-L9:
-
-    // $t38 := 8 at .\sources\ConditionalBorrowChain.move:25:25+1
-    assume {:print "$at(3,1032,1033)"} true;
-    $t38 := 8;
-    assume $IsValid'u64'($t38);
-
-    // $t39 := %($t1, $t38) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:25:18+8
-    call $t39 := $Mod($t1, $t38);
-    if ($abort_flag) {
-        assume {:print "$at(3,1025,1033)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // $t40 := 5 at .\sources\ConditionalBorrowChain.move:25:30+1
-    $t40 := 5;
-    assume $IsValid'u64'($t40);
-
-    // $t41 := ==($t39, $t40) at .\sources\ConditionalBorrowChain.move:25:18+13
-    $t41 := $IsEqual'u64'($t39, $t40);
-
-    // if ($t41) goto L22 else goto L11 at .\sources\ConditionalBorrowChain.move:25:14+119
-    if ($t41) { goto L22; } else { goto L11; }
-
-    // label L12 at .\sources\ConditionalBorrowChain.move:25:35+13
-L12:
-
-    // $t9 := borrow_field<0xbc::ProphecyBenchmark::Node>.v5($t12) at .\sources\ConditionalBorrowChain.move:25:35+13
-    assume {:print "$at(3,1042,1055)"} true;
-    call $t9 := $ChildMutationAlt($t12, 5, $Dereference($t12)->$v5);
-    assume $Dereference($t9) == $Dereference($t12)->$v5;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v5($Dereference($t12), $DereferenceProphecy($t9)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:25:35+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t9 at .\sources\ConditionalBorrowChain.move:25:35+13
-    $t3 := $t9;
-
-    // trace_local[target]($t9) at .\sources\ConditionalBorrowChain.move:25:35+13
-    $temp_0'u64' := $Dereference($t9);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t9) at .\sources\ConditionalBorrowChain.move:25:35+13
-    assume $Fulfilled($t9, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:25:35+13
-    goto L4;
-
-    // label L11 at .\sources\ConditionalBorrowChain.move:26:18+6
-    assume {:print "$at(3,1076,1082)"} true;
-L11:
-
-    // $t42 := 8 at .\sources\ConditionalBorrowChain.move:26:25+1
-    assume {:print "$at(3,1083,1084)"} true;
-    $t42 := 8;
-    assume $IsValid'u64'($t42);
-
-    // $t43 := %($t1, $t42) on_abort goto L16 with $t15 at .\sources\ConditionalBorrowChain.move:26:18+8
-    call $t43 := $Mod($t1, $t42);
-    if ($abort_flag) {
-        assume {:print "$at(3,1076,1084)"} true;
-        $t15 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t15} $t15 == $t15;
-        goto L16;
-    }
-
-    // $t44 := 6 at .\sources\ConditionalBorrowChain.move:26:30+1
-    $t44 := 6;
-    assume $IsValid'u64'($t44);
-
-    // $t45 := ==($t43, $t44) at .\sources\ConditionalBorrowChain.move:26:18+13
-    $t45 := $IsEqual'u64'($t43, $t44);
-
-    // if ($t45) goto L23 else goto L24 at .\sources\ConditionalBorrowChain.move:26:14+68
-    if ($t45) { goto L23; } else { goto L24; }
-
-    // label L14 at .\sources\ConditionalBorrowChain.move:26:35+13
-L14:
-
-    // $t10 := borrow_field<0xbc::ProphecyBenchmark::Node>.v6($t12) at .\sources\ConditionalBorrowChain.move:26:35+13
-    assume {:print "$at(3,1093,1106)"} true;
-    call $t10 := $ChildMutationAlt($t12, 6, $Dereference($t12)->$v6);
-    assume $Dereference($t10) == $Dereference($t12)->$v6;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v6($Dereference($t12), $DereferenceProphecy($t10)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:26:35+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t10 at .\sources\ConditionalBorrowChain.move:26:35+13
-    $t3 := $t10;
-
-    // trace_local[target]($t10) at .\sources\ConditionalBorrowChain.move:26:35+13
-    $temp_0'u64' := $Dereference($t10);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t10) at .\sources\ConditionalBorrowChain.move:26:35+13
-    assume $Fulfilled($t10, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:26:35+13
-    goto L4;
-
-    // label L13 at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume {:print "$at(3,1125,1138)"} true;
-L13:
-
-    // $t11 := borrow_field<0xbc::ProphecyBenchmark::Node>.v7($t12) at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume {:print "$at(3,1125,1138)"} true;
-    call $t11 := $ChildMutationAlt($t12, 7, $Dereference($t12)->$v7);
-    assume $Dereference($t11) == $Dereference($t12)->$v7;
-    $t12 := $UpdateMutation($t12, $Update'$bc_ProphecyBenchmark_Node'_v7($Dereference($t12), $DereferenceProphecy($t11)));
-
-    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume $Fulfilled($t12, $cur_index);
-
-    // $t3 := $t11 at .\sources\ConditionalBorrowChain.move:27:16+13
-    $t3 := $t11;
-
-    // trace_local[target]($t11) at .\sources\ConditionalBorrowChain.move:27:16+13
-    $temp_0'u64' := $Dereference($t11);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t11) at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume $Fulfilled($t11, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:27:16+13
-    goto L4;
-
-    // label L15 at .\sources\ConditionalBorrowChain.move:32:5+1
-    assume {:print "$at(3,1257,1258)"} true;
-L15:
-
-    // return $t21 at .\sources\ConditionalBorrowChain.move:32:5+1
-    assume {:print "$at(3,1257,1258)"} true;
-    $ret0 := $t21;
+    // return $t9 at .\sources\ConditionalBorrowChain.move:24:5+1
+    assume {:print "$at(3,754,755)"} true;
+    $ret0 := $t9;
     return;
 
-    // label L16 at .\sources\ConditionalBorrowChain.move:32:5+1
-L16:
+    // label L2 at .\sources\ConditionalBorrowChain.move:24:5+1
+L2:
 
-    // abort($t15) at .\sources\ConditionalBorrowChain.move:32:5+1
-    assume {:print "$at(3,1257,1258)"} true;
-    $abort_code := $t15;
+    // abort($t8) at .\sources\ConditionalBorrowChain.move:24:5+1
+    assume {:print "$at(3,754,755)"} true;
+    $abort_code := $t8;
     $abort_flag := true;
     return;
 
-    // label L17 at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-L17:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L1 at <internal>:1:1+10
-    goto L1;
-
-    // label L18 at <internal>:1:1+10
-L18:
-
-    // drop($t5) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L3 at <internal>:1:1+10
-    goto L3;
-
-    // label L19 at <internal>:1:1+10
-L19:
-
-    // drop($t6) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
-
-    // label L20 at <internal>:1:1+10
-L20:
-
-    // drop($t7) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L8 at <internal>:1:1+10
-    goto L8;
-
-    // label L21 at <internal>:1:1+10
-L21:
-
-    // drop($t8) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L10 at <internal>:1:1+10
-    goto L10;
-
-    // label L22 at <internal>:1:1+10
-L22:
-
-    // drop($t9) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L12 at <internal>:1:1+10
-    goto L12;
-
-    // label L23 at <internal>:1:1+10
-L23:
-
-    // drop($t10) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L14 at <internal>:1:1+10
-    goto L14;
-
-    // label L24 at <internal>:1:1+10
-L24:
-
-    // drop($t11) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L13 at <internal>:1:1+10
-    goto L13;
-
 }
 
-// fun ProphecyBenchmark::update_one [verification] at .\sources\ConditionalBorrowChain.move:15:5+781
+// fun ProphecyBenchmark::update_one [verification] at .\sources\ConditionalBorrowChain.move:14:5+412
 procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
-    var $isEntryPoint: bool;
-    var $t2: $Mutation ($bc_ProphecyBenchmark_Node);
-    var $t3: $Mutation (int);
-    var $t4: $Mutation (int);
+    var $t2: $Mutation (int);
+    var $t3: $bc_ProphecyBenchmark_Node;
+    var $t4: $Mutation ($bc_ProphecyBenchmark_Node);
     var $t5: $Mutation (int);
-    var $t6: $Mutation (int);
-    var $t7: $Mutation (int);
-    var $t8: $Mutation (int);
-    var $t9: $Mutation (int);
-    var $t10: $Mutation (int);
-    var $t11: $Mutation (int);
-    var $t12: $bc_ProphecyBenchmark_Node;
-    var $t13: $Mutation ($bc_ProphecyBenchmark_Node);
-    var $t14: int;
-    var $t15: int;
-    var $t16: int;
-    var $t17: int;
-    var $t18: bool;
-    var $t19: int;
-    var $t20: int;
-    var $t21: int;
-    var $t22: $bc_ProphecyBenchmark_Node;
-    var $t23: int;
-    var $t24: int;
-    var $t25: int;
-    var $t26: bool;
-    var $t27: int;
-    var $t28: int;
-    var $t29: int;
-    var $t30: bool;
-    var $t31: int;
-    var $t32: int;
-    var $t33: int;
-    var $t34: bool;
-    var $t35: int;
-    var $t36: int;
-    var $t37: int;
-    var $t38: bool;
-    var $t39: int;
-    var $t40: int;
-    var $t41: int;
-    var $t42: bool;
-    var $t43: int;
-    var $t44: int;
-    var $t45: int;
-    var $t46: bool;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: int;
+    var $t10: $bc_ProphecyBenchmark_Node;
     var $t0: $bc_ProphecyBenchmark_Node;
     var $t1: int;
     var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
@@ -7307,748 +6288,114 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_Prop
     $t1 := _$t1;
 
     // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:15:5+1
-    assume {:print "$at(3,477,478)"} true;
+    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
+    assume {:print "$at(3,343,344)"} true;
     assume $IsValid'$bc_ProphecyBenchmark_Node'($t0);
 
-    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:15:5+1
+    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:14:5+1
     assume $IsValid'u64'($t1);
 
-    // uninit($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-    assume $t4->l == $Uninitialized();
+    // assume Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
+    assume {:print "$at(3,830,854)"} true;
+    assume ($t0->$v0 <= 100);
 
-    // uninit($t5) at <internal>:1:1+10
-    assume $t5->l == $Uninitialized();
+    // $t3 := copy($t0) at .\sources\ConditionalBorrowChain.move:28:6+24
+    $t3 := $t0;
 
-    // uninit($t6) at <internal>:1:1+10
-    assume $t6->l == $Uninitialized();
-
-    // uninit($t7) at <internal>:1:1+10
-    assume $t7->l == $Uninitialized();
-
-    // uninit($t8) at <internal>:1:1+10
-    assume $t8->l == $Uninitialized();
-
-    // uninit($t9) at <internal>:1:1+10
-    assume $t9->l == $Uninitialized();
-
-    // uninit($t10) at <internal>:1:1+10
-    assume $t10->l == $Uninitialized();
-
-    // uninit($t11) at <internal>:1:1+10
-    assume $t11->l == $Uninitialized();
-
-    // assume And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:37:9+70
-    assume {:print "$at(3,1365,1435)"} true;
-    assume ((($IsEqual'u64'($t0->$v0, 0) && $IsEqual'u64'($t0->$v1, 0)) && $IsEqual'u64'($t0->$v2, 0)) && $IsEqual'u64'($t0->$v3, 0));
-
-    // assume And(And(And(Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t0), 0), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t0), 0)), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t0), 0)) at .\sources\ConditionalBorrowChain.move:38:9+70
-    assume {:print "$at(3,1445,1515)"} true;
-    assume ((($IsEqual'u64'($t0->$v4, 0) && $IsEqual'u64'($t0->$v5, 0)) && $IsEqual'u64'($t0->$v6, 0)) && $IsEqual'u64'($t0->$v7, 0));
-
-    // $t12 := copy($t0) at .\sources\ConditionalBorrowChain.move:38:9+70
-    $t12 := $t0;
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:15:5+1
-    assume {:print "$at(3,477,478)"} true;
+    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
+    assume {:print "$at(3,343,344)"} true;
     assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
 
-    // trace_local[choice]($t1) at .\sources\ConditionalBorrowChain.move:15:5+1
+    // trace_local[choice]($t1) at .\sources\ConditionalBorrowChain.move:14:5+1
     assume {:print "$track_local(4,2,1):", $t1} $t1 == $t1;
 
-    // $t13 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:17:21+9
-    assume {:print "$at(3,622,631)"} true;
-    call $t13 := $MutationAlt($Local(0), EmptyVec(), $t0);
-    assume $Dereference($t13) == $t0;
-    $t0 := $DereferenceProphecy($t13);
+    // $t4 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:16:21+9
+    assume {:print "$at(3,486,495)"} true;
+    $t4 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // trace_local[n_ref]($t13) at .\sources\ConditionalBorrowChain.move:17:21+9
-    $temp_0'$bc_ProphecyBenchmark_Node' := $Dereference($t13);
-    assume {:print "$track_local(4,2,2):", $temp_0'$bc_ProphecyBenchmark_Node'} $temp_0'$bc_ProphecyBenchmark_Node' == $temp_0'$bc_ProphecyBenchmark_Node';
+    // $t5 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
+    assume {:print "$at(3,629,642)"} true;
+    $t5 := $ChildMutation($t4, 0, $Dereference($t4)->$v0);
 
-    // $t14 := 8 at .\sources\ConditionalBorrowChain.move:20:33+1
-    assume {:print "$at(3,777,778)"} true;
-    $t14 := 8;
-    assume $IsValid'u64'($t14);
+    // trace_local[target]($t5) at .\sources\ConditionalBorrowChain.move:19:22+13
+    $temp_0'u64' := $Dereference($t5);
+    assume {:print "$track_local(4,2,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t15 := %($t1, $t14) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:20:26+8
-    call $t15 := $Mod($t1, $t14);
+    // $t6 := read_ref($t5) at .\sources\ConditionalBorrowChain.move:21:19+7
+    assume {:print "$at(3,686,693)"} true;
+    $t6 := $Dereference($t5);
+
+    // $t7 := 1 at .\sources\ConditionalBorrowChain.move:21:29+1
+    $t7 := 1;
+    assume $IsValid'u64'($t7);
+
+    // $t8 := +($t6, $t7) on_abort goto L2 with $t9 at .\sources\ConditionalBorrowChain.move:21:19+11
+    call $t8 := $AddU64($t6, $t7);
     if ($abort_flag) {
-        assume {:print "$at(3,770,778)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
+        assume {:print "$at(3,686,697)"} true;
+        $t9 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t9} $t9 == $t9;
+        goto L2;
     }
 
-    // $t17 := 0 at .\sources\ConditionalBorrowChain.move:20:38+1
-    $t17 := 0;
-    assume $IsValid'u64'($t17);
+    // write_ref($t5, $t8) at .\sources\ConditionalBorrowChain.move:21:9+21
+    $t5 := $UpdateMutation($t5, $t8);
 
-    // $t18 := ==($t15, $t17) at .\sources\ConditionalBorrowChain.move:20:26+13
-    $t18 := $IsEqual'u64'($t15, $t17);
+    // write_back[Reference($t4).v0 (u64)]($t5) at .\sources\ConditionalBorrowChain.move:21:9+21
+    $t4 := $UpdateMutation($t4, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t4), $Dereference($t5)));
 
-    // if ($t18) goto L17 else goto L0 at .\sources\ConditionalBorrowChain.move:20:22+374
-    if ($t18) { goto L17; } else { goto L0; }
+    // write_back[LocalRoot($t0)@]($t4) at .\sources\ConditionalBorrowChain.move:21:9+21
+    $t0 := $Dereference($t4);
 
-    // label L1 at .\sources\ConditionalBorrowChain.move:20:43+13
+    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:21:9+21
+    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
+
+    // $t10 := move($t0) at .\sources\ConditionalBorrowChain.move:23:9+4
+    assume {:print "$at(3,745,749)"} true;
+    $t10 := $t0;
+
+    // trace_return[0]($t10) at .\sources\ConditionalBorrowChain.move:14:58+359
+    assume {:print "$at(3,396,755)"} true;
+    assume {:print "$track_return(4,2,0):", $t10} $t10 == $t10;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:24:5+1
+    assume {:print "$at(3,754,755)"} true;
 L1:
 
-    // $t4 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t13) at .\sources\ConditionalBorrowChain.move:20:43+13
-    assume {:print "$at(3,787,800)"} true;
-    call $t4 := $ChildMutationAlt($t13, 0, $Dereference($t13)->$v0);
-    assume $Dereference($t4) == $Dereference($t13)->$v0;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t13), $DereferenceProphecy($t4)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:20:43+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t4 at .\sources\ConditionalBorrowChain.move:20:43+13
-    $t3 := $t4;
-
-    // trace_local[target]($t4) at .\sources\ConditionalBorrowChain.move:20:43+13
-    $temp_0'u64' := $Dereference($t4);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t4) at .\sources\ConditionalBorrowChain.move:20:43+13
-    assume $Fulfilled($t4, $cur_index);
-
-    // label L4 at .\sources\ConditionalBorrowChain.move:29:19+7
-    assume {:print "$at(3,1186,1193)"} true;
-L4:
-
-    // $t19 := read_ref($t3) at .\sources\ConditionalBorrowChain.move:29:19+7
-    assume {:print "$at(3,1186,1193)"} true;
-    $t19 := $Dereference($t3);
-
-    // $t20 := 1 at .\sources\ConditionalBorrowChain.move:29:29+1
-    $t20 := 1;
-    assume $IsValid'u64'($t20);
-
-    // $t21 := +($t19, $t20) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:29:19+11
-    call $t21 := $AddU64($t19, $t20);
-    if ($abort_flag) {
-        assume {:print "$at(3,1186,1197)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // write_ref($t3, $t21) at .\sources\ConditionalBorrowChain.move:29:9+21
-    $t3 := $UpdateMutation($t3, $t21);
-
-    // write_back[Reference($t4)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v0 (u64)]($t4) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t4, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t5)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v1 (u64)]($t5) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t5, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t6)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v2 (u64)]($t6) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t6, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t7)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v3 (u64)]($t7) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t7, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t8)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v4 (u64)]($t8) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t8, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t9)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v5 (u64)]($t9) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t9, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t10)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v6 (u64)]($t10) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t10, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // write_back[Reference($t11)@]($t3) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t3, $cur_index);
-
-    // write_back[Reference($t13).v7 (u64)]($t11) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $Fulfilled($t11, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t13) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t13), $DereferenceProphecy($t13));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:29:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // $t22 := move($t0) at .\sources\ConditionalBorrowChain.move:31:9+4
-    assume {:print "$at(3,1247,1251)"} true;
-    $t22 := $t0;
-
-    // trace_return[0]($t22) at .\sources\ConditionalBorrowChain.move:15:58+728
-    assume {:print "$at(3,530,1258)"} true;
-    assume {:print "$track_return(4,2,0):", $t22} $t22 == $t22;
-
-    // goto L15 at .\sources\ConditionalBorrowChain.move:15:58+728
-    goto L15;
-
-    // label L0 at .\sources\ConditionalBorrowChain.move:21:18+6
-    assume {:print "$at(3,821,827)"} true;
-L0:
-
-    // $t23 := 8 at .\sources\ConditionalBorrowChain.move:21:25+1
-    assume {:print "$at(3,828,829)"} true;
-    $t23 := 8;
-    assume $IsValid'u64'($t23);
-
-    // $t24 := %($t1, $t23) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:21:18+8
-    call $t24 := $Mod($t1, $t23);
-    if ($abort_flag) {
-        assume {:print "$at(3,821,829)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // $t25 := 1 at .\sources\ConditionalBorrowChain.move:21:30+1
-    $t25 := 1;
-    assume $IsValid'u64'($t25);
-
-    // $t26 := ==($t24, $t25) at .\sources\ConditionalBorrowChain.move:21:18+13
-    $t26 := $IsEqual'u64'($t24, $t25);
-
-    // if ($t26) goto L18 else goto L2 at .\sources\ConditionalBorrowChain.move:21:14+323
-    if ($t26) { goto L18; } else { goto L2; }
-
-    // label L3 at .\sources\ConditionalBorrowChain.move:21:35+13
-L3:
-
-    // $t5 := borrow_field<0xbc::ProphecyBenchmark::Node>.v1($t13) at .\sources\ConditionalBorrowChain.move:21:35+13
-    assume {:print "$at(3,838,851)"} true;
-    call $t5 := $ChildMutationAlt($t13, 1, $Dereference($t13)->$v1);
-    assume $Dereference($t5) == $Dereference($t13)->$v1;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v1($Dereference($t13), $DereferenceProphecy($t5)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:21:35+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t5 at .\sources\ConditionalBorrowChain.move:21:35+13
-    $t3 := $t5;
-
-    // trace_local[target]($t5) at .\sources\ConditionalBorrowChain.move:21:35+13
-    $temp_0'u64' := $Dereference($t5);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t5) at .\sources\ConditionalBorrowChain.move:21:35+13
-    assume $Fulfilled($t5, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:21:35+13
-    goto L4;
-
-    // label L2 at .\sources\ConditionalBorrowChain.move:22:18+6
-    assume {:print "$at(3,872,878)"} true;
-L2:
-
-    // $t27 := 8 at .\sources\ConditionalBorrowChain.move:22:25+1
-    assume {:print "$at(3,879,880)"} true;
-    $t27 := 8;
-    assume $IsValid'u64'($t27);
-
-    // $t28 := %($t1, $t27) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:22:18+8
-    call $t28 := $Mod($t1, $t27);
-    if ($abort_flag) {
-        assume {:print "$at(3,872,880)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // $t29 := 2 at .\sources\ConditionalBorrowChain.move:22:30+1
-    $t29 := 2;
-    assume $IsValid'u64'($t29);
-
-    // $t30 := ==($t28, $t29) at .\sources\ConditionalBorrowChain.move:22:18+13
-    $t30 := $IsEqual'u64'($t28, $t29);
-
-    // if ($t30) goto L19 else goto L5 at .\sources\ConditionalBorrowChain.move:22:14+272
-    if ($t30) { goto L19; } else { goto L5; }
-
-    // label L6 at .\sources\ConditionalBorrowChain.move:22:35+13
-L6:
-
-    // $t6 := borrow_field<0xbc::ProphecyBenchmark::Node>.v2($t13) at .\sources\ConditionalBorrowChain.move:22:35+13
-    assume {:print "$at(3,889,902)"} true;
-    call $t6 := $ChildMutationAlt($t13, 2, $Dereference($t13)->$v2);
-    assume $Dereference($t6) == $Dereference($t13)->$v2;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v2($Dereference($t13), $DereferenceProphecy($t6)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:22:35+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t6 at .\sources\ConditionalBorrowChain.move:22:35+13
-    $t3 := $t6;
-
-    // trace_local[target]($t6) at .\sources\ConditionalBorrowChain.move:22:35+13
-    $temp_0'u64' := $Dereference($t6);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t6) at .\sources\ConditionalBorrowChain.move:22:35+13
-    assume $Fulfilled($t6, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:22:35+13
-    goto L4;
-
-    // label L5 at .\sources\ConditionalBorrowChain.move:23:18+6
-    assume {:print "$at(3,923,929)"} true;
-L5:
-
-    // $t31 := 8 at .\sources\ConditionalBorrowChain.move:23:25+1
-    assume {:print "$at(3,930,931)"} true;
-    $t31 := 8;
-    assume $IsValid'u64'($t31);
-
-    // $t32 := %($t1, $t31) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:23:18+8
-    call $t32 := $Mod($t1, $t31);
-    if ($abort_flag) {
-        assume {:print "$at(3,923,931)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // $t33 := 3 at .\sources\ConditionalBorrowChain.move:23:30+1
-    $t33 := 3;
-    assume $IsValid'u64'($t33);
-
-    // $t34 := ==($t32, $t33) at .\sources\ConditionalBorrowChain.move:23:18+13
-    $t34 := $IsEqual'u64'($t32, $t33);
-
-    // if ($t34) goto L20 else goto L7 at .\sources\ConditionalBorrowChain.move:23:14+221
-    if ($t34) { goto L20; } else { goto L7; }
-
-    // label L8 at .\sources\ConditionalBorrowChain.move:23:35+13
-L8:
-
-    // $t7 := borrow_field<0xbc::ProphecyBenchmark::Node>.v3($t13) at .\sources\ConditionalBorrowChain.move:23:35+13
-    assume {:print "$at(3,940,953)"} true;
-    call $t7 := $ChildMutationAlt($t13, 3, $Dereference($t13)->$v3);
-    assume $Dereference($t7) == $Dereference($t13)->$v3;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v3($Dereference($t13), $DereferenceProphecy($t7)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:23:35+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t7 at .\sources\ConditionalBorrowChain.move:23:35+13
-    $t3 := $t7;
-
-    // trace_local[target]($t7) at .\sources\ConditionalBorrowChain.move:23:35+13
-    $temp_0'u64' := $Dereference($t7);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t7) at .\sources\ConditionalBorrowChain.move:23:35+13
-    assume $Fulfilled($t7, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:23:35+13
-    goto L4;
-
-    // label L7 at .\sources\ConditionalBorrowChain.move:24:18+6
-    assume {:print "$at(3,974,980)"} true;
-L7:
-
-    // $t35 := 8 at .\sources\ConditionalBorrowChain.move:24:25+1
-    assume {:print "$at(3,981,982)"} true;
-    $t35 := 8;
-    assume $IsValid'u64'($t35);
-
-    // $t36 := %($t1, $t35) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:24:18+8
-    call $t36 := $Mod($t1, $t35);
-    if ($abort_flag) {
-        assume {:print "$at(3,974,982)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // $t37 := 4 at .\sources\ConditionalBorrowChain.move:24:30+1
-    $t37 := 4;
-    assume $IsValid'u64'($t37);
-
-    // $t38 := ==($t36, $t37) at .\sources\ConditionalBorrowChain.move:24:18+13
-    $t38 := $IsEqual'u64'($t36, $t37);
-
-    // if ($t38) goto L21 else goto L9 at .\sources\ConditionalBorrowChain.move:24:14+170
-    if ($t38) { goto L21; } else { goto L9; }
-
-    // label L10 at .\sources\ConditionalBorrowChain.move:24:35+13
-L10:
-
-    // $t8 := borrow_field<0xbc::ProphecyBenchmark::Node>.v4($t13) at .\sources\ConditionalBorrowChain.move:24:35+13
-    assume {:print "$at(3,991,1004)"} true;
-    call $t8 := $ChildMutationAlt($t13, 4, $Dereference($t13)->$v4);
-    assume $Dereference($t8) == $Dereference($t13)->$v4;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v4($Dereference($t13), $DereferenceProphecy($t8)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:24:35+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t8 at .\sources\ConditionalBorrowChain.move:24:35+13
-    $t3 := $t8;
-
-    // trace_local[target]($t8) at .\sources\ConditionalBorrowChain.move:24:35+13
-    $temp_0'u64' := $Dereference($t8);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t8) at .\sources\ConditionalBorrowChain.move:24:35+13
-    assume $Fulfilled($t8, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:24:35+13
-    goto L4;
-
-    // label L9 at .\sources\ConditionalBorrowChain.move:25:18+6
-    assume {:print "$at(3,1025,1031)"} true;
-L9:
-
-    // $t39 := 8 at .\sources\ConditionalBorrowChain.move:25:25+1
-    assume {:print "$at(3,1032,1033)"} true;
-    $t39 := 8;
-    assume $IsValid'u64'($t39);
-
-    // $t40 := %($t1, $t39) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:25:18+8
-    call $t40 := $Mod($t1, $t39);
-    if ($abort_flag) {
-        assume {:print "$at(3,1025,1033)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // $t41 := 5 at .\sources\ConditionalBorrowChain.move:25:30+1
-    $t41 := 5;
-    assume $IsValid'u64'($t41);
-
-    // $t42 := ==($t40, $t41) at .\sources\ConditionalBorrowChain.move:25:18+13
-    $t42 := $IsEqual'u64'($t40, $t41);
-
-    // if ($t42) goto L22 else goto L11 at .\sources\ConditionalBorrowChain.move:25:14+119
-    if ($t42) { goto L22; } else { goto L11; }
-
-    // label L12 at .\sources\ConditionalBorrowChain.move:25:35+13
-L12:
-
-    // $t9 := borrow_field<0xbc::ProphecyBenchmark::Node>.v5($t13) at .\sources\ConditionalBorrowChain.move:25:35+13
-    assume {:print "$at(3,1042,1055)"} true;
-    call $t9 := $ChildMutationAlt($t13, 5, $Dereference($t13)->$v5);
-    assume $Dereference($t9) == $Dereference($t13)->$v5;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v5($Dereference($t13), $DereferenceProphecy($t9)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:25:35+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t9 at .\sources\ConditionalBorrowChain.move:25:35+13
-    $t3 := $t9;
-
-    // trace_local[target]($t9) at .\sources\ConditionalBorrowChain.move:25:35+13
-    $temp_0'u64' := $Dereference($t9);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t9) at .\sources\ConditionalBorrowChain.move:25:35+13
-    assume $Fulfilled($t9, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:25:35+13
-    goto L4;
-
-    // label L11 at .\sources\ConditionalBorrowChain.move:26:18+6
-    assume {:print "$at(3,1076,1082)"} true;
-L11:
-
-    // $t43 := 8 at .\sources\ConditionalBorrowChain.move:26:25+1
-    assume {:print "$at(3,1083,1084)"} true;
-    $t43 := 8;
-    assume $IsValid'u64'($t43);
-
-    // $t44 := %($t1, $t43) on_abort goto L16 with $t16 at .\sources\ConditionalBorrowChain.move:26:18+8
-    call $t44 := $Mod($t1, $t43);
-    if ($abort_flag) {
-        assume {:print "$at(3,1076,1084)"} true;
-        $t16 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t16} $t16 == $t16;
-        goto L16;
-    }
-
-    // $t45 := 6 at .\sources\ConditionalBorrowChain.move:26:30+1
-    $t45 := 6;
-    assume $IsValid'u64'($t45);
-
-    // $t46 := ==($t44, $t45) at .\sources\ConditionalBorrowChain.move:26:18+13
-    $t46 := $IsEqual'u64'($t44, $t45);
-
-    // if ($t46) goto L23 else goto L24 at .\sources\ConditionalBorrowChain.move:26:14+68
-    if ($t46) { goto L23; } else { goto L24; }
-
-    // label L14 at .\sources\ConditionalBorrowChain.move:26:35+13
-L14:
-
-    // $t10 := borrow_field<0xbc::ProphecyBenchmark::Node>.v6($t13) at .\sources\ConditionalBorrowChain.move:26:35+13
-    assume {:print "$at(3,1093,1106)"} true;
-    call $t10 := $ChildMutationAlt($t13, 6, $Dereference($t13)->$v6);
-    assume $Dereference($t10) == $Dereference($t13)->$v6;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v6($Dereference($t13), $DereferenceProphecy($t10)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:26:35+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t10 at .\sources\ConditionalBorrowChain.move:26:35+13
-    $t3 := $t10;
-
-    // trace_local[target]($t10) at .\sources\ConditionalBorrowChain.move:26:35+13
-    $temp_0'u64' := $Dereference($t10);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t10) at .\sources\ConditionalBorrowChain.move:26:35+13
-    assume $Fulfilled($t10, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:26:35+13
-    goto L4;
-
-    // label L13 at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume {:print "$at(3,1125,1138)"} true;
-L13:
-
-    // $t11 := borrow_field<0xbc::ProphecyBenchmark::Node>.v7($t13) at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume {:print "$at(3,1125,1138)"} true;
-    call $t11 := $ChildMutationAlt($t13, 7, $Dereference($t13)->$v7);
-    assume $Dereference($t11) == $Dereference($t13)->$v7;
-    $t13 := $UpdateMutation($t13, $Update'$bc_ProphecyBenchmark_Node'_v7($Dereference($t13), $DereferenceProphecy($t11)));
-
-    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume $Fulfilled($t13, $cur_index);
-
-    // $t3 := $t11 at .\sources\ConditionalBorrowChain.move:27:16+13
-    $t3 := $t11;
-
-    // trace_local[target]($t11) at .\sources\ConditionalBorrowChain.move:27:16+13
-    $temp_0'u64' := $Dereference($t11);
-    assume {:print "$track_local(4,2,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // fulfilled($t11) at .\sources\ConditionalBorrowChain.move:27:16+13
-    assume $Fulfilled($t11, $cur_index);
-
-    // goto L4 at .\sources\ConditionalBorrowChain.move:27:16+13
-    goto L4;
-
-    // label L15 at .\sources\ConditionalBorrowChain.move:32:5+1
-    assume {:print "$at(3,1257,1258)"} true;
-L15:
-
-    // assert Not(false) at .\sources\ConditionalBorrowChain.move:56:9+16
-    assume {:print "$at(3,2427,2443)"} true;
-    assert {:msg "assert_failed(3,2427,2443): function does not abort under this condition"}
+    // assert Not(false) at .\sources\ConditionalBorrowChain.move:38:9+16
+    assume {:print "$at(3,1397,1413)"} true;
+    assert {:msg "assert_failed(3,1397,1413): function does not abort under this condition"}
       !false;
 
-    // assert Implies(Eq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:42:9+39
-    assume {:print "$at(3,1694,1733)"} true;
-    assert {:msg "assert_failed(3,1694,1733): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t22->$v0, 1));
+    // assert Implies(Eq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t10), Add(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t3), 1))) at .\sources\ConditionalBorrowChain.move:32:9+49
+    assume {:print "$at(3,1026,1075)"} true;
+    assert {:msg "assert_failed(3,1026,1075): post-condition does not hold"}
+      ($IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t10->$v0, ($t3->$v0 + 1)));
 
-    // assert Implies(Eq<u64>($t1, 1), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:43:9+39
-    assume {:print "$at(3,1743,1782)"} true;
-    assert {:msg "assert_failed(3,1743,1782): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 1) ==> $IsEqual'u64'($t22->$v1, 1));
+    // assert Implies(Neq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t10), select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t10))) at .\sources\ConditionalBorrowChain.move:33:9+47
+    assume {:print "$at(3,1084,1131)"} true;
+    assert {:msg "assert_failed(3,1084,1131): post-condition does not hold"}
+      (!$IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t10->$v0, $t10->$v0));
 
-    // assert Implies(Eq<u64>($t1, 2), Eq<u64>(select ProphecyBenchmark::Node.v2<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:44:9+39
-    assume {:print "$at(3,1792,1831)"} true;
-    assert {:msg "assert_failed(3,1792,1831): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 2) ==> $IsEqual'u64'($t22->$v2, 1));
-
-    // assert Implies(Eq<u64>($t1, 3), Eq<u64>(select ProphecyBenchmark::Node.v3<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:45:9+39
-    assume {:print "$at(3,1841,1880)"} true;
-    assert {:msg "assert_failed(3,1841,1880): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 3) ==> $IsEqual'u64'($t22->$v3, 1));
-
-    // assert Implies(Eq<u64>($t1, 4), Eq<u64>(select ProphecyBenchmark::Node.v4<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:46:9+39
-    assume {:print "$at(3,1890,1929)"} true;
-    assert {:msg "assert_failed(3,1890,1929): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 4) ==> $IsEqual'u64'($t22->$v4, 1));
-
-    // assert Implies(Eq<u64>($t1, 5), Eq<u64>(select ProphecyBenchmark::Node.v5<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:47:9+39
-    assume {:print "$at(3,1939,1978)"} true;
-    assert {:msg "assert_failed(3,1939,1978): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 5) ==> $IsEqual'u64'($t22->$v5, 1));
-
-    // assert Implies(Eq<u64>($t1, 6), Eq<u64>(select ProphecyBenchmark::Node.v6<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:48:9+39
-    assume {:print "$at(3,1988,2027)"} true;
-    assert {:msg "assert_failed(3,1988,2027): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 6) ==> $IsEqual'u64'($t22->$v6, 1));
-
-    // assert Implies(Eq<u64>($t1, 7), Eq<u64>(select ProphecyBenchmark::Node.v7<0xbc::ProphecyBenchmark::Node>($t22), 1)) at .\sources\ConditionalBorrowChain.move:49:9+39
-    assume {:print "$at(3,2037,2076)"} true;
-    assert {:msg "assert_failed(3,2037,2076): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 7) ==> $IsEqual'u64'($t22->$v7, 1));
-
-    // assert Implies(Eq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t22), Add(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t12), 1))) at .\sources\ConditionalBorrowChain.move:50:9+49
-    assume {:print "$at(3,2086,2135)"} true;
-    assert {:msg "assert_failed(3,2086,2135): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t22->$v0, ($t12->$v0 + 1)));
-
-    // assert Implies(Eq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t22), select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t12))) at .\sources\ConditionalBorrowChain.move:51:9+45
-    assume {:print "$at(3,2145,2190)"} true;
-    assert {:msg "assert_failed(3,2145,2190): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t22->$v1, $t12->$v1));
-
-    // assert Implies(Eq<u64>($t1, 1), Eq<u64>(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t22), Add(select ProphecyBenchmark::Node.v1<0xbc::ProphecyBenchmark::Node>($t12), 1))) at .\sources\ConditionalBorrowChain.move:53:9+49
-    assume {:print "$at(3,2286,2335)"} true;
-    assert {:msg "assert_failed(3,2286,2335): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 1) ==> $IsEqual'u64'($t22->$v1, ($t12->$v1 + 1)));
-
-    // assert Implies(Eq<u64>($t1, 1), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t22), select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t12))) at .\sources\ConditionalBorrowChain.move:54:9+45
-    assume {:print "$at(3,2345,2390)"} true;
-    assert {:msg "assert_failed(3,2345,2390): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 1) ==> $IsEqual'u64'($t22->$v0, $t12->$v0));
-
-    // return $t22 at .\sources\ConditionalBorrowChain.move:54:9+45
-    $ret0 := $t22;
+    // return $t10 at .\sources\ConditionalBorrowChain.move:33:9+47
+    $ret0 := $t10;
     return;
 
-    // label L16 at .\sources\ConditionalBorrowChain.move:32:5+1
-    assume {:print "$at(3,1257,1258)"} true;
-L16:
+    // label L2 at .\sources\ConditionalBorrowChain.move:24:5+1
+    assume {:print "$at(3,754,755)"} true;
+L2:
 
-    // assert false at .\sources\ConditionalBorrowChain.move:35:5+1160
-    assume {:print "$at(3,1291,2451)"} true;
-    assert {:msg "assert_failed(3,1291,2451): abort not covered by any of the `aborts_if` clauses"}
+    // assert false at .\sources\ConditionalBorrowChain.move:26:5+659
+    assume {:print "$at(3,761,1420)"} true;
+    assert {:msg "assert_failed(3,761,1420): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t16) at .\sources\ConditionalBorrowChain.move:35:5+1160
-    $abort_code := $t16;
+    // abort($t9) at .\sources\ConditionalBorrowChain.move:26:5+659
+    $abort_code := $t9;
     $abort_flag := true;
     return;
-
-    // label L17 at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-L17:
-
-    // drop($t4) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L1 at <internal>:1:1+10
-    goto L1;
-
-    // label L18 at <internal>:1:1+10
-L18:
-
-    // drop($t5) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L3 at <internal>:1:1+10
-    goto L3;
-
-    // label L19 at <internal>:1:1+10
-L19:
-
-    // drop($t6) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L6 at <internal>:1:1+10
-    goto L6;
-
-    // label L20 at <internal>:1:1+10
-L20:
-
-    // drop($t7) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L8 at <internal>:1:1+10
-    goto L8;
-
-    // label L21 at <internal>:1:1+10
-L21:
-
-    // drop($t8) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L10 at <internal>:1:1+10
-    goto L10;
-
-    // label L22 at <internal>:1:1+10
-L22:
-
-    // drop($t9) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L12 at <internal>:1:1+10
-    goto L12;
-
-    // label L23 at <internal>:1:1+10
-L23:
-
-    // drop($t10) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L14 at <internal>:1:1+10
-    goto L14;
-
-    // label L24 at <internal>:1:1+10
-L24:
-
-    // drop($t11) at <internal>:1:1+10
-    assume {:print "$at(1,0,10)"} true;
-
-    // goto L13 at <internal>:1:1+10
-    goto L13;
 
 }
