@@ -251,7 +251,15 @@ function $Arbitrary_value_of'$bc_BasicCoin_Coin'#0''(): $bc_BasicCoin_Coin'#0';
 
 
 
-function $Arbitrary_value_of'$bc_ProphecyBenchmark_Node'(): $bc_ProphecyBenchmark_Node;
+function $Arbitrary_value_of'$bc_ProphecyBenchmark3Levels_Node1'(): $bc_ProphecyBenchmark3Levels_Node1;
+
+
+
+function $Arbitrary_value_of'$bc_ProphecyBenchmark3Levels_Node2'(): $bc_ProphecyBenchmark3Levels_Node2;
+
+
+
+function $Arbitrary_value_of'$bc_ProphecyBenchmark3Levels_Node3'(): $bc_ProphecyBenchmark3Levels_Node3;
 
 
 
@@ -6026,69 +6034,8043 @@ L3:
 
 }
 
-// struct ProphecyBenchmark::Node at .\sources\ConditionalBorrowChain.move:4:5+51
-datatype $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node($v0: int)
+// struct ProphecyBenchmark3Levels::Node1 at .\sources\ConditionalBorrowChain.move:8:5+131
+datatype $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1($v0: int, $v1: int, $v2: int, $v3: int, $v4: int, $v5: int, $v6: int, $v7: int)
 }
-function {:inline} $Update'$bc_ProphecyBenchmark_Node'_v0(s: $bc_ProphecyBenchmark_Node, x: int): $bc_ProphecyBenchmark_Node {
-    $bc_ProphecyBenchmark_Node(x)
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v0(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(x, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
 }
-function $IsValid'$bc_ProphecyBenchmark_Node'(s: $bc_ProphecyBenchmark_Node): bool {
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v1(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, x, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v2(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, s->$v1, x, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v3(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, s->$v1, s->$v2, x, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v4(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, s->$v1, s->$v2, s->$v3, x, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v5(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, x, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v6(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, x, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node1'_v7(s: $bc_ProphecyBenchmark3Levels_Node1, x: int): $bc_ProphecyBenchmark3Levels_Node1 {
+    $bc_ProphecyBenchmark3Levels_Node1(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, x)
+}
+function $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s: $bc_ProphecyBenchmark3Levels_Node1): bool {
     $IsValid'u64'(s->$v0)
+      && $IsValid'u64'(s->$v1)
+      && $IsValid'u64'(s->$v2)
+      && $IsValid'u64'(s->$v3)
+      && $IsValid'u64'(s->$v4)
+      && $IsValid'u64'(s->$v5)
+      && $IsValid'u64'(s->$v6)
+      && $IsValid'u64'(s->$v7)
 }
-function {:inline} $IsEqual'$bc_ProphecyBenchmark_Node'(s1: $bc_ProphecyBenchmark_Node, s2: $bc_ProphecyBenchmark_Node): bool {
+function {:inline} $IsEqual'$bc_ProphecyBenchmark3Levels_Node1'(s1: $bc_ProphecyBenchmark3Levels_Node1, s2: $bc_ProphecyBenchmark3Levels_Node1): bool {
     s1 == s2
 }
 
-// fun ProphecyBenchmark::new_node [verification] at .\sources\ConditionalBorrowChain.move:9:5+58
-procedure {:timeLimit 40} $bc_ProphecyBenchmark_new_node$verify() returns ($ret0: $bc_ProphecyBenchmark_Node)
+// struct ProphecyBenchmark3Levels::Node2 at .\sources\ConditionalBorrowChain.move:14:5+147
+datatype $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2($v0: $bc_ProphecyBenchmark3Levels_Node1, $v1: $bc_ProphecyBenchmark3Levels_Node1, $v2: $bc_ProphecyBenchmark3Levels_Node1, $v3: $bc_ProphecyBenchmark3Levels_Node1, $v4: $bc_ProphecyBenchmark3Levels_Node1, $v5: $bc_ProphecyBenchmark3Levels_Node1, $v6: $bc_ProphecyBenchmark3Levels_Node1, $v7: $bc_ProphecyBenchmark3Levels_Node1)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v0(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(x, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v1(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, x, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v2(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, s->$v1, x, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v3(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, s->$v1, s->$v2, x, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v4(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, s->$v1, s->$v2, s->$v3, x, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v5(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, x, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v6(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, x, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node2'_v7(s: $bc_ProphecyBenchmark3Levels_Node2, x: $bc_ProphecyBenchmark3Levels_Node1): $bc_ProphecyBenchmark3Levels_Node2 {
+    $bc_ProphecyBenchmark3Levels_Node2(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, x)
+}
+function $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s: $bc_ProphecyBenchmark3Levels_Node2): bool {
+    $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v0)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v1)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v2)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v3)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v4)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v5)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v6)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node1'(s->$v7)
+}
+function {:inline} $IsEqual'$bc_ProphecyBenchmark3Levels_Node2'(s1: $bc_ProphecyBenchmark3Levels_Node2, s2: $bc_ProphecyBenchmark3Levels_Node2): bool {
+    s1 == s2
+}
+
+// struct ProphecyBenchmark3Levels::Node3 at .\sources\ConditionalBorrowChain.move:20:5+147
+datatype $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3($v0: $bc_ProphecyBenchmark3Levels_Node2, $v1: $bc_ProphecyBenchmark3Levels_Node2, $v2: $bc_ProphecyBenchmark3Levels_Node2, $v3: $bc_ProphecyBenchmark3Levels_Node2, $v4: $bc_ProphecyBenchmark3Levels_Node2, $v5: $bc_ProphecyBenchmark3Levels_Node2, $v6: $bc_ProphecyBenchmark3Levels_Node2, $v7: $bc_ProphecyBenchmark3Levels_Node2)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v0(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(x, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v1(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, x, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v2(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, s->$v1, x, s->$v3, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v3(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, s->$v1, s->$v2, x, s->$v4, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v4(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, s->$v1, s->$v2, s->$v3, x, s->$v5, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v5(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, x, s->$v6, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v6(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, x, s->$v7)
+}
+function {:inline} $Update'$bc_ProphecyBenchmark3Levels_Node3'_v7(s: $bc_ProphecyBenchmark3Levels_Node3, x: $bc_ProphecyBenchmark3Levels_Node2): $bc_ProphecyBenchmark3Levels_Node3 {
+    $bc_ProphecyBenchmark3Levels_Node3(s->$v0, s->$v1, s->$v2, s->$v3, s->$v4, s->$v5, s->$v6, x)
+}
+function $IsValid'$bc_ProphecyBenchmark3Levels_Node3'(s: $bc_ProphecyBenchmark3Levels_Node3): bool {
+    $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v0)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v1)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v2)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v3)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v4)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v5)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v6)
+      && $IsValid'$bc_ProphecyBenchmark3Levels_Node2'(s->$v7)
+}
+function {:inline} $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'(s1: $bc_ProphecyBenchmark3Levels_Node3, s2: $bc_ProphecyBenchmark3Levels_Node3): bool {
+    s1 == s2
+}
+
+// fun ProphecyBenchmark3Levels::benchmark_from_scratch [verification] at .\sources\ConditionalBorrowChain.move:91:5+500
+procedure {:timeLimit 40} $bc_ProphecyBenchmark3Levels_benchmark_from_scratch$verify(_$t0: int, _$t1: int, _$t2: int) returns ($ret0: $bc_ProphecyBenchmark3Levels_Node3)
 {
     // declare local variables
     var $isEntryPoint: bool;
+    var $t3: $bc_ProphecyBenchmark3Levels_Node3;
+    var $t4: $Mutation (int);
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: int;
+    var $t10: int;
+    var $t11: int;
+    var $t12: $Mutation ($bc_ProphecyBenchmark3Levels_Node3);
+    var $t13: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t14: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t15: $Mutation (int);
+    var $t16: int;
+    var $t17: int;
+    var $t18: int;
+    var $t19: $bc_ProphecyBenchmark3Levels_Node3;
     var $t0: int;
-    var $t1: $bc_ProphecyBenchmark_Node;
-    var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
+    var $t1: int;
+    var $t2: int;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node3': $bc_ProphecyBenchmark3Levels_Node3;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
 
     // verification entrypoint assumptions
     call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 0 at .\sources\ConditionalBorrowChain.move:10:20+1
-    assume {:print "$at(3,252,253)"} true;
-    $t0 := 0;
+    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:91:5+1
+    assume {:print "$at(3,3171,3172)"} true;
     assume $IsValid'u64'($t0);
 
-    // $t1 := pack 0xbc::ProphecyBenchmark::Node($t0) at .\sources\ConditionalBorrowChain.move:10:9+14
-    $t1 := $bc_ProphecyBenchmark_Node($t0);
+    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:91:5+1
+    assume $IsValid'u64'($t1);
 
-    // trace_return[0]($t1) at .\sources\ConditionalBorrowChain.move:10:9+14
-    assume {:print "$track_return(4,0,0):", $t1} $t1 == $t1;
+    // assume WellFormed($t2) at .\sources\ConditionalBorrowChain.move:91:5+1
+    assume $IsValid'u64'($t2);
 
-    // label L1 at .\sources\ConditionalBorrowChain.move:11:5+1
-    assume {:print "$at(3,260,261)"} true;
+    // trace_local[c3]($t0) at .\sources\ConditionalBorrowChain.move:91:5+1
+    assume {:print "$track_local(4,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[c2]($t1) at .\sources\ConditionalBorrowChain.move:91:5+1
+    assume {:print "$track_local(4,0,1):", $t1} $t1 == $t1;
+
+    // trace_local[c1]($t2) at .\sources\ConditionalBorrowChain.move:91:5+1
+    assume {:print "$track_local(4,0,2):", $t2} $t2 == $t2;
+
+    // $t3 := ProphecyBenchmark3Levels::new_node3() on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:94:20+11
+    assume {:print "$at(3,3274,3285)"} true;
+    call $t3 := $bc_ProphecyBenchmark3Levels_new_node3();
+    if ($abort_flag) {
+        assume {:print "$at(3,3274,3285)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:94:20+11
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // $t6 := 8 at .\sources\ConditionalBorrowChain.move:96:25+1
+    assume {:print "$at(3,3320,3321)"} true;
+    $t6 := 8;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := %($t0, $t6) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:96:20+6
+    call $t7 := $Mod($t0, $t6);
+    if ($abort_flag) {
+        assume {:print "$at(3,3315,3321)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[c3]($t7) at .\sources\ConditionalBorrowChain.move:96:20+6
+    assume {:print "$track_local(4,0,0):", $t7} $t7 == $t7;
+
+    // $t8 := 8 at .\sources\ConditionalBorrowChain.move:97:25+1
+    assume {:print "$at(3,3347,3348)"} true;
+    $t8 := 8;
+    assume $IsValid'u64'($t8);
+
+    // $t9 := %($t1, $t8) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:97:20+6
+    call $t9 := $Mod($t1, $t8);
+    if ($abort_flag) {
+        assume {:print "$at(3,3342,3348)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[c2]($t9) at .\sources\ConditionalBorrowChain.move:97:20+6
+    assume {:print "$track_local(4,0,1):", $t9} $t9 == $t9;
+
+    // $t10 := 8 at .\sources\ConditionalBorrowChain.move:98:25+1
+    assume {:print "$at(3,3374,3375)"} true;
+    $t10 := 8;
+    assume $IsValid'u64'($t10);
+
+    // $t11 := %($t2, $t10) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:98:20+6
+    call $t11 := $Mod($t2, $t10);
+    if ($abort_flag) {
+        assume {:print "$at(3,3369,3375)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[c1]($t11) at .\sources\ConditionalBorrowChain.move:98:20+6
+    assume {:print "$track_local(4,0,2):", $t11} $t11 == $t11;
+
+    // $t12 := borrow_local($t3) at .\sources\ConditionalBorrowChain.move:100:22+9
+    assume {:print "$at(3,3399,3408)"} true;
+    call $t12 := $MutationAlt($Local(3), EmptyVec(), $t3);
+    assume $Dereference($t12) == $t3;
+    $t3 := $DereferenceProphecy($t12);
+
+    // $t13 := ProphecyBenchmark3Levels::select_n2($t12, $t7) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:103:22+23
+    assume {:print "$at(3,3496,3519)"} true;
+    call $t13,$t12 := $bc_ProphecyBenchmark3Levels_select_n2($t12, $t7);
+    if ($abort_flag) {
+        assume {:print "$at(3,3496,3519)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // fulfilled($t12) at .\sources\ConditionalBorrowChain.move:103:22+23
+    assume $Fulfilled($t12, $cur_index);
+
+    // $t14 := ProphecyBenchmark3Levels::select_n1($t13, $t9) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:104:22+23
+    assume {:print "$at(3,3542,3565)"} true;
+    call $t14,$t13 := $bc_ProphecyBenchmark3Levels_select_n1($t13, $t9);
+    if ($abort_flag) {
+        assume {:print "$at(3,3542,3565)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // fulfilled($t13) at .\sources\ConditionalBorrowChain.move:104:22+23
+    assume $Fulfilled($t13, $cur_index);
+
+    // $t15 := ProphecyBenchmark3Levels::select_leaf($t14, $t11) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:105:24+25
+    assume {:print "$at(3,3590,3615)"} true;
+    call $t15,$t14 := $bc_ProphecyBenchmark3Levels_select_leaf($t14, $t11);
+    if ($abort_flag) {
+        assume {:print "$at(3,3590,3615)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // fulfilled($t14) at .\sources\ConditionalBorrowChain.move:105:24+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // trace_local[leaf_ref]($t15) at .\sources\ConditionalBorrowChain.move:105:24+25
+    $temp_0'u64' := $Dereference($t15);
+    assume {:print "$track_local(4,0,4):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t16 := read_ref($t15) at .\sources\ConditionalBorrowChain.move:106:21+9
+    assume {:print "$at(3,3637,3646)"} true;
+    $t16 := $Dereference($t15);
+
+    // $t17 := 1 at .\sources\ConditionalBorrowChain.move:106:33+1
+    $t17 := 1;
+    assume $IsValid'u64'($t17);
+
+    // $t18 := +($t16, $t17) on_abort goto L2 with $t5 at .\sources\ConditionalBorrowChain.move:106:21+13
+    call $t18 := $AddU64($t16, $t17);
+    if ($abort_flag) {
+        assume {:print "$at(3,3637,3650)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(4,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // write_ref($t15, $t18) at .\sources\ConditionalBorrowChain.move:106:9+25
+    $t15 := $UpdateMutation($t15, $t18);
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v0 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v1 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v2 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v3 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v4 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v5 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v6 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v0 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v1 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v2 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v3 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v4 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v5 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v6 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v0 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v1 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v2 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v3 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v4 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v5 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v6 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // write_back[Reference($t14).v7 (u64)]($t15) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t15, $cur_index);
+
+    // write_back[Reference($t13).v7 (0xbc::ProphecyBenchmark3Levels::Node1)]($t14) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t14, $cur_index);
+
+    // write_back[Reference($t12).v7 (0xbc::ProphecyBenchmark3Levels::Node2)]($t13) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $Fulfilled($t13, $cur_index);
+
+    // write_back[LocalRoot($t3)@]($t12) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume $IsEqual'$bc_ProphecyBenchmark3Levels_Node3'($Dereference($t12), $DereferenceProphecy($t12));
+
+    // trace_local[root]($t3) at .\sources\ConditionalBorrowChain.move:106:9+25
+    assume {:print "$track_local(4,0,3):", $t3} $t3 == $t3;
+
+    // $t19 := move($t3) at .\sources\ConditionalBorrowChain.move:108:9+4
+    assume {:print "$at(3,3661,3665)"} true;
+    $t19 := $t3;
+
+    // trace_return[0]($t19) at .\sources\ConditionalBorrowChain.move:93:14+418
+    assume {:print "$at(3,3253,3671)"} true;
+    assume {:print "$track_return(4,0,0):", $t19} $t19 == $t19;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:109:5+1
+    assume {:print "$at(3,3670,3671)"} true;
 L1:
 
-    // return $t1 at .\sources\ConditionalBorrowChain.move:11:5+1
-    assume {:print "$at(3,260,261)"} true;
-    $ret0 := $t1;
+    // assert Implies(And(And(Eq<u64>($t0, 0), Eq<u64>($t1, 0)), Eq<u64>($t2, 0)), Eq<u64>(select ProphecyBenchmark3Levels::Node1.v0<0xbc::ProphecyBenchmark3Levels::Node1>(select ProphecyBenchmark3Levels::Node2.v0<0xbc::ProphecyBenchmark3Levels::Node2>(select ProphecyBenchmark3Levels::Node3.v0<0xbc::ProphecyBenchmark3Levels::Node3>($t19))), 1)) at .\sources\ConditionalBorrowChain.move:125:9+72
+    assume {:print "$at(3,4006,4078)"} true;
+    assert {:msg "assert_failed(3,4006,4078): post-condition does not hold"}
+      ((($IsEqual'u64'($t0, 0) && $IsEqual'u64'($t1, 0)) && $IsEqual'u64'($t2, 0)) ==> $IsEqual'u64'($t19->$v0->$v0->$v0, 1));
+
+    // assert Le(select ProphecyBenchmark3Levels::Node1.v0<0xbc::ProphecyBenchmark3Levels::Node1>(select ProphecyBenchmark3Levels::Node2.v0<0xbc::ProphecyBenchmark3Levels::Node2>(select ProphecyBenchmark3Levels::Node3.v0<0xbc::ProphecyBenchmark3Levels::Node3>($t19))), 1) at .\sources\ConditionalBorrowChain.move:133:9+29
+    assume {:print "$at(3,4278,4307)"} true;
+    assert {:msg "assert_failed(3,4278,4307): post-condition does not hold"}
+      ($t19->$v0->$v0->$v0 <= 1);
+
+    // return $t19 at .\sources\ConditionalBorrowChain.move:133:9+29
+    $ret0 := $t19;
+    return;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:109:5+1
+    assume {:print "$at(3,3670,3671)"} true;
+L2:
+
+    // abort($t5) at .\sources\ConditionalBorrowChain.move:109:5+1
+    assume {:print "$at(3,3670,3671)"} true;
+    $abort_code := $t5;
+    $abort_flag := true;
     return;
 
 }
 
-// fun ProphecyBenchmark::stress_test_10 [verification] at .\sources\ConditionalBorrowChain.move:42:5+439
-procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int, _$t2: int, _$t3: int, _$t4: int, _$t5: int, _$t6: int, _$t7: int, _$t8: int, _$t9: int, _$t10: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
+// fun ProphecyBenchmark3Levels::new_node1 [baseline] at .\sources\ConditionalBorrowChain.move:29:5+110
+procedure {:inline 1} $bc_ProphecyBenchmark3Levels_new_node1() returns ($ret0: $bc_ProphecyBenchmark3Levels_Node1)
 {
     // declare local variables
     var $isEntryPoint: bool;
-    var $t11: $bc_ProphecyBenchmark_Node;
-    var $t12: int;
-    var $t13: $bc_ProphecyBenchmark_Node;
-    var $t14: $bc_ProphecyBenchmark_Node;
-    var $t15: $bc_ProphecyBenchmark_Node;
-    var $t16: $bc_ProphecyBenchmark_Node;
-    var $t17: $bc_ProphecyBenchmark_Node;
-    var $t18: $bc_ProphecyBenchmark_Node;
-    var $t0: $bc_ProphecyBenchmark_Node;
+    var $t0: int;
     var $t1: int;
     var $t2: int;
     var $t3: int;
@@ -6096,478 +14078,1810 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_
     var $t5: int;
     var $t6: int;
     var $t7: int;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-    $t2 := _$t2;
-    $t3 := _$t3;
-    $t4 := _$t4;
-    $t5 := _$t5;
-    $t6 := _$t6;
-    $t7 := _$t7;
-    $t8 := _$t8;
-    $t9 := _$t9;
-    $t10 := _$t10;
-
-    // verification entrypoint assumptions
-    call $isEntryPoint := $InitVerification();
+    var $t8: $bc_ProphecyBenchmark3Levels_Node1;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node1': $bc_ProphecyBenchmark3Levels_Node1;
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$at(3,1484,1485)"} true;
-    assume $IsValid'$bc_ProphecyBenchmark_Node'($t0);
+    // $t0 := 0 at .\sources\ConditionalBorrowChain.move:30:21+1
+    assume {:print "$at(3,924,925)"} true;
+    $t0 := 0;
+    assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t1 := 0 at .\sources\ConditionalBorrowChain.move:30:28+1
+    $t1 := 0;
     assume $IsValid'u64'($t1);
 
-    // assume WellFormed($t2) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t2 := 0 at .\sources\ConditionalBorrowChain.move:30:35+1
+    $t2 := 0;
     assume $IsValid'u64'($t2);
 
-    // assume WellFormed($t3) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t3 := 0 at .\sources\ConditionalBorrowChain.move:30:42+1
+    $t3 := 0;
     assume $IsValid'u64'($t3);
 
-    // assume WellFormed($t4) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t4 := 0 at .\sources\ConditionalBorrowChain.move:30:49+1
+    $t4 := 0;
     assume $IsValid'u64'($t4);
 
-    // assume WellFormed($t5) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t5 := 0 at .\sources\ConditionalBorrowChain.move:30:56+1
+    $t5 := 0;
     assume $IsValid'u64'($t5);
 
-    // assume WellFormed($t6) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t6 := 0 at .\sources\ConditionalBorrowChain.move:30:63+1
+    $t6 := 0;
     assume $IsValid'u64'($t6);
 
-    // assume WellFormed($t7) at .\sources\ConditionalBorrowChain.move:42:5+1
+    // $t7 := 0 at .\sources\ConditionalBorrowChain.move:30:70+1
+    $t7 := 0;
     assume $IsValid'u64'($t7);
 
-    // assume WellFormed($t8) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume $IsValid'u64'($t8);
+    // $t8 := pack 0xbc::ProphecyBenchmark3Levels::Node1($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7) at .\sources\ConditionalBorrowChain.move:30:9+64
+    $t8 := $bc_ProphecyBenchmark3Levels_Node1($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7);
 
-    // assume WellFormed($t9) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume $IsValid'u64'($t9);
+    // trace_return[0]($t8) at .\sources\ConditionalBorrowChain.move:30:9+64
+    assume {:print "$track_return(4,1,0):", $t8} $t8 == $t8;
 
-    // assume WellFormed($t10) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume $IsValid'u64'($t10);
-
-    // assume Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 0) at .\sources\ConditionalBorrowChain.move:59:6+19
-    assume {:print "$at(3,2020,2039)"} true;
-    assume $IsEqual'u64'($t0->$v0, 0);
-
-    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$at(3,1484,1485)"} true;
-    assume {:print "$track_local(4,1,0):", $t0} $t0 == $t0;
-
-    // trace_local[c0]($t1) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,1):", $t1} $t1 == $t1;
-
-    // trace_local[c1]($t2) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,2):", $t2} $t2 == $t2;
-
-    // trace_local[c2]($t3) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,3):", $t3} $t3 == $t3;
-
-    // trace_local[c3]($t4) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,4):", $t4} $t4 == $t4;
-
-    // trace_local[c4]($t5) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,5):", $t5} $t5 == $t5;
-
-    // trace_local[c5]($t6) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,6):", $t6} $t6 == $t6;
-
-    // trace_local[c6]($t7) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,7):", $t7} $t7 == $t7;
-
-    // trace_local[c7]($t8) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,8):", $t8} $t8 == $t8;
-
-    // trace_local[c8]($t9) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,9):", $t9} $t9 == $t9;
-
-    // trace_local[c9]($t10) at .\sources\ConditionalBorrowChain.move:42:5+1
-    assume {:print "$track_local(4,1,10):", $t10} $t10 == $t10;
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t0->$v0 <= 100);
-
-    // $t11 := ProphecyBenchmark::update_one($t0, $t1) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:47:18+17
-    assume {:print "$at(3,1666,1683)"} true;
-    call $t11 := $bc_ProphecyBenchmark_update_one($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(3,1666,1683)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t11), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t11->$v0 <= 100);
-
-    // $t13 := ProphecyBenchmark::update_one($t11, $t2) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:48:18+18
-    assume {:print "$at(3,1702,1720)"} true;
-    call $t13 := $bc_ProphecyBenchmark_update_one($t11, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(3,1702,1720)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t13), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t13->$v0 <= 100);
-
-    // $t14 := ProphecyBenchmark::update_one($t13, $t3) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:49:18+18
-    assume {:print "$at(3,1739,1757)"} true;
-    call $t14 := $bc_ProphecyBenchmark_update_one($t13, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(3,1739,1757)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t14), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t14->$v0 <= 100);
-
-    // $t15 := ProphecyBenchmark::update_one($t14, $t4) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:50:18+18
-    assume {:print "$at(3,1776,1794)"} true;
-    call $t15 := $bc_ProphecyBenchmark_update_one($t14, $t4);
-    if ($abort_flag) {
-        assume {:print "$at(3,1776,1794)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t15), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t15->$v0 <= 100);
-
-    // $t16 := ProphecyBenchmark::update_one($t15, $t5) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:51:18+18
-    assume {:print "$at(3,1813,1831)"} true;
-    call $t16 := $bc_ProphecyBenchmark_update_one($t15, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(3,1813,1831)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t16), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t16->$v0 <= 100);
-
-    // $t17 := ProphecyBenchmark::update_one($t16, $t6) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:52:18+18
-    assume {:print "$at(3,1850,1868)"} true;
-    call $t17 := $bc_ProphecyBenchmark_update_one($t16, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(3,1850,1868)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t17), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assert {:msg "assert_failed(3,830,854): precondition does not hold at this call"}
-      ($t17->$v0 <= 100);
-
-    // $t18 := ProphecyBenchmark::update_one($t17, $t7) on_abort goto L2 with $t12 at .\sources\ConditionalBorrowChain.move:53:18+18
-    assume {:print "$at(3,1887,1905)"} true;
-    call $t18 := $bc_ProphecyBenchmark_update_one($t17, $t7);
-    if ($abort_flag) {
-        assume {:print "$at(3,1887,1905)"} true;
-        $t12 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t12} $t12 == $t12;
-        goto L2;
-    }
-
-    // trace_return[0]($t18) at .\sources\ConditionalBorrowChain.move:54:9+2
-    assume {:print "$at(3,1915,1917)"} true;
-    assume {:print "$track_return(4,1,0):", $t18} $t18 == $t18;
-
-    // label L1 at .\sources\ConditionalBorrowChain.move:55:5+1
-    assume {:print "$at(3,1922,1923)"} true;
+    // label L1 at .\sources\ConditionalBorrowChain.move:31:5+1
+    assume {:print "$at(3,981,982)"} true;
 L1:
 
-    // assert Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t18), 10) at .\sources\ConditionalBorrowChain.move:62:9+24
-    assume {:print "$at(3,2151,2175)"} true;
-    assert {:msg "assert_failed(3,2151,2175): post-condition does not hold"}
-      ($t18->$v0 <= 10);
-
-    // return $t18 at .\sources\ConditionalBorrowChain.move:62:9+24
-    $ret0 := $t18;
-    return;
-
-    // label L2 at .\sources\ConditionalBorrowChain.move:55:5+1
-    assume {:print "$at(3,1922,1923)"} true;
-L2:
-
-    // abort($t12) at .\sources\ConditionalBorrowChain.move:55:5+1
-    assume {:print "$at(3,1922,1923)"} true;
-    $abort_code := $t12;
-    $abort_flag := true;
+    // return $t8 at .\sources\ConditionalBorrowChain.move:31:5+1
+    assume {:print "$at(3,981,982)"} true;
+    $ret0 := $t8;
     return;
 
 }
 
-// fun ProphecyBenchmark::update_one [baseline] at .\sources\ConditionalBorrowChain.move:14:5+412
-procedure {:inline 1} $bc_ProphecyBenchmark_update_one(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
+// fun ProphecyBenchmark3Levels::new_node1 [verification] at .\sources\ConditionalBorrowChain.move:29:5+110
+procedure {:timeLimit 40} $bc_ProphecyBenchmark3Levels_new_node1$verify() returns ($ret0: $bc_ProphecyBenchmark3Levels_Node1)
 {
     // declare local variables
     var $isEntryPoint: bool;
-    var $t2: $Mutation (int);
-    var $t3: $Mutation ($bc_ProphecyBenchmark_Node);
-    var $t4: $Mutation (int);
+    var $t0: int;
+    var $t1: int;
+    var $t2: int;
+    var $t3: int;
+    var $t4: int;
     var $t5: int;
     var $t6: int;
     var $t7: int;
-    var $t8: int;
-    var $t9: $bc_ProphecyBenchmark_Node;
-    var $t0: $bc_ProphecyBenchmark_Node;
-    var $t1: int;
-    var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // bytecode translation starts here
-    // assume Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assume ($t0->$v0 <= 100);
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
-    assume {:print "$at(3,343,344)"} true;
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // trace_local[choice]($t1) at .\sources\ConditionalBorrowChain.move:14:5+1
-    assume {:print "$track_local(4,2,1):", $t1} $t1 == $t1;
-
-    // $t3 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:16:21+9
-    assume {:print "$at(3,486,495)"} true;
-    call $t3 := $MutationAlt($Local(0), EmptyVec(), $t0);
-    assume $Dereference($t3) == $t0;
-    $t0 := $DereferenceProphecy($t3);
-
-    // $t4 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t3) at .\sources\ConditionalBorrowChain.move:19:22+13
-    assume {:print "$at(3,629,642)"} true;
-    call $t4 := $ChildMutationAlt($t3, 0, $Dereference($t3)->$v0);
-    assume $Dereference($t4) == $Dereference($t3)->$v0;
-    $t3 := $UpdateMutation($t3, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t3), $DereferenceProphecy($t4)));
-
-    // fulfilled($t3) at .\sources\ConditionalBorrowChain.move:19:22+13
-    assume $Fulfilled($t3, $cur_index);
-
-    // trace_local[target]($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
-    $temp_0'u64' := $Dereference($t4);
-    assume {:print "$track_local(4,2,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t5 := read_ref($t4) at .\sources\ConditionalBorrowChain.move:21:19+7
-    assume {:print "$at(3,686,693)"} true;
-    $t5 := $Dereference($t4);
-
-    // $t6 := 1 at .\sources\ConditionalBorrowChain.move:21:29+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t5, $t6) on_abort goto L2 with $t8 at .\sources\ConditionalBorrowChain.move:21:19+11
-    call $t7 := $AddU64($t5, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(3,686,697)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t8} $t8 == $t8;
-        goto L2;
-    }
-
-    // write_ref($t4, $t7) at .\sources\ConditionalBorrowChain.move:21:9+21
-    $t4 := $UpdateMutation($t4, $t7);
-
-    // write_back[Reference($t3).v0 (u64)]($t4) at .\sources\ConditionalBorrowChain.move:21:9+21
-    assume $Fulfilled($t4, $cur_index);
-
-    // write_back[LocalRoot($t0)@]($t3) at .\sources\ConditionalBorrowChain.move:21:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t3), $DereferenceProphecy($t3));
-
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:21:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // $t9 := move($t0) at .\sources\ConditionalBorrowChain.move:23:9+4
-    assume {:print "$at(3,745,749)"} true;
-    $t9 := $t0;
-
-    // trace_return[0]($t9) at .\sources\ConditionalBorrowChain.move:14:58+359
-    assume {:print "$at(3,396,755)"} true;
-    assume {:print "$track_return(4,2,0):", $t9} $t9 == $t9;
-
-    // label L1 at .\sources\ConditionalBorrowChain.move:24:5+1
-    assume {:print "$at(3,754,755)"} true;
-L1:
-
-    // return $t9 at .\sources\ConditionalBorrowChain.move:24:5+1
-    assume {:print "$at(3,754,755)"} true;
-    $ret0 := $t9;
-    return;
-
-    // label L2 at .\sources\ConditionalBorrowChain.move:24:5+1
-L2:
-
-    // abort($t8) at .\sources\ConditionalBorrowChain.move:24:5+1
-    assume {:print "$at(3,754,755)"} true;
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun ProphecyBenchmark::update_one [verification] at .\sources\ConditionalBorrowChain.move:14:5+412
-procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
-{
-    // declare local variables
-    var $isEntryPoint: bool;
-    var $t2: $Mutation (int);
-    var $t3: $bc_ProphecyBenchmark_Node;
-    var $t4: $Mutation ($bc_ProphecyBenchmark_Node);
-    var $t5: $Mutation (int);
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
-    var $t10: $bc_ProphecyBenchmark_Node;
-    var $t0: $bc_ProphecyBenchmark_Node;
-    var $t1: int;
-    var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
+    var $t8: $bc_ProphecyBenchmark3Levels_Node1;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node1': $bc_ProphecyBenchmark3Levels_Node1;
 
     // verification entrypoint assumptions
     call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
-    assume {:print "$at(3,343,344)"} true;
-    assume $IsValid'$bc_ProphecyBenchmark_Node'($t0);
+    // $t0 := 0 at .\sources\ConditionalBorrowChain.move:30:21+1
+    assume {:print "$at(3,924,925)"} true;
+    $t0 := 0;
+    assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t1) at .\sources\ConditionalBorrowChain.move:14:5+1
+    // $t1 := 0 at .\sources\ConditionalBorrowChain.move:30:28+1
+    $t1 := 0;
     assume $IsValid'u64'($t1);
 
-    // assume Le(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t0), 100) at .\sources\ConditionalBorrowChain.move:28:6+24
-    assume {:print "$at(3,830,854)"} true;
-    assume ($t0->$v0 <= 100);
+    // $t2 := 0 at .\sources\ConditionalBorrowChain.move:30:35+1
+    $t2 := 0;
+    assume $IsValid'u64'($t2);
 
-    // $t3 := copy($t0) at .\sources\ConditionalBorrowChain.move:28:6+24
-    $t3 := $t0;
+    // $t3 := 0 at .\sources\ConditionalBorrowChain.move:30:42+1
+    $t3 := 0;
+    assume $IsValid'u64'($t3);
 
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
-    assume {:print "$at(3,343,344)"} true;
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
+    // $t4 := 0 at .\sources\ConditionalBorrowChain.move:30:49+1
+    $t4 := 0;
+    assume $IsValid'u64'($t4);
 
-    // trace_local[choice]($t1) at .\sources\ConditionalBorrowChain.move:14:5+1
-    assume {:print "$track_local(4,2,1):", $t1} $t1 == $t1;
+    // $t5 := 0 at .\sources\ConditionalBorrowChain.move:30:56+1
+    $t5 := 0;
+    assume $IsValid'u64'($t5);
 
-    // $t4 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:16:21+9
-    assume {:print "$at(3,486,495)"} true;
-    call $t4 := $MutationAlt($Local(0), EmptyVec(), $t0);
-    assume $Dereference($t4) == $t0;
-    $t0 := $DereferenceProphecy($t4);
+    // $t6 := 0 at .\sources\ConditionalBorrowChain.move:30:63+1
+    $t6 := 0;
+    assume $IsValid'u64'($t6);
 
-    // $t5 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
-    assume {:print "$at(3,629,642)"} true;
-    call $t5 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$v0);
-    assume $Dereference($t5) == $Dereference($t4)->$v0;
-    $t4 := $UpdateMutation($t4, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t4), $DereferenceProphecy($t5)));
-
-    // fulfilled($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
-    assume $Fulfilled($t4, $cur_index);
-
-    // trace_local[target]($t5) at .\sources\ConditionalBorrowChain.move:19:22+13
-    $temp_0'u64' := $Dereference($t5);
-    assume {:print "$track_local(4,2,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t6 := read_ref($t5) at .\sources\ConditionalBorrowChain.move:21:19+7
-    assume {:print "$at(3,686,693)"} true;
-    $t6 := $Dereference($t5);
-
-    // $t7 := 1 at .\sources\ConditionalBorrowChain.move:21:29+1
-    $t7 := 1;
+    // $t7 := 0 at .\sources\ConditionalBorrowChain.move:30:70+1
+    $t7 := 0;
     assume $IsValid'u64'($t7);
 
-    // $t8 := +($t6, $t7) on_abort goto L2 with $t9 at .\sources\ConditionalBorrowChain.move:21:19+11
-    call $t8 := $AddU64($t6, $t7);
+    // $t8 := pack 0xbc::ProphecyBenchmark3Levels::Node1($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7) at .\sources\ConditionalBorrowChain.move:30:9+64
+    $t8 := $bc_ProphecyBenchmark3Levels_Node1($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7);
+
+    // trace_return[0]($t8) at .\sources\ConditionalBorrowChain.move:30:9+64
+    assume {:print "$track_return(4,1,0):", $t8} $t8 == $t8;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:31:5+1
+    assume {:print "$at(3,981,982)"} true;
+L1:
+
+    // return $t8 at .\sources\ConditionalBorrowChain.move:31:5+1
+    assume {:print "$at(3,981,982)"} true;
+    $ret0 := $t8;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::new_node2 [baseline] at .\sources\ConditionalBorrowChain.move:33:5+225
+procedure {:inline 1} $bc_ProphecyBenchmark3Levels_new_node2() returns ($ret0: $bc_ProphecyBenchmark3Levels_Node2)
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t0: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t1: int;
+    var $t2: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t3: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t4: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t5: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t6: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t7: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t8: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t9: $bc_ProphecyBenchmark3Levels_Node2;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node2': $bc_ProphecyBenchmark3Levels_Node2;
+
+    // bytecode translation starts here
+    // $t0 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:17+11
+    assume {:print "$at(3,1053,1064)"} true;
+    call $t0 := $bc_ProphecyBenchmark3Levels_new_node1();
     if ($abort_flag) {
-        assume {:print "$at(3,686,697)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t9} $t9 == $t9;
+        assume {:print "$at(3,1053,1064)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
         goto L2;
     }
 
-    // write_ref($t5, $t8) at .\sources\ConditionalBorrowChain.move:21:9+21
-    $t5 := $UpdateMutation($t5, $t8);
+    // $t2 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:34+11
+    call $t2 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1070,1081)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
 
-    // write_back[Reference($t4).v0 (u64)]($t5) at .\sources\ConditionalBorrowChain.move:21:9+21
-    assume $Fulfilled($t5, $cur_index);
+    // $t3 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:51+11
+    call $t3 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1087,1098)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
 
-    // write_back[LocalRoot($t0)@]($t4) at .\sources\ConditionalBorrowChain.move:21:9+21
-    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t4), $DereferenceProphecy($t4));
+    // $t4 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:68+11
+    call $t4 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1104,1115)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
 
-    // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:21:9+21
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
+    // $t5 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:17+11
+    assume {:print "$at(3,1134,1145)"} true;
+    call $t5 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1134,1145)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
 
-    // $t10 := move($t0) at .\sources\ConditionalBorrowChain.move:23:9+4
-    assume {:print "$at(3,745,749)"} true;
-    $t10 := $t0;
+    // $t6 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:34+11
+    call $t6 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1151,1162)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
 
-    // trace_return[0]($t10) at .\sources\ConditionalBorrowChain.move:14:58+359
-    assume {:print "$at(3,396,755)"} true;
-    assume {:print "$track_return(4,2,0):", $t10} $t10 == $t10;
+    // $t7 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:51+11
+    call $t7 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1168,1179)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
 
-    // label L1 at .\sources\ConditionalBorrowChain.move:24:5+1
-    assume {:print "$at(3,754,755)"} true;
+    // $t8 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:68+11
+    call $t8 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1185,1196)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t9 := pack 0xbc::ProphecyBenchmark3Levels::Node2($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8) at .\sources\ConditionalBorrowChain.move:34:9+179
+    assume {:print "$at(3,1028,1207)"} true;
+    $t9 := $bc_ProphecyBenchmark3Levels_Node2($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8);
+
+    // trace_return[0]($t9) at .\sources\ConditionalBorrowChain.move:34:9+179
+    assume {:print "$track_return(4,2,0):", $t9} $t9 == $t9;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:38:5+1
+    assume {:print "$at(3,1212,1213)"} true;
 L1:
 
-    // assert Not(false) at .\sources\ConditionalBorrowChain.move:38:9+16
-    assume {:print "$at(3,1397,1413)"} true;
-    assert {:msg "assert_failed(3,1397,1413): function does not abort under this condition"}
-      !false;
-
-    // assert Implies(Eq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t10), Add(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t3), 1))) at .\sources\ConditionalBorrowChain.move:32:9+49
-    assume {:print "$at(3,1026,1075)"} true;
-    assert {:msg "assert_failed(3,1026,1075): post-condition does not hold"}
-      ($IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t10->$v0, ($t3->$v0 + 1)));
-
-    // assert Implies(Neq<u64>($t1, 0), Eq<u64>(select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t10), select ProphecyBenchmark::Node.v0<0xbc::ProphecyBenchmark::Node>($t10))) at .\sources\ConditionalBorrowChain.move:33:9+47
-    assume {:print "$at(3,1084,1131)"} true;
-    assert {:msg "assert_failed(3,1084,1131): post-condition does not hold"}
-      (!$IsEqual'u64'($t1, 0) ==> $IsEqual'u64'($t10->$v0, $t10->$v0));
-
-    // return $t10 at .\sources\ConditionalBorrowChain.move:33:9+47
-    $ret0 := $t10;
+    // return $t9 at .\sources\ConditionalBorrowChain.move:38:5+1
+    assume {:print "$at(3,1212,1213)"} true;
+    $ret0 := $t9;
     return;
 
-    // label L2 at .\sources\ConditionalBorrowChain.move:24:5+1
-    assume {:print "$at(3,754,755)"} true;
+    // label L2 at .\sources\ConditionalBorrowChain.move:38:5+1
 L2:
 
-    // assert false at .\sources\ConditionalBorrowChain.move:26:5+659
-    assume {:print "$at(3,761,1420)"} true;
-    assert {:msg "assert_failed(3,761,1420): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t9) at .\sources\ConditionalBorrowChain.move:26:5+659
-    $abort_code := $t9;
+    // abort($t1) at .\sources\ConditionalBorrowChain.move:38:5+1
+    assume {:print "$at(3,1212,1213)"} true;
+    $abort_code := $t1;
     $abort_flag := true;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::new_node2 [verification] at .\sources\ConditionalBorrowChain.move:33:5+225
+procedure {:timeLimit 40} $bc_ProphecyBenchmark3Levels_new_node2$verify() returns ($ret0: $bc_ProphecyBenchmark3Levels_Node2)
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t0: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t1: int;
+    var $t2: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t3: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t4: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t5: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t6: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t7: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t8: $bc_ProphecyBenchmark3Levels_Node1;
+    var $t9: $bc_ProphecyBenchmark3Levels_Node2;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node2': $bc_ProphecyBenchmark3Levels_Node2;
+
+    // verification entrypoint assumptions
+    call $isEntryPoint := $InitVerification();
+
+    // bytecode translation starts here
+    // $t0 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:17+11
+    assume {:print "$at(3,1053,1064)"} true;
+    call $t0 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1053,1064)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t2 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:34+11
+    call $t2 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1070,1081)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t3 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:51+11
+    call $t3 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1087,1098)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t4 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:35:68+11
+    call $t4 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1104,1115)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t5 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:17+11
+    assume {:print "$at(3,1134,1145)"} true;
+    call $t5 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1134,1145)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t6 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:34+11
+    call $t6 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1151,1162)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t7 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:51+11
+    call $t7 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1168,1179)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t8 := ProphecyBenchmark3Levels::new_node1() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:36:68+11
+    call $t8 := $bc_ProphecyBenchmark3Levels_new_node1();
+    if ($abort_flag) {
+        assume {:print "$at(3,1185,1196)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,2):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t9 := pack 0xbc::ProphecyBenchmark3Levels::Node2($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8) at .\sources\ConditionalBorrowChain.move:34:9+179
+    assume {:print "$at(3,1028,1207)"} true;
+    $t9 := $bc_ProphecyBenchmark3Levels_Node2($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8);
+
+    // trace_return[0]($t9) at .\sources\ConditionalBorrowChain.move:34:9+179
+    assume {:print "$track_return(4,2,0):", $t9} $t9 == $t9;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:38:5+1
+    assume {:print "$at(3,1212,1213)"} true;
+L1:
+
+    // return $t9 at .\sources\ConditionalBorrowChain.move:38:5+1
+    assume {:print "$at(3,1212,1213)"} true;
+    $ret0 := $t9;
+    return;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:38:5+1
+L2:
+
+    // abort($t1) at .\sources\ConditionalBorrowChain.move:38:5+1
+    assume {:print "$at(3,1212,1213)"} true;
+    $abort_code := $t1;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::new_node3 [baseline] at .\sources\ConditionalBorrowChain.move:40:5+225
+procedure {:inline 1} $bc_ProphecyBenchmark3Levels_new_node3() returns ($ret0: $bc_ProphecyBenchmark3Levels_Node3)
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t0: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t1: int;
+    var $t2: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t3: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t4: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t5: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t6: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t7: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t8: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t9: $bc_ProphecyBenchmark3Levels_Node3;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node3': $bc_ProphecyBenchmark3Levels_Node3;
+
+    // bytecode translation starts here
+    // $t0 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:17+11
+    assume {:print "$at(3,1284,1295)"} true;
+    call $t0 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1284,1295)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t2 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:34+11
+    call $t2 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1301,1312)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t3 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:51+11
+    call $t3 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1318,1329)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t4 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:68+11
+    call $t4 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1335,1346)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t5 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:17+11
+    assume {:print "$at(3,1365,1376)"} true;
+    call $t5 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1365,1376)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t6 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:34+11
+    call $t6 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1382,1393)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t7 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:51+11
+    call $t7 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1399,1410)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t8 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:68+11
+    call $t8 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1416,1427)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t9 := pack 0xbc::ProphecyBenchmark3Levels::Node3($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8) at .\sources\ConditionalBorrowChain.move:41:9+179
+    assume {:print "$at(3,1259,1438)"} true;
+    $t9 := $bc_ProphecyBenchmark3Levels_Node3($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8);
+
+    // trace_return[0]($t9) at .\sources\ConditionalBorrowChain.move:41:9+179
+    assume {:print "$track_return(4,3,0):", $t9} $t9 == $t9;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:45:5+1
+    assume {:print "$at(3,1443,1444)"} true;
+L1:
+
+    // return $t9 at .\sources\ConditionalBorrowChain.move:45:5+1
+    assume {:print "$at(3,1443,1444)"} true;
+    $ret0 := $t9;
+    return;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:45:5+1
+L2:
+
+    // abort($t1) at .\sources\ConditionalBorrowChain.move:45:5+1
+    assume {:print "$at(3,1443,1444)"} true;
+    $abort_code := $t1;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::new_node3 [verification] at .\sources\ConditionalBorrowChain.move:40:5+225
+procedure {:timeLimit 40} $bc_ProphecyBenchmark3Levels_new_node3$verify() returns ($ret0: $bc_ProphecyBenchmark3Levels_Node3)
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t0: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t1: int;
+    var $t2: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t3: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t4: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t5: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t6: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t7: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t8: $bc_ProphecyBenchmark3Levels_Node2;
+    var $t9: $bc_ProphecyBenchmark3Levels_Node3;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node3': $bc_ProphecyBenchmark3Levels_Node3;
+
+    // verification entrypoint assumptions
+    call $isEntryPoint := $InitVerification();
+
+    // bytecode translation starts here
+    // $t0 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:17+11
+    assume {:print "$at(3,1284,1295)"} true;
+    call $t0 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1284,1295)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t2 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:34+11
+    call $t2 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1301,1312)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t3 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:51+11
+    call $t3 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1318,1329)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t4 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:42:68+11
+    call $t4 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1335,1346)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t5 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:17+11
+    assume {:print "$at(3,1365,1376)"} true;
+    call $t5 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1365,1376)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t6 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:34+11
+    call $t6 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1382,1393)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t7 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:51+11
+    call $t7 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1399,1410)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t8 := ProphecyBenchmark3Levels::new_node2() on_abort goto L2 with $t1 at .\sources\ConditionalBorrowChain.move:43:68+11
+    call $t8 := $bc_ProphecyBenchmark3Levels_new_node2();
+    if ($abort_flag) {
+        assume {:print "$at(3,1416,1427)"} true;
+        $t1 := $abort_code;
+        assume {:print "$track_abort(4,3):", $t1} $t1 == $t1;
+        goto L2;
+    }
+
+    // $t9 := pack 0xbc::ProphecyBenchmark3Levels::Node3($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8) at .\sources\ConditionalBorrowChain.move:41:9+179
+    assume {:print "$at(3,1259,1438)"} true;
+    $t9 := $bc_ProphecyBenchmark3Levels_Node3($t0, $t2, $t3, $t4, $t5, $t6, $t7, $t8);
+
+    // trace_return[0]($t9) at .\sources\ConditionalBorrowChain.move:41:9+179
+    assume {:print "$track_return(4,3,0):", $t9} $t9 == $t9;
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:45:5+1
+    assume {:print "$at(3,1443,1444)"} true;
+L1:
+
+    // return $t9 at .\sources\ConditionalBorrowChain.move:45:5+1
+    assume {:print "$at(3,1443,1444)"} true;
+    $ret0 := $t9;
+    return;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:45:5+1
+L2:
+
+    // abort($t1) at .\sources\ConditionalBorrowChain.move:45:5+1
+    assume {:print "$at(3,1443,1444)"} true;
+    $abort_code := $t1;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::select_leaf [baseline] at .\sources\ConditionalBorrowChain.move:76:5+335
+procedure {:inline 1} $bc_ProphecyBenchmark3Levels_select_leaf(_$t0: $Mutation ($bc_ProphecyBenchmark3Levels_Node1), _$t1: int) returns ($ret0: $Mutation (int), $ret1: $Mutation ($bc_ProphecyBenchmark3Levels_Node1))
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: $Mutation (int);
+    var $t5: $Mutation (int);
+    var $t6: int;
+    var $t7: bool;
+    var $t8: $Mutation (int);
+    var $t9: int;
+    var $t10: bool;
+    var $t11: $Mutation (int);
+    var $t12: int;
+    var $t13: bool;
+    var $t14: $Mutation (int);
+    var $t15: int;
+    var $t16: bool;
+    var $t17: $Mutation (int);
+    var $t18: int;
+    var $t19: bool;
+    var $t20: $Mutation (int);
+    var $t21: int;
+    var $t22: bool;
+    var $t23: $Mutation (int);
+    var $t24: $Mutation (int);
+    var $t0: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t1: int;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node1': $bc_ProphecyBenchmark3Levels_Node1;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:76:5+1
+    assume {:print "$at(3,2601,2602)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[idx]($t1) at .\sources\ConditionalBorrowChain.move:76:5+1
+    assume {:print "$track_local(4,4,1):", $t1} $t1 == $t1;
+
+    // $t2 := 0 at .\sources\ConditionalBorrowChain.move:77:20+1
+    assume {:print "$at(3,2673,2674)"} true;
+    $t2 := 0;
+    assume $IsValid'u64'($t2);
+
+    // $t3 := ==($t1, $t2) at .\sources\ConditionalBorrowChain.move:77:13+8
+    $t3 := $IsEqual'u64'($t1, $t2);
+
+    // if ($t3) goto L1 else goto L0 at .\sources\ConditionalBorrowChain.move:77:9+268
+    if ($t3) { goto L1; } else { goto L0; }
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:77:25+9
+L1:
+
+    // $t4 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v0($t0) at .\sources\ConditionalBorrowChain.move:77:25+9
+    assume {:print "$at(3,2678,2687)"} true;
+    call $t4 := $ChildMutationAlt($t0, 0, $Dereference($t0)->$v0);
+    assume $Dereference($t4) == $Dereference($t0)->$v0;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v0($Dereference($t0), $DereferenceProphecy($t4)));
+
+    // trace_return[0]($t4) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'u64' := $Dereference($t4);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t4) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t4;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L0 at .\sources\ConditionalBorrowChain.move:77:46+3
+L0:
+
+    // $t6 := 1 at .\sources\ConditionalBorrowChain.move:77:53+1
+    assume {:print "$at(3,2706,2707)"} true;
+    $t6 := 1;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := ==($t1, $t6) at .\sources\ConditionalBorrowChain.move:77:46+8
+    $t7 := $IsEqual'u64'($t1, $t6);
+
+    // if ($t7) goto L3 else goto L2 at .\sources\ConditionalBorrowChain.move:77:42+235
+    if ($t7) { goto L3; } else { goto L2; }
+
+    // label L3 at .\sources\ConditionalBorrowChain.move:77:58+9
+L3:
+
+    // $t8 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v1($t0) at .\sources\ConditionalBorrowChain.move:77:58+9
+    assume {:print "$at(3,2711,2720)"} true;
+    call $t8 := $ChildMutationAlt($t0, 1, $Dereference($t0)->$v1);
+    assume $Dereference($t8) == $Dereference($t0)->$v1;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v1($Dereference($t0), $DereferenceProphecy($t8)));
+
+    // trace_return[0]($t8) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'u64' := $Dereference($t8);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t8) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t8;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:78:18+3
+    assume {:print "$at(3,2740,2743)"} true;
+L2:
+
+    // $t9 := 2 at .\sources\ConditionalBorrowChain.move:78:25+1
+    assume {:print "$at(3,2747,2748)"} true;
+    $t9 := 2;
+    assume $IsValid'u64'($t9);
+
+    // $t10 := ==($t1, $t9) at .\sources\ConditionalBorrowChain.move:78:18+8
+    $t10 := $IsEqual'u64'($t1, $t9);
+
+    // if ($t10) goto L5 else goto L4 at .\sources\ConditionalBorrowChain.move:78:14+194
+    if ($t10) { goto L5; } else { goto L4; }
+
+    // label L5 at .\sources\ConditionalBorrowChain.move:78:30+9
+L5:
+
+    // $t11 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v2($t0) at .\sources\ConditionalBorrowChain.move:78:30+9
+    assume {:print "$at(3,2752,2761)"} true;
+    call $t11 := $ChildMutationAlt($t0, 2, $Dereference($t0)->$v2);
+    assume $Dereference($t11) == $Dereference($t0)->$v2;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v2($Dereference($t0), $DereferenceProphecy($t11)));
+
+    // trace_return[0]($t11) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume {:print "$at(3,2662,2930)"} true;
+    $temp_0'u64' := $Dereference($t11);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t11) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t11;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L4 at .\sources\ConditionalBorrowChain.move:78:51+3
+    assume {:print "$at(3,2773,2776)"} true;
+L4:
+
+    // $t12 := 3 at .\sources\ConditionalBorrowChain.move:78:58+1
+    assume {:print "$at(3,2780,2781)"} true;
+    $t12 := 3;
+    assume $IsValid'u64'($t12);
+
+    // $t13 := ==($t1, $t12) at .\sources\ConditionalBorrowChain.move:78:51+8
+    $t13 := $IsEqual'u64'($t1, $t12);
+
+    // if ($t13) goto L7 else goto L6 at .\sources\ConditionalBorrowChain.move:78:47+161
+    if ($t13) { goto L7; } else { goto L6; }
+
+    // label L7 at .\sources\ConditionalBorrowChain.move:78:63+9
+L7:
+
+    // $t14 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v3($t0) at .\sources\ConditionalBorrowChain.move:78:63+9
+    assume {:print "$at(3,2785,2794)"} true;
+    call $t14 := $ChildMutationAlt($t0, 3, $Dereference($t0)->$v3);
+    assume $Dereference($t14) == $Dereference($t0)->$v3;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v3($Dereference($t0), $DereferenceProphecy($t14)));
+
+    // trace_return[0]($t14) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume {:print "$at(3,2662,2930)"} true;
+    $temp_0'u64' := $Dereference($t14);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t14) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t14;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L6 at .\sources\ConditionalBorrowChain.move:79:18+3
+    assume {:print "$at(3,2814,2817)"} true;
+L6:
+
+    // $t15 := 4 at .\sources\ConditionalBorrowChain.move:79:25+1
+    assume {:print "$at(3,2821,2822)"} true;
+    $t15 := 4;
+    assume $IsValid'u64'($t15);
+
+    // $t16 := ==($t1, $t15) at .\sources\ConditionalBorrowChain.move:79:18+8
+    $t16 := $IsEqual'u64'($t1, $t15);
+
+    // if ($t16) goto L9 else goto L8 at .\sources\ConditionalBorrowChain.move:79:14+120
+    if ($t16) { goto L9; } else { goto L8; }
+
+    // label L9 at .\sources\ConditionalBorrowChain.move:79:30+9
+L9:
+
+    // $t17 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v4($t0) at .\sources\ConditionalBorrowChain.move:79:30+9
+    assume {:print "$at(3,2826,2835)"} true;
+    call $t17 := $ChildMutationAlt($t0, 4, $Dereference($t0)->$v4);
+    assume $Dereference($t17) == $Dereference($t0)->$v4;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v4($Dereference($t0), $DereferenceProphecy($t17)));
+
+    // trace_return[0]($t17) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume {:print "$at(3,2662,2930)"} true;
+    $temp_0'u64' := $Dereference($t17);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t17) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t17;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L8 at .\sources\ConditionalBorrowChain.move:79:51+3
+    assume {:print "$at(3,2847,2850)"} true;
+L8:
+
+    // $t18 := 5 at .\sources\ConditionalBorrowChain.move:79:58+1
+    assume {:print "$at(3,2854,2855)"} true;
+    $t18 := 5;
+    assume $IsValid'u64'($t18);
+
+    // $t19 := ==($t1, $t18) at .\sources\ConditionalBorrowChain.move:79:51+8
+    $t19 := $IsEqual'u64'($t1, $t18);
+
+    // if ($t19) goto L11 else goto L10 at .\sources\ConditionalBorrowChain.move:79:47+87
+    if ($t19) { goto L11; } else { goto L10; }
+
+    // label L11 at .\sources\ConditionalBorrowChain.move:79:63+9
+L11:
+
+    // $t20 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v5($t0) at .\sources\ConditionalBorrowChain.move:79:63+9
+    assume {:print "$at(3,2859,2868)"} true;
+    call $t20 := $ChildMutationAlt($t0, 5, $Dereference($t0)->$v5);
+    assume $Dereference($t20) == $Dereference($t0)->$v5;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v5($Dereference($t0), $DereferenceProphecy($t20)));
+
+    // trace_return[0]($t20) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume {:print "$at(3,2662,2930)"} true;
+    $temp_0'u64' := $Dereference($t20);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t20) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t20;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L10 at .\sources\ConditionalBorrowChain.move:80:18+3
+    assume {:print "$at(3,2888,2891)"} true;
+L10:
+
+    // $t21 := 6 at .\sources\ConditionalBorrowChain.move:80:25+1
+    assume {:print "$at(3,2895,2896)"} true;
+    $t21 := 6;
+    assume $IsValid'u64'($t21);
+
+    // $t22 := ==($t1, $t21) at .\sources\ConditionalBorrowChain.move:80:18+8
+    $t22 := $IsEqual'u64'($t1, $t21);
+
+    // if ($t22) goto L13 else goto L12 at .\sources\ConditionalBorrowChain.move:80:14+46
+    if ($t22) { goto L13; } else { goto L12; }
+
+    // label L13 at .\sources\ConditionalBorrowChain.move:80:30+9
+L13:
+
+    // $t23 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v6($t0) at .\sources\ConditionalBorrowChain.move:80:30+9
+    assume {:print "$at(3,2900,2909)"} true;
+    call $t23 := $ChildMutationAlt($t0, 6, $Dereference($t0)->$v6);
+    assume $Dereference($t23) == $Dereference($t0)->$v6;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v6($Dereference($t0), $DereferenceProphecy($t23)));
+
+    // trace_return[0]($t23) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume {:print "$at(3,2662,2930)"} true;
+    $temp_0'u64' := $Dereference($t23);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t23) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t23;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:77:9+268
+    goto L14;
+
+    // label L12 at .\sources\ConditionalBorrowChain.move:80:49+9
+    assume {:print "$at(3,2919,2928)"} true;
+L12:
+
+    // $t24 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node1>.v7($t0) at .\sources\ConditionalBorrowChain.move:80:49+9
+    assume {:print "$at(3,2919,2928)"} true;
+    call $t24 := $ChildMutationAlt($t0, 7, $Dereference($t0)->$v7);
+    assume $Dereference($t24) == $Dereference($t0)->$v7;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node1'_v7($Dereference($t0), $DereferenceProphecy($t24)));
+
+    // trace_return[0]($t24) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume {:print "$at(3,2662,2930)"} true;
+    $temp_0'u64' := $Dereference($t24);
+    assume {:print "$track_return(4,4,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t0);
+    assume {:print "$track_local(4,4,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // $t5 := move($t24) at .\sources\ConditionalBorrowChain.move:77:9+268
+    $t5 := $t24;
+
+    // label L14 at .\sources\ConditionalBorrowChain.move:81:5+1
+    assume {:print "$at(3,2935,2936)"} true;
+L14:
+
+    // return $t5 at .\sources\ConditionalBorrowChain.move:81:5+1
+    assume {:print "$at(3,2935,2936)"} true;
+    $ret0 := $t5;
+    $ret1 := $t0;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::select_n1 [baseline] at .\sources\ConditionalBorrowChain.move:64:5+335
+procedure {:inline 1} $bc_ProphecyBenchmark3Levels_select_n1(_$t0: $Mutation ($bc_ProphecyBenchmark3Levels_Node2), _$t1: int) returns ($ret0: $Mutation ($bc_ProphecyBenchmark3Levels_Node1), $ret1: $Mutation ($bc_ProphecyBenchmark3Levels_Node2))
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t5: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t6: int;
+    var $t7: bool;
+    var $t8: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t9: int;
+    var $t10: bool;
+    var $t11: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t12: int;
+    var $t13: bool;
+    var $t14: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t15: int;
+    var $t16: bool;
+    var $t17: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t18: int;
+    var $t19: bool;
+    var $t20: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t21: int;
+    var $t22: bool;
+    var $t23: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t24: $Mutation ($bc_ProphecyBenchmark3Levels_Node1);
+    var $t0: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t1: int;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node1': $bc_ProphecyBenchmark3Levels_Node1;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node2': $bc_ProphecyBenchmark3Levels_Node2;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:64:5+1
+    assume {:print "$at(3,2125,2126)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[idx]($t1) at .\sources\ConditionalBorrowChain.move:64:5+1
+    assume {:print "$track_local(4,5,1):", $t1} $t1 == $t1;
+
+    // $t2 := 0 at .\sources\ConditionalBorrowChain.move:65:20+1
+    assume {:print "$at(3,2197,2198)"} true;
+    $t2 := 0;
+    assume $IsValid'u64'($t2);
+
+    // $t3 := ==($t1, $t2) at .\sources\ConditionalBorrowChain.move:65:13+8
+    $t3 := $IsEqual'u64'($t1, $t2);
+
+    // if ($t3) goto L1 else goto L0 at .\sources\ConditionalBorrowChain.move:65:9+268
+    if ($t3) { goto L1; } else { goto L0; }
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:65:25+9
+L1:
+
+    // $t4 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v0($t0) at .\sources\ConditionalBorrowChain.move:65:25+9
+    assume {:print "$at(3,2202,2211)"} true;
+    call $t4 := $ChildMutationAlt($t0, 0, $Dereference($t0)->$v0);
+    assume $Dereference($t4) == $Dereference($t0)->$v0;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v0($Dereference($t0), $DereferenceProphecy($t4)));
+
+    // trace_return[0]($t4) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t4);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t4) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t4;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L0 at .\sources\ConditionalBorrowChain.move:65:46+3
+L0:
+
+    // $t6 := 1 at .\sources\ConditionalBorrowChain.move:65:53+1
+    assume {:print "$at(3,2230,2231)"} true;
+    $t6 := 1;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := ==($t1, $t6) at .\sources\ConditionalBorrowChain.move:65:46+8
+    $t7 := $IsEqual'u64'($t1, $t6);
+
+    // if ($t7) goto L3 else goto L2 at .\sources\ConditionalBorrowChain.move:65:42+235
+    if ($t7) { goto L3; } else { goto L2; }
+
+    // label L3 at .\sources\ConditionalBorrowChain.move:65:58+9
+L3:
+
+    // $t8 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v1($t0) at .\sources\ConditionalBorrowChain.move:65:58+9
+    assume {:print "$at(3,2235,2244)"} true;
+    call $t8 := $ChildMutationAlt($t0, 1, $Dereference($t0)->$v1);
+    assume $Dereference($t8) == $Dereference($t0)->$v1;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v1($Dereference($t0), $DereferenceProphecy($t8)));
+
+    // trace_return[0]($t8) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t8);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t8) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t8;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:66:18+3
+    assume {:print "$at(3,2264,2267)"} true;
+L2:
+
+    // $t9 := 2 at .\sources\ConditionalBorrowChain.move:66:25+1
+    assume {:print "$at(3,2271,2272)"} true;
+    $t9 := 2;
+    assume $IsValid'u64'($t9);
+
+    // $t10 := ==($t1, $t9) at .\sources\ConditionalBorrowChain.move:66:18+8
+    $t10 := $IsEqual'u64'($t1, $t9);
+
+    // if ($t10) goto L5 else goto L4 at .\sources\ConditionalBorrowChain.move:66:14+194
+    if ($t10) { goto L5; } else { goto L4; }
+
+    // label L5 at .\sources\ConditionalBorrowChain.move:66:30+9
+L5:
+
+    // $t11 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v2($t0) at .\sources\ConditionalBorrowChain.move:66:30+9
+    assume {:print "$at(3,2276,2285)"} true;
+    call $t11 := $ChildMutationAlt($t0, 2, $Dereference($t0)->$v2);
+    assume $Dereference($t11) == $Dereference($t0)->$v2;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v2($Dereference($t0), $DereferenceProphecy($t11)));
+
+    // trace_return[0]($t11) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume {:print "$at(3,2186,2454)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t11);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t11) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t11;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L4 at .\sources\ConditionalBorrowChain.move:66:51+3
+    assume {:print "$at(3,2297,2300)"} true;
+L4:
+
+    // $t12 := 3 at .\sources\ConditionalBorrowChain.move:66:58+1
+    assume {:print "$at(3,2304,2305)"} true;
+    $t12 := 3;
+    assume $IsValid'u64'($t12);
+
+    // $t13 := ==($t1, $t12) at .\sources\ConditionalBorrowChain.move:66:51+8
+    $t13 := $IsEqual'u64'($t1, $t12);
+
+    // if ($t13) goto L7 else goto L6 at .\sources\ConditionalBorrowChain.move:66:47+161
+    if ($t13) { goto L7; } else { goto L6; }
+
+    // label L7 at .\sources\ConditionalBorrowChain.move:66:63+9
+L7:
+
+    // $t14 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v3($t0) at .\sources\ConditionalBorrowChain.move:66:63+9
+    assume {:print "$at(3,2309,2318)"} true;
+    call $t14 := $ChildMutationAlt($t0, 3, $Dereference($t0)->$v3);
+    assume $Dereference($t14) == $Dereference($t0)->$v3;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v3($Dereference($t0), $DereferenceProphecy($t14)));
+
+    // trace_return[0]($t14) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume {:print "$at(3,2186,2454)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t14);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t14) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t14;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L6 at .\sources\ConditionalBorrowChain.move:67:18+3
+    assume {:print "$at(3,2338,2341)"} true;
+L6:
+
+    // $t15 := 4 at .\sources\ConditionalBorrowChain.move:67:25+1
+    assume {:print "$at(3,2345,2346)"} true;
+    $t15 := 4;
+    assume $IsValid'u64'($t15);
+
+    // $t16 := ==($t1, $t15) at .\sources\ConditionalBorrowChain.move:67:18+8
+    $t16 := $IsEqual'u64'($t1, $t15);
+
+    // if ($t16) goto L9 else goto L8 at .\sources\ConditionalBorrowChain.move:67:14+120
+    if ($t16) { goto L9; } else { goto L8; }
+
+    // label L9 at .\sources\ConditionalBorrowChain.move:67:30+9
+L9:
+
+    // $t17 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v4($t0) at .\sources\ConditionalBorrowChain.move:67:30+9
+    assume {:print "$at(3,2350,2359)"} true;
+    call $t17 := $ChildMutationAlt($t0, 4, $Dereference($t0)->$v4);
+    assume $Dereference($t17) == $Dereference($t0)->$v4;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v4($Dereference($t0), $DereferenceProphecy($t17)));
+
+    // trace_return[0]($t17) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume {:print "$at(3,2186,2454)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t17);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t17) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t17;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L8 at .\sources\ConditionalBorrowChain.move:67:51+3
+    assume {:print "$at(3,2371,2374)"} true;
+L8:
+
+    // $t18 := 5 at .\sources\ConditionalBorrowChain.move:67:58+1
+    assume {:print "$at(3,2378,2379)"} true;
+    $t18 := 5;
+    assume $IsValid'u64'($t18);
+
+    // $t19 := ==($t1, $t18) at .\sources\ConditionalBorrowChain.move:67:51+8
+    $t19 := $IsEqual'u64'($t1, $t18);
+
+    // if ($t19) goto L11 else goto L10 at .\sources\ConditionalBorrowChain.move:67:47+87
+    if ($t19) { goto L11; } else { goto L10; }
+
+    // label L11 at .\sources\ConditionalBorrowChain.move:67:63+9
+L11:
+
+    // $t20 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v5($t0) at .\sources\ConditionalBorrowChain.move:67:63+9
+    assume {:print "$at(3,2383,2392)"} true;
+    call $t20 := $ChildMutationAlt($t0, 5, $Dereference($t0)->$v5);
+    assume $Dereference($t20) == $Dereference($t0)->$v5;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v5($Dereference($t0), $DereferenceProphecy($t20)));
+
+    // trace_return[0]($t20) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume {:print "$at(3,2186,2454)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t20);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t20) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t20;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L10 at .\sources\ConditionalBorrowChain.move:68:18+3
+    assume {:print "$at(3,2412,2415)"} true;
+L10:
+
+    // $t21 := 6 at .\sources\ConditionalBorrowChain.move:68:25+1
+    assume {:print "$at(3,2419,2420)"} true;
+    $t21 := 6;
+    assume $IsValid'u64'($t21);
+
+    // $t22 := ==($t1, $t21) at .\sources\ConditionalBorrowChain.move:68:18+8
+    $t22 := $IsEqual'u64'($t1, $t21);
+
+    // if ($t22) goto L13 else goto L12 at .\sources\ConditionalBorrowChain.move:68:14+46
+    if ($t22) { goto L13; } else { goto L12; }
+
+    // label L13 at .\sources\ConditionalBorrowChain.move:68:30+9
+L13:
+
+    // $t23 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v6($t0) at .\sources\ConditionalBorrowChain.move:68:30+9
+    assume {:print "$at(3,2424,2433)"} true;
+    call $t23 := $ChildMutationAlt($t0, 6, $Dereference($t0)->$v6);
+    assume $Dereference($t23) == $Dereference($t0)->$v6;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v6($Dereference($t0), $DereferenceProphecy($t23)));
+
+    // trace_return[0]($t23) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume {:print "$at(3,2186,2454)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t23);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t23) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t23;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:65:9+268
+    goto L14;
+
+    // label L12 at .\sources\ConditionalBorrowChain.move:68:49+9
+    assume {:print "$at(3,2443,2452)"} true;
+L12:
+
+    // $t24 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node2>.v7($t0) at .\sources\ConditionalBorrowChain.move:68:49+9
+    assume {:print "$at(3,2443,2452)"} true;
+    call $t24 := $ChildMutationAlt($t0, 7, $Dereference($t0)->$v7);
+    assume $Dereference($t24) == $Dereference($t0)->$v7;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node2'_v7($Dereference($t0), $DereferenceProphecy($t24)));
+
+    // trace_return[0]($t24) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume {:print "$at(3,2186,2454)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node1' := $Dereference($t24);
+    assume {:print "$track_return(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node1'} $temp_0'$bc_ProphecyBenchmark3Levels_Node1' == $temp_0'$bc_ProphecyBenchmark3Levels_Node1';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t0);
+    assume {:print "$track_local(4,5,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // $t5 := move($t24) at .\sources\ConditionalBorrowChain.move:65:9+268
+    $t5 := $t24;
+
+    // label L14 at .\sources\ConditionalBorrowChain.move:69:5+1
+    assume {:print "$at(3,2459,2460)"} true;
+L14:
+
+    // return $t5 at .\sources\ConditionalBorrowChain.move:69:5+1
+    assume {:print "$at(3,2459,2460)"} true;
+    $ret0 := $t5;
+    $ret1 := $t0;
+    return;
+
+}
+
+// fun ProphecyBenchmark3Levels::select_n2 [baseline] at .\sources\ConditionalBorrowChain.move:52:5+335
+procedure {:inline 1} $bc_ProphecyBenchmark3Levels_select_n2(_$t0: $Mutation ($bc_ProphecyBenchmark3Levels_Node3), _$t1: int) returns ($ret0: $Mutation ($bc_ProphecyBenchmark3Levels_Node2), $ret1: $Mutation ($bc_ProphecyBenchmark3Levels_Node3))
+{
+    // declare local variables
+    var $isEntryPoint: bool;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t5: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t6: int;
+    var $t7: bool;
+    var $t8: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t9: int;
+    var $t10: bool;
+    var $t11: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t12: int;
+    var $t13: bool;
+    var $t14: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t15: int;
+    var $t16: bool;
+    var $t17: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t18: int;
+    var $t19: bool;
+    var $t20: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t21: int;
+    var $t22: bool;
+    var $t23: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t24: $Mutation ($bc_ProphecyBenchmark3Levels_Node2);
+    var $t0: $Mutation ($bc_ProphecyBenchmark3Levels_Node3);
+    var $t1: int;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node2': $bc_ProphecyBenchmark3Levels_Node2;
+    var $temp_0'$bc_ProphecyBenchmark3Levels_Node3': $bc_ProphecyBenchmark3Levels_Node3;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:52:5+1
+    assume {:print "$at(3,1645,1646)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // trace_local[idx]($t1) at .\sources\ConditionalBorrowChain.move:52:5+1
+    assume {:print "$track_local(4,6,1):", $t1} $t1 == $t1;
+
+    // $t2 := 0 at .\sources\ConditionalBorrowChain.move:53:20+1
+    assume {:print "$at(3,1717,1718)"} true;
+    $t2 := 0;
+    assume $IsValid'u64'($t2);
+
+    // $t3 := ==($t1, $t2) at .\sources\ConditionalBorrowChain.move:53:13+8
+    $t3 := $IsEqual'u64'($t1, $t2);
+
+    // if ($t3) goto L1 else goto L0 at .\sources\ConditionalBorrowChain.move:53:9+268
+    if ($t3) { goto L1; } else { goto L0; }
+
+    // label L1 at .\sources\ConditionalBorrowChain.move:53:25+9
+L1:
+
+    // $t4 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v0($t0) at .\sources\ConditionalBorrowChain.move:53:25+9
+    assume {:print "$at(3,1722,1731)"} true;
+    call $t4 := $ChildMutationAlt($t0, 0, $Dereference($t0)->$v0);
+    assume $Dereference($t4) == $Dereference($t0)->$v0;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v0($Dereference($t0), $DereferenceProphecy($t4)));
+
+    // trace_return[0]($t4) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t4);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t4) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t4;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L0 at .\sources\ConditionalBorrowChain.move:53:46+3
+L0:
+
+    // $t6 := 1 at .\sources\ConditionalBorrowChain.move:53:53+1
+    assume {:print "$at(3,1750,1751)"} true;
+    $t6 := 1;
+    assume $IsValid'u64'($t6);
+
+    // $t7 := ==($t1, $t6) at .\sources\ConditionalBorrowChain.move:53:46+8
+    $t7 := $IsEqual'u64'($t1, $t6);
+
+    // if ($t7) goto L3 else goto L2 at .\sources\ConditionalBorrowChain.move:53:42+235
+    if ($t7) { goto L3; } else { goto L2; }
+
+    // label L3 at .\sources\ConditionalBorrowChain.move:53:58+9
+L3:
+
+    // $t8 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v1($t0) at .\sources\ConditionalBorrowChain.move:53:58+9
+    assume {:print "$at(3,1755,1764)"} true;
+    call $t8 := $ChildMutationAlt($t0, 1, $Dereference($t0)->$v1);
+    assume $Dereference($t8) == $Dereference($t0)->$v1;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v1($Dereference($t0), $DereferenceProphecy($t8)));
+
+    // trace_return[0]($t8) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t8);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t8) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t8;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L2 at .\sources\ConditionalBorrowChain.move:54:18+3
+    assume {:print "$at(3,1784,1787)"} true;
+L2:
+
+    // $t9 := 2 at .\sources\ConditionalBorrowChain.move:54:25+1
+    assume {:print "$at(3,1791,1792)"} true;
+    $t9 := 2;
+    assume $IsValid'u64'($t9);
+
+    // $t10 := ==($t1, $t9) at .\sources\ConditionalBorrowChain.move:54:18+8
+    $t10 := $IsEqual'u64'($t1, $t9);
+
+    // if ($t10) goto L5 else goto L4 at .\sources\ConditionalBorrowChain.move:54:14+194
+    if ($t10) { goto L5; } else { goto L4; }
+
+    // label L5 at .\sources\ConditionalBorrowChain.move:54:30+9
+L5:
+
+    // $t11 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v2($t0) at .\sources\ConditionalBorrowChain.move:54:30+9
+    assume {:print "$at(3,1796,1805)"} true;
+    call $t11 := $ChildMutationAlt($t0, 2, $Dereference($t0)->$v2);
+    assume $Dereference($t11) == $Dereference($t0)->$v2;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v2($Dereference($t0), $DereferenceProphecy($t11)));
+
+    // trace_return[0]($t11) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume {:print "$at(3,1706,1974)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t11);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t11) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t11;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L4 at .\sources\ConditionalBorrowChain.move:54:51+3
+    assume {:print "$at(3,1817,1820)"} true;
+L4:
+
+    // $t12 := 3 at .\sources\ConditionalBorrowChain.move:54:58+1
+    assume {:print "$at(3,1824,1825)"} true;
+    $t12 := 3;
+    assume $IsValid'u64'($t12);
+
+    // $t13 := ==($t1, $t12) at .\sources\ConditionalBorrowChain.move:54:51+8
+    $t13 := $IsEqual'u64'($t1, $t12);
+
+    // if ($t13) goto L7 else goto L6 at .\sources\ConditionalBorrowChain.move:54:47+161
+    if ($t13) { goto L7; } else { goto L6; }
+
+    // label L7 at .\sources\ConditionalBorrowChain.move:54:63+9
+L7:
+
+    // $t14 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v3($t0) at .\sources\ConditionalBorrowChain.move:54:63+9
+    assume {:print "$at(3,1829,1838)"} true;
+    call $t14 := $ChildMutationAlt($t0, 3, $Dereference($t0)->$v3);
+    assume $Dereference($t14) == $Dereference($t0)->$v3;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v3($Dereference($t0), $DereferenceProphecy($t14)));
+
+    // trace_return[0]($t14) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume {:print "$at(3,1706,1974)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t14);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t14) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t14;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L6 at .\sources\ConditionalBorrowChain.move:55:18+3
+    assume {:print "$at(3,1858,1861)"} true;
+L6:
+
+    // $t15 := 4 at .\sources\ConditionalBorrowChain.move:55:25+1
+    assume {:print "$at(3,1865,1866)"} true;
+    $t15 := 4;
+    assume $IsValid'u64'($t15);
+
+    // $t16 := ==($t1, $t15) at .\sources\ConditionalBorrowChain.move:55:18+8
+    $t16 := $IsEqual'u64'($t1, $t15);
+
+    // if ($t16) goto L9 else goto L8 at .\sources\ConditionalBorrowChain.move:55:14+120
+    if ($t16) { goto L9; } else { goto L8; }
+
+    // label L9 at .\sources\ConditionalBorrowChain.move:55:30+9
+L9:
+
+    // $t17 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v4($t0) at .\sources\ConditionalBorrowChain.move:55:30+9
+    assume {:print "$at(3,1870,1879)"} true;
+    call $t17 := $ChildMutationAlt($t0, 4, $Dereference($t0)->$v4);
+    assume $Dereference($t17) == $Dereference($t0)->$v4;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v4($Dereference($t0), $DereferenceProphecy($t17)));
+
+    // trace_return[0]($t17) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume {:print "$at(3,1706,1974)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t17);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t17) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t17;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L8 at .\sources\ConditionalBorrowChain.move:55:51+3
+    assume {:print "$at(3,1891,1894)"} true;
+L8:
+
+    // $t18 := 5 at .\sources\ConditionalBorrowChain.move:55:58+1
+    assume {:print "$at(3,1898,1899)"} true;
+    $t18 := 5;
+    assume $IsValid'u64'($t18);
+
+    // $t19 := ==($t1, $t18) at .\sources\ConditionalBorrowChain.move:55:51+8
+    $t19 := $IsEqual'u64'($t1, $t18);
+
+    // if ($t19) goto L11 else goto L10 at .\sources\ConditionalBorrowChain.move:55:47+87
+    if ($t19) { goto L11; } else { goto L10; }
+
+    // label L11 at .\sources\ConditionalBorrowChain.move:55:63+9
+L11:
+
+    // $t20 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v5($t0) at .\sources\ConditionalBorrowChain.move:55:63+9
+    assume {:print "$at(3,1903,1912)"} true;
+    call $t20 := $ChildMutationAlt($t0, 5, $Dereference($t0)->$v5);
+    assume $Dereference($t20) == $Dereference($t0)->$v5;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v5($Dereference($t0), $DereferenceProphecy($t20)));
+
+    // trace_return[0]($t20) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume {:print "$at(3,1706,1974)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t20);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t20) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t20;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L10 at .\sources\ConditionalBorrowChain.move:56:18+3
+    assume {:print "$at(3,1932,1935)"} true;
+L10:
+
+    // $t21 := 6 at .\sources\ConditionalBorrowChain.move:56:25+1
+    assume {:print "$at(3,1939,1940)"} true;
+    $t21 := 6;
+    assume $IsValid'u64'($t21);
+
+    // $t22 := ==($t1, $t21) at .\sources\ConditionalBorrowChain.move:56:18+8
+    $t22 := $IsEqual'u64'($t1, $t21);
+
+    // if ($t22) goto L13 else goto L12 at .\sources\ConditionalBorrowChain.move:56:14+46
+    if ($t22) { goto L13; } else { goto L12; }
+
+    // label L13 at .\sources\ConditionalBorrowChain.move:56:30+9
+L13:
+
+    // $t23 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v6($t0) at .\sources\ConditionalBorrowChain.move:56:30+9
+    assume {:print "$at(3,1944,1953)"} true;
+    call $t23 := $ChildMutationAlt($t0, 6, $Dereference($t0)->$v6);
+    assume $Dereference($t23) == $Dereference($t0)->$v6;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v6($Dereference($t0), $DereferenceProphecy($t23)));
+
+    // trace_return[0]($t23) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume {:print "$at(3,1706,1974)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t23);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t23) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t23;
+
+    // goto L14 at .\sources\ConditionalBorrowChain.move:53:9+268
+    goto L14;
+
+    // label L12 at .\sources\ConditionalBorrowChain.move:56:49+9
+    assume {:print "$at(3,1963,1972)"} true;
+L12:
+
+    // $t24 := borrow_field<0xbc::ProphecyBenchmark3Levels::Node3>.v7($t0) at .\sources\ConditionalBorrowChain.move:56:49+9
+    assume {:print "$at(3,1963,1972)"} true;
+    call $t24 := $ChildMutationAlt($t0, 7, $Dereference($t0)->$v7);
+    assume $Dereference($t24) == $Dereference($t0)->$v7;
+    $t0 := $UpdateMutation($t0, $Update'$bc_ProphecyBenchmark3Levels_Node3'_v7($Dereference($t0), $DereferenceProphecy($t24)));
+
+    // trace_return[0]($t24) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume {:print "$at(3,1706,1974)"} true;
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node2' := $Dereference($t24);
+    assume {:print "$track_return(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node2'} $temp_0'$bc_ProphecyBenchmark3Levels_Node2' == $temp_0'$bc_ProphecyBenchmark3Levels_Node2';
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // fulfilled($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    assume $Fulfilled($t0, $cur_index);
+
+    // trace_local[n]($t0) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $temp_0'$bc_ProphecyBenchmark3Levels_Node3' := $Dereference($t0);
+    assume {:print "$track_local(4,6,0):", $temp_0'$bc_ProphecyBenchmark3Levels_Node3'} $temp_0'$bc_ProphecyBenchmark3Levels_Node3' == $temp_0'$bc_ProphecyBenchmark3Levels_Node3';
+
+    // $t5 := move($t24) at .\sources\ConditionalBorrowChain.move:53:9+268
+    $t5 := $t24;
+
+    // label L14 at .\sources\ConditionalBorrowChain.move:57:5+1
+    assume {:print "$at(3,1979,1980)"} true;
+L14:
+
+    // return $t5 at .\sources\ConditionalBorrowChain.move:57:5+1
+    assume {:print "$at(3,1979,1980)"} true;
+    $ret0 := $t5;
+    $ret1 := $t0;
     return;
 
 }
