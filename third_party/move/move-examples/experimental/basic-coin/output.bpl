@@ -2106,12 +2106,17 @@ datatype $Location {
 // are single threaded in Move, we can keep them together and treat them as a value
 // during mutation until the point they are stored back to their original location.
 datatype $Mutation<T> {
-    $Mutation(l: $Location, p: Vec int, v: T)
+    $Mutation(l: $Location, p: Vec int, v: T, v_final: T)
 }
 
 // Representation of memory for a given type.
+
 datatype $Memory<T> {
     $Memory(domain: [int]bool, contents: [int]T)
+}
+
+datatype $MemoryPair<T> {
+    $MemoryPair(prev: $Memory T, curr: $Memory T, times: [int]int)
 }
 
 function {:builtin "MapConst"} $ConstMemoryDomain(v: bool): [int]bool;
@@ -2119,15 +2124,33 @@ function {:builtin "MapConst"} $ConstMemoryContent<T>(v: T): [int]T;
 axiom $ConstMemoryDomain(false) == (lambda i: int :: false);
 axiom $ConstMemoryDomain(true) == (lambda i: int :: true);
 
+function {:inline} $Fulfilled<T>(ref: $Mutation T, c_index: int): bool {
+    ref->v == ref->v_final
+}
+procedure $MutationAlt<T>(l: $Location, p: Vec int, v: T) returns (result: $Mutation T) {
+    var prophecy: T;
+    var r_order: int;
+    havoc prophecy;
+    havoc r_order;
+    result := $Mutation(l, p, v, prophecy);
+    assume result->l == l;
+    assume result->p == p;
+    assume result->v == v;
+}
 
 // Dereferences a mutation.
 function {:inline} $Dereference<T>(ref: $Mutation T): T {
     ref->v
 }
 
+// Dereferences a mutation.
+function {:inline} $DereferenceProphecy<T>(ref: $Mutation T): T {
+    ref->v_final
+}
+
 // Update the value of a mutation.
 function {:inline} $UpdateMutation<T>(m: $Mutation T, v: T): $Mutation T {
-    $Mutation(m->l, m->p, v)
+    $Mutation(m->l, m->p, v, m->v_final)
 }
 
 // Havoc the content of the mutation, preserving location and path.
@@ -2138,7 +2161,21 @@ procedure {:inline 1} $HavocMutation<T>(m: $Mutation T) returns (r: $Mutation T)
 }
 
 function {:inline} $ChildMutation<T1, T2>(m: $Mutation T1, offset: int, v: T2): $Mutation T2 {
-    $Mutation(m->l, ExtendVec(m->p, offset), v)
+    $Mutation(m->l, ExtendVec(m->p, offset), v, v)
+}
+//functions are pure and deterministic, have to use procedure
+
+procedure $ChildMutationAlt<T1, T2>(m: $Mutation T1, offset: int, v: T2) returns (result: $Mutation T2) {
+    var prophecy: T2;
+    //var r_token: int;
+    havoc prophecy;
+    //havoc r_token;
+    result := $Mutation(m->l, ExtendVec(m->p, offset), v, prophecy);
+    assume result->l == m->l;
+    assume result->p == ExtendVec(m->p, offset);
+    assume result->v == v;
+    //assume r_token >= 0 && r_token <= m->r_token;
+    //if you have the token, you may pass it down.
 }
 
 // Return true if two mutations share the location and path
@@ -2203,15 +2240,38 @@ function {:inline} $GlobalLocationAddress<T>(m: $Mutation T): int {
 function {:inline} $ResourceExists<T>(m: $Memory T, addr: int): bool {
     m->domain[addr]
 }
+//individual timestamp for all address
+function {:inline} $ResourceExistsMP<T>(mp: $MemoryPair T, addr: int, c_index: int): bool {
+    if c_index >= mp->times[addr] then
+        mp->curr->domain[addr]
+    else
+        mp->prev->domain[addr]
+}
 
 // Obtains Value of given resource.
 function {:inline} $ResourceValue<T>(m: $Memory T, addr: int): T {
     m->contents[addr]
 }
 
+function {:inline} $ResourceValueMP<T>(mp: $MemoryPair T, addr: int, c_index: int): T {
+    if c_index >= mp->times[addr] then
+        mp->curr->contents[addr]
+    else
+        mp->prev->contents[addr]
+}
+
 // Update resource.
 function {:inline} $ResourceUpdate<T>(m: $Memory T, a: int, v: T): $Memory T {
     $Memory(m->domain[a := true], m->contents[a := v])
+}
+function {:inline} $ResourceUpdateMP<T>(mp: $MemoryPair T, a: int, v: T, proph_index: int): $MemoryPair T {
+    $MemoryPair(
+        // old: gets domain and value from new for this address
+        $Memory(mp->prev->domain[a:= mp->curr->domain[a]], mp->prev->contents[a:= mp->curr->contents[a]]),
+        $Memory(mp->curr->domain[a:= true], mp->curr->contents[a:= v]),
+        //update times
+        mp->times[a := proph_index]
+    )
 }
 
 // Remove resource.
@@ -2219,11 +2279,31 @@ function {:inline} $ResourceRemove<T>(m: $Memory T, a: int): $Memory T {
     $Memory(m->domain[a := false], m->contents)
 }
 
+function {:inline} $ResourceRemoveMP<T>(mp: $MemoryPair T, a: int, proph_index: int): $MemoryPair T {
+    $MemoryPair(
+        $Memory(mp->prev->domain[a := mp->curr->domain[a]], mp->prev->contents[a:= mp->curr->contents[a]]),
+        $Memory(mp->curr->domain[a := false], mp->curr->contents),
+        //update times
+        mp->times[a := proph_index]
+    )
+}
+
 // Copies resource from memory s to m.
 function {:inline} $ResourceCopy<T>(m: $Memory T, s: $Memory T, a: int): $Memory T {
     $Memory(m->domain[a := s->domain[a]],
             m->contents[a := s->contents[a]])
 }
+
+function {:inline} $ResourceCopyMP<T>(m: $MemoryPair T, s: $MemoryPair T, a: int, c_index: int): $MemoryPair T {
+    $MemoryPair(
+    $Memory(m->prev->domain[a := s->curr->domain[a]],
+            m->prev->contents[a := s->curr->contents[a]]),
+    $Memory(m->curr->domain[a := $ResourceExistsMP(s, a, c_index)],
+            m->curr->contents[a := $ResourceValueMP(s, a, c_index)]),
+    m->times
+    )
+}
+
 
 // ============================================================================================
 // Abort Handling
@@ -2254,13 +2334,24 @@ procedure {:inline 1} $Abort(code: int) {
 function {:inline} $StdError(cat: int, reason: int): int {
     reason * 256 + cat
 }
+var $cur_index: int; //default is initialized to 0
+var $cur_index_initialized: bool;
 
-procedure {:inline 1} $InitVerification() {
+procedure {:inline 1} $InitVerification() returns (isEntryPoint: bool) {
     // Set abort_flag to false, and havoc abort_code
+    // returns whether the current function is entry point function.
     $abort_flag := false;
     havoc $abort_code;
     // Initialize event store
     call $InitEventStore();
+    if (!$cur_index_initialized){
+        $cur_index := 0;
+        $cur_index_initialized := true;
+        isEntryPoint := true;
+    }
+    else{
+        isEntryPoint := false;
+    }
 }
 
 // ============================================================================================
@@ -3947,8 +4038,14 @@ returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
         call $ExecFailureAbort();
         return;
     }
-    dst := $Mutation(m->l, ExtendVec(m->p, index), ReadVec(v, index));
-    m' := m;
+    //Todo: this is where it is borrowed.
+
+    call dst := $MutationAlt(m->l, ExtendVec(m->p, index), ReadVec(v, index));
+    assume dst->l == m->l;
+    assume dst->p == ExtendVec(m->p, index);
+    assume dst->v == ReadVec(v, index);
+    m' := $UpdateMutation(m, UpdateVec(v, index, $DereferenceProphecy(dst)));
+
 }
 
 function {:inline} $1_vector_$borrow_mut'u8'(v: Vec (int), i: int): int {
@@ -4278,6 +4375,7 @@ var #0_$memory: $Memory #0;
 procedure {:inline 1} $1_error_already_exists(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t1: int;
     var $t2: int;
     var $t3: int;
@@ -4329,6 +4427,7 @@ L2:
 procedure {:inline 1} $1_error_canonical(_$t0: int, _$t1: int) returns ($ret0: int)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: int;
     var $t4: int;
@@ -4402,6 +4501,7 @@ function {:inline} $1_signer_$address_of(s: $signer): int {
 procedure {:inline 1} $1_signer_address_of(_$t0: $signer) returns ($ret0: int)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t1: int;
     var $t2: int;
     var $t0: $signer;
@@ -4480,6 +4580,7 @@ function {:inline} $IsEqual'$bc_BasicCoin_Coin'#0''(s1: $bc_BasicCoin_Coin'#0', 
 procedure {:inline 1} $bc_BasicCoin_balance_of'#0'(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t1: $bc_BasicCoin_Balance'#0';
     var $t2: int;
     var $t3: $bc_BasicCoin_Coin'#0';
@@ -4541,6 +4642,7 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_balance_of$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t1: $bc_BasicCoin_Balance'#0';
     var $t2: int;
     var $t3: $bc_BasicCoin_Coin'#0';
@@ -4552,7 +4654,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_balance_of$verify(_$t0: int) returns ($r
     $t0 := _$t0;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:66:5+1
@@ -4625,6 +4727,7 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_burn$verify(_$t0: int, _$t1: int, _$t2: #0) returns ()
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t3: int;
     var $t4: $bc_BasicCoin_Coin'#0';
     var $t5: int;
@@ -4640,7 +4743,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_burn$verify(_$t0: int, _$t1: int, _$t2: 
     $t2 := _$t2;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:56:5+1
@@ -4708,6 +4811,7 @@ L2:
 procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_Coin'#0') returns ()
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: $Mutation (int);
     var $t4: int;
@@ -4759,7 +4863,9 @@ procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_C
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
+        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
     }
     if ($abort_flag) {
         assume {:print "$at(2,4622,4664)"} true;
@@ -4769,10 +4875,20 @@ procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_C
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:123:32+47
-    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
+    assume $Dereference($t10) == $Dereference($t9)->$coin;
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // fulfilled($t9) at .\sources\BasicCoin.move:123:32+47
+    assume $Fulfilled($t9, $cur_index);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:123:27+58
-    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
+    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
+    assume $Dereference($t11) == $Dereference($t10)->$value;
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
+
+    // fulfilled($t10) at .\sources\BasicCoin.move:123:27+58
+    assume $Fulfilled($t10, $cur_index);
 
     // $t12 := unpack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:124:13+14
     assume {:print "$at(2,4689,4703)"} true;
@@ -4799,14 +4915,13 @@ procedure {:inline 1} $bc_BasicCoin_deposit'#0'(_$t0: int, _$t1: $bc_BasicCoin_C
     $t11 := $UpdateMutation($t11, $t13);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:125:9+30
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
+    assume $Fulfilled($t11, $cur_index);
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:125:9+30
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
+    assume $Fulfilled($t10, $cur_index);
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:125:9+30
-    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
-        $Dereference($t9));
+    assume $Dereference($t9) == $DereferenceProphecy($t9);
 
     // label L1 at .\sources\BasicCoin.move:126:5+1
     assume {:print "$at(2,4757,4758)"} true;
@@ -4831,6 +4946,7 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_BasicCoin_Coin'#0') returns ()
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: $Mutation (int);
     var $t4: int;
@@ -4854,7 +4970,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     $t1 := _$t1;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:121:5+1
@@ -4901,7 +5017,9 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
+        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
     }
     if ($abort_flag) {
         assume {:print "$at(2,4622,4664)"} true;
@@ -4911,10 +5029,20 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:123:32+47
-    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
+    assume $Dereference($t10) == $Dereference($t9)->$coin;
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // fulfilled($t9) at .\sources\BasicCoin.move:123:32+47
+    assume $Fulfilled($t9, $cur_index);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:123:27+58
-    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
+    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
+    assume $Dereference($t11) == $Dereference($t10)->$value;
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
+
+    // fulfilled($t10) at .\sources\BasicCoin.move:123:27+58
+    assume $Fulfilled($t10, $cur_index);
 
     // $t12 := unpack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:124:13+14
     assume {:print "$at(2,4689,4703)"} true;
@@ -4941,14 +5069,13 @@ procedure {:timeLimit 40} $bc_BasicCoin_deposit$verify(_$t0: int, _$t1: $bc_Basi
     $t11 := $UpdateMutation($t11, $t13);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:125:9+30
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
+    assume $Fulfilled($t11, $cur_index);
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:125:9+30
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
+    assume $Fulfilled($t10, $cur_index);
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:125:9+30
-    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
-        $Dereference($t9));
+    assume $Dereference($t9) == $DereferenceProphecy($t9);
 
     // label L1 at .\sources\BasicCoin.move:126:5+1
     assume {:print "$at(2,4757,4758)"} true;
@@ -4996,6 +5123,7 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_mint$verify(_$t0: int, _$t1: int, _$t2: #0) returns ()
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t3: int;
     var $t4: $bc_BasicCoin_Coin'#0';
     var $t5: int;
@@ -5014,7 +5142,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_mint$verify(_$t0: int, _$t1: int, _$t2: 
     $t2 := _$t2;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:45:5+1
@@ -5116,6 +5244,7 @@ L2:
 procedure {:timeLimit 40} $bc_BasicCoin_publish_balance$verify(_$t0: $signer) returns ()
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t1: $bc_BasicCoin_Coin'#0';
     var $t2: int;
     var $t3: $bc_BasicCoin_Coin'#0';
@@ -5133,7 +5262,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_publish_balance$verify(_$t0: $signer) re
     $t0 := _$t0;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:21:5+1
@@ -5276,6 +5405,7 @@ L3:
 procedure {:timeLimit 40} $bc_BasicCoin_transfer$verify(_$t0: $signer, _$t1: int, _$t2: int, _$t3: #0) returns ()
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t4: int;
     var $t5: $bc_BasicCoin_Coin'#0';
     var $t6: int;
@@ -5307,7 +5437,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_transfer$verify(_$t0: $signer, _$t1: int
     $t3 := _$t3;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:77:5+1
@@ -5507,6 +5637,7 @@ L3:
 procedure {:inline 1} $bc_BasicCoin_withdraw'#0'(_$t0: int, _$t1: int) returns ($ret0: $bc_BasicCoin_Coin'#0')
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: int;
     var $t4: $Mutation (int);
@@ -5569,7 +5700,9 @@ L1:
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
+        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
     }
     if ($abort_flag) {
         assume {:print "$at(2,3946,3988)"} true;
@@ -5579,10 +5712,20 @@ L1:
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:105:32+47
-    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
+    assume $Dereference($t10) == $Dereference($t9)->$coin;
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // fulfilled($t9) at .\sources\BasicCoin.move:105:32+47
+    assume $Fulfilled($t9, $cur_index);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:105:27+58
-    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
+    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
+    assume $Dereference($t11) == $Dereference($t10)->$value;
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
+
+    // fulfilled($t10) at .\sources\BasicCoin.move:105:27+58
+    assume $Fulfilled($t10, $cur_index);
 
     // $t12 := -($t6, $t1) on_abort goto L3 with $t7 at .\sources\BasicCoin.move:106:24+16
     assume {:print "$at(2,4024,4040)"} true;
@@ -5605,14 +5748,13 @@ L1:
     $t11 := $UpdateMutation($t11, $t12);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:106:9+31
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
+    assume $Fulfilled($t11, $cur_index);
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:106:9+31
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
+    assume $Fulfilled($t10, $cur_index);
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:106:9+31
-    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
-        $Dereference($t9));
+    assume $Dereference($t9) == $DereferenceProphecy($t9);
 
     // $t13 := pack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:107:9+32
     assume {:print "$at(2,4050,4082)"} true;
@@ -5668,6 +5810,7 @@ L3:
 procedure {:timeLimit 40} $bc_BasicCoin_withdraw$verify(_$t0: int, _$t1: int) returns ($ret0: $bc_BasicCoin_Coin'#0')
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: int;
     var $t3: int;
     var $t4: $Mutation (int);
@@ -5692,7 +5835,7 @@ procedure {:timeLimit 40} $bc_BasicCoin_withdraw$verify(_$t0: int, _$t1: int) re
     $t1 := _$t1;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\BasicCoin.move:102:5+1
@@ -5749,7 +5892,9 @@ L1:
     if (!$ResourceExists($bc_BasicCoin_Balance'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
-        $t9 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        call $t9 := $MutationAlt($Global($t0), EmptyVec(), $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0));
+        assume $ResourceValue($bc_BasicCoin_Balance'#0'_$memory, $t0) == $Dereference($t9);
+        $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $t0, $DereferenceProphecy($t9));
     }
     if ($abort_flag) {
         assume {:print "$at(2,3946,3988)"} true;
@@ -5759,10 +5904,20 @@ L1:
     }
 
     // $t10 := borrow_field<0xbc::BasicCoin::Balance<#0>>.coin($t9) at .\sources\BasicCoin.move:105:32+47
-    $t10 := $ChildMutation($t9, 0, $Dereference($t9)->$coin);
+    call $t10 := $ChildMutationAlt($t9, 0, $Dereference($t9)->$coin);
+    assume $Dereference($t10) == $Dereference($t9)->$coin;
+    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $DereferenceProphecy($t10)));
+
+    // fulfilled($t9) at .\sources\BasicCoin.move:105:32+47
+    assume $Fulfilled($t9, $cur_index);
 
     // $t11 := borrow_field<0xbc::BasicCoin::Coin<#0>>.value($t10) at .\sources\BasicCoin.move:105:27+58
-    $t11 := $ChildMutation($t10, 0, $Dereference($t10)->$value);
+    call $t11 := $ChildMutationAlt($t10, 0, $Dereference($t10)->$value);
+    assume $Dereference($t11) == $Dereference($t10)->$value;
+    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $DereferenceProphecy($t11)));
+
+    // fulfilled($t10) at .\sources\BasicCoin.move:105:27+58
+    assume $Fulfilled($t10, $cur_index);
 
     // $t12 := -($t6, $t1) on_abort goto L3 with $t7 at .\sources\BasicCoin.move:106:24+16
     assume {:print "$at(2,4024,4040)"} true;
@@ -5785,14 +5940,13 @@ L1:
     $t11 := $UpdateMutation($t11, $t12);
 
     // write_back[Reference($t10).value (u64)]($t11) at .\sources\BasicCoin.move:106:9+31
-    $t10 := $UpdateMutation($t10, $Update'$bc_BasicCoin_Coin'#0''_value($Dereference($t10), $Dereference($t11)));
+    assume $Fulfilled($t11, $cur_index);
 
     // write_back[Reference($t9).coin (0xbc::BasicCoin::Coin<#0>)]($t10) at .\sources\BasicCoin.move:106:9+31
-    $t9 := $UpdateMutation($t9, $Update'$bc_BasicCoin_Balance'#0''_coin($Dereference($t9), $Dereference($t10)));
+    assume $Fulfilled($t10, $cur_index);
 
     // write_back[0xbc::BasicCoin::Balance<#0>@]($t9) at .\sources\BasicCoin.move:106:9+31
-    $bc_BasicCoin_Balance'#0'_$memory := $ResourceUpdate($bc_BasicCoin_Balance'#0'_$memory, $GlobalLocationAddress($t9),
-        $Dereference($t9));
+    assume $Dereference($t9) == $DereferenceProphecy($t9);
 
     // $t13 := pack 0xbc::BasicCoin::Coin<#0>($t1) at .\sources\BasicCoin.move:107:9+32
     assume {:print "$at(2,4050,4082)"} true;
@@ -5890,12 +6044,13 @@ function {:inline} $IsEqual'$bc_ProphecyBenchmark_Node'(s1: $bc_ProphecyBenchmar
 procedure {:timeLimit 40} $bc_ProphecyBenchmark_new_node$verify() returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t0: int;
     var $t1: $bc_ProphecyBenchmark_Node;
     var $temp_0'$bc_ProphecyBenchmark_Node': $bc_ProphecyBenchmark_Node;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // $t0 := 0 at .\sources\ConditionalBorrowChain.move:10:20+1
@@ -5924,6 +6079,7 @@ L1:
 procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int, _$t2: int, _$t3: int, _$t4: int, _$t5: int, _$t6: int, _$t7: int, _$t8: int, _$t9: int, _$t10: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t11: $bc_ProphecyBenchmark_Node;
     var $t12: int;
     var $t13: $bc_ProphecyBenchmark_Node;
@@ -5958,7 +6114,7 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_stress_test_10$verify(_$t0: $bc_
     $t10 := _$t10;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:42:5+1
@@ -6171,6 +6327,7 @@ L2:
 procedure {:inline 1} $bc_ProphecyBenchmark_update_one(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: $Mutation (int);
     var $t3: $Mutation ($bc_ProphecyBenchmark_Node);
     var $t4: $Mutation (int);
@@ -6200,11 +6357,18 @@ procedure {:inline 1} $bc_ProphecyBenchmark_update_one(_$t0: $bc_ProphecyBenchma
 
     // $t3 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:16:21+9
     assume {:print "$at(3,486,495)"} true;
-    $t3 := $Mutation($Local(0), EmptyVec(), $t0);
+    call $t3 := $MutationAlt($Local(0), EmptyVec(), $t0);
+    assume $Dereference($t3) == $t0;
+    $t0 := $DereferenceProphecy($t3);
 
     // $t4 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t3) at .\sources\ConditionalBorrowChain.move:19:22+13
     assume {:print "$at(3,629,642)"} true;
-    $t4 := $ChildMutation($t3, 0, $Dereference($t3)->$v0);
+    call $t4 := $ChildMutationAlt($t3, 0, $Dereference($t3)->$v0);
+    assume $Dereference($t4) == $Dereference($t3)->$v0;
+    $t3 := $UpdateMutation($t3, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t3), $DereferenceProphecy($t4)));
+
+    // fulfilled($t3) at .\sources\ConditionalBorrowChain.move:19:22+13
+    assume $Fulfilled($t3, $cur_index);
 
     // trace_local[target]($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
     $temp_0'u64' := $Dereference($t4);
@@ -6231,10 +6395,10 @@ procedure {:inline 1} $bc_ProphecyBenchmark_update_one(_$t0: $bc_ProphecyBenchma
     $t4 := $UpdateMutation($t4, $t7);
 
     // write_back[Reference($t3).v0 (u64)]($t4) at .\sources\ConditionalBorrowChain.move:21:9+21
-    $t3 := $UpdateMutation($t3, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t3), $Dereference($t4)));
+    assume $Fulfilled($t4, $cur_index);
 
     // write_back[LocalRoot($t0)@]($t3) at .\sources\ConditionalBorrowChain.move:21:9+21
-    $t0 := $Dereference($t3);
+    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t3), $DereferenceProphecy($t3));
 
     // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:21:9+21
     assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
@@ -6271,6 +6435,7 @@ L2:
 procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_ProphecyBenchmark_Node, _$t1: int) returns ($ret0: $bc_ProphecyBenchmark_Node)
 {
     // declare local variables
+    var $isEntryPoint: bool;
     var $t2: $Mutation (int);
     var $t3: $bc_ProphecyBenchmark_Node;
     var $t4: $Mutation ($bc_ProphecyBenchmark_Node);
@@ -6288,7 +6453,7 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_Prop
     $t1 := _$t1;
 
     // verification entrypoint assumptions
-    call $InitVerification();
+    call $isEntryPoint := $InitVerification();
 
     // bytecode translation starts here
     // assume WellFormed($t0) at .\sources\ConditionalBorrowChain.move:14:5+1
@@ -6314,11 +6479,18 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_Prop
 
     // $t4 := borrow_local($t0) at .\sources\ConditionalBorrowChain.move:16:21+9
     assume {:print "$at(3,486,495)"} true;
-    $t4 := $Mutation($Local(0), EmptyVec(), $t0);
+    call $t4 := $MutationAlt($Local(0), EmptyVec(), $t0);
+    assume $Dereference($t4) == $t0;
+    $t0 := $DereferenceProphecy($t4);
 
     // $t5 := borrow_field<0xbc::ProphecyBenchmark::Node>.v0($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
     assume {:print "$at(3,629,642)"} true;
-    $t5 := $ChildMutation($t4, 0, $Dereference($t4)->$v0);
+    call $t5 := $ChildMutationAlt($t4, 0, $Dereference($t4)->$v0);
+    assume $Dereference($t5) == $Dereference($t4)->$v0;
+    $t4 := $UpdateMutation($t4, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t4), $DereferenceProphecy($t5)));
+
+    // fulfilled($t4) at .\sources\ConditionalBorrowChain.move:19:22+13
+    assume $Fulfilled($t4, $cur_index);
 
     // trace_local[target]($t5) at .\sources\ConditionalBorrowChain.move:19:22+13
     $temp_0'u64' := $Dereference($t5);
@@ -6345,10 +6517,10 @@ procedure {:timeLimit 40} $bc_ProphecyBenchmark_update_one$verify(_$t0: $bc_Prop
     $t5 := $UpdateMutation($t5, $t8);
 
     // write_back[Reference($t4).v0 (u64)]($t5) at .\sources\ConditionalBorrowChain.move:21:9+21
-    $t4 := $UpdateMutation($t4, $Update'$bc_ProphecyBenchmark_Node'_v0($Dereference($t4), $Dereference($t5)));
+    assume $Fulfilled($t5, $cur_index);
 
     // write_back[LocalRoot($t0)@]($t4) at .\sources\ConditionalBorrowChain.move:21:9+21
-    $t0 := $Dereference($t4);
+    assume $IsEqual'$bc_ProphecyBenchmark_Node'($Dereference($t4), $DereferenceProphecy($t4));
 
     // trace_local[node]($t0) at .\sources\ConditionalBorrowChain.move:21:9+21
     assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
