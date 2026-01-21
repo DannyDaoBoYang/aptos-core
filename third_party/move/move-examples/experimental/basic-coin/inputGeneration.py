@@ -72,7 +72,7 @@ def generate_update_one_spec(n):
         // Postcondition: exactly one field is incremented by 1
         // The chosen field gets incremented by 1
         ensures choice == 0 ==> result.v0 == node.v0 + 1;
-        ensures choice != 0 ==> result.v0 == result.v0;
+        ensures choice != 0 ==> result.v0 == node.v0;
         ensures choice == 0 ==> result.v1 == node.v1; 
         // This implies checks for every combination (8 * 8 = 64 checks internally)
         ensures choice == 1 ==> result.v1 == node.v1 + 1;
