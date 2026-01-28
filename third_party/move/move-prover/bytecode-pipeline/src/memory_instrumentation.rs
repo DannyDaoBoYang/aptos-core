@@ -4,7 +4,7 @@
 
 use move_binary_format::file_format::CodeOffset;
 use move_model::{
-    ast::{ConditionKind, Exp},
+    ast::{ConditionKind, Exp, TempIndex},
     exp_generator::ExpGenerator,
     model::{FunctionEnv, GlobalEnv, StructEnv},
     ty::{Type, BOOL_TYPE},
@@ -20,7 +20,7 @@ use move_stackless_bytecode::{
         Operation,
     },
 };
-use std::{collections::BTreeSet, iter::Map};
+use std::collections::BTreeSet;
 
 pub struct MemoryInstrumentationProcessor {}
 
@@ -382,6 +382,30 @@ impl<'a> Instrumenter<'a> {
         }
     }
 
+    /// Combines write-back chains by deduplicating actions based on source only.
+    ///
+    /// This reduces duplication when multiple chains from the same source write back
+    /// to different or same destinations (e.g. conditional borrow trees). We emit only
+    /// the first action from each source, eliminating redundant write-backs from the same source.
+    fn combine_write_back_chains(chains: &[Vec<WriteBackAction>]) -> Vec<WriteBackAction> {
+        let max_len = chains.iter().map(|chain| chain.len()).max().unwrap_or(0);
+        let mut combined = vec![];
+        let mut seen_sources: BTreeSet<TempIndex> = BTreeSet::new();
+
+        for depth in 0..max_len {
+            for chain in chains {
+                if let Some(action) = chain.get(depth) {
+                    // Only emit if we haven't already processed this source
+                    if seen_sources.insert(action.src) {
+                        combined.push(action.clone());
+                    }
+                }
+            }
+        }
+
+        combined
+    }
+
     /// Instrument write-back action for spec blocks
     pub fn instrument_write_back_for_spec(
         builder: &mut FunctionDataBuilder,
@@ -445,20 +469,25 @@ impl<'a> Instrumenter<'a> {
         self.builder.set_loc_from_attr(attr_id);
 
         //
-        for (node, FA) in before.fulfilled_nodes(after){
+        for (_node, fa) in before.fulfilled_nodes(after){
             self.builder.emit_with(|id| {
                 Bytecode::Call(
                     id,
                     vec![],
-                    Operation::Fulfilled(FA.src),
-                    vec![FA.src],
+                    Operation::Fulfilled(fa.src),
+                    vec![fa.src],
                     None,
                 )
             });
         }
+        
+        // Collect all write-back chains from all dying nodes
+        let mut all_chains: Vec<Vec<WriteBackAction>> = vec![];
+        let mut param_pack_refs: Vec<TempIndex> = vec![];
+        
         for (node, ancestors) in before.dying_nodes(after) {
             // we only care about references that occurs in the function body
-            let node_idx = match node {
+            match node {
                 BorrowNode::LocalRoot(..) | BorrowNode::GlobalRoot(..) => {
                     continue;
                 },
@@ -474,42 +503,39 @@ impl<'a> Instrumenter<'a> {
                         let target = self.builder.get_target();
                         let ty = target.get_local_type(idx);
                         if self.is_pack_ref_ty(ty) {
-                            self.builder.emit_with(|id| {
-                                Bytecode::Call(id, vec![], Operation::PackRefDeep, vec![idx], None)
-                            });
+                            param_pack_refs.push(idx);
                         }
                         continue;
                     }
-                    idx
                 },
                 BorrowNode::ReturnPlaceholder(..) => {
                     unreachable!("Unexpected placeholder borrow node");
                 },
             };
-
-            // Generate write_back for this reference.
-            //Danny
-            //only the most recent reference type matter
-            let is_conditional = false; //ancestors.len() > 1;
-            //1st iteration: non reference nodes
-            for (chain_index, chain) in ancestors.iter().enumerate() {
-                // sanity check: the src node of the first action must be the node itself
-                assert_eq!(
-                    chain
-                        .first()
-                        .expect("The write-back chain should contain at action")
-                        .src,
-                    node_idx
-                );
-
+            
+            // Add all chains from this dying node
+            all_chains.extend(ancestors);
+        }
+        
+        // Emit PackRefDeep for parameters first
+        for idx in param_pack_refs {
+            self.builder.emit_with(|id| {
+                Bytecode::Call(id, vec![], Operation::PackRefDeep, vec![idx], None)
+            });
+        }
+        
+        // Combine all write-back chains across all dying nodes to eliminate duplicates
+        if !all_chains.is_empty() {
+            let combined_chain = Self::combine_write_back_chains(&all_chains);
+            if !combined_chain.is_empty() {
+                let combined_ancestors = vec![combined_chain];
                 Instrumenter::write_back_chain(
                     &mut self.builder,
-                    &ancestors,
-                    chain_index,
-                    is_conditional,
+                    &combined_ancestors,
+                    0,
+                    false,
                 );
             }
-
         }
         /*
         let mut possible_src = Vec::new();
