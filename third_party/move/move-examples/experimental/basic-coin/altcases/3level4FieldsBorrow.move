@@ -120,8 +120,8 @@ module BasicCoin::ProphecyBenchmark3Levels4Fields {
             ==> result.v0.v0.v0 == 1;
 
         // 2. Any deviation implies root.v0.v0.v0 was NOT touched
-        //ensures (c3!=0 || c2!=0 || c1!=0) 
-        //    ==> result.v0.v0.v0 == 0;
+        ensures (c3%8!=0 || c2%8!=0 || c1%8!=0) 
+            ==> result.v0.v0.v0 == 0;
             
         // 3. Bound check
         ensures result.v0.v0.v0 <= 1;
