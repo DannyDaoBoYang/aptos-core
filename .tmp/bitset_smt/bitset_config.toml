@@ -1,0 +1,9 @@
+move_deps = [
+  "C:/Users/daobo/OneDrive/Documents/GitHub/aptos-core/third_party/move/move-stdlib/sources",
+  "C:/Users/daobo/OneDrive/Documents/GitHub/aptos-core/third_party/move/move-stdlib/nursery/sources",
+  "C:/Users/daobo/OneDrive/Documents/GitHub/aptos-core/third_party/move/extensions/move-table-extension/sources",
+]
+move_named_address_values = [
+  "std=0x1",
+  "extensions=0x2",
+]

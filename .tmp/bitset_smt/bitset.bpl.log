@@ -1,0 +1,3 @@
+C:\Users\daobo\OneDrive\Documents\GitHub\aptos-core\.tmp\bitset_smt\bitset.bpl(4845,27): Verification of '$42_bitset128_ident$verify' timed out after 40 seconds
+
+Boogie program verifier finished with 0 errors, 1 time out
