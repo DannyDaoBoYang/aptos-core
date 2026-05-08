@@ -1,0 +1,33 @@
+﻿move-prover.exe : [INFO] Move Compiler v2
+At C:\Users\daobo\OneDrive\Documents\GitHub\aptos-core\th
+ird_party\move\move-examples\experimental\basic-coin\run_
+prove_and_collect_smt_v2.ps1:80 char:15
++ ...   $output = & move-prover --generate-smt --keep 
+--named-addresses "Ba ...
++                 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([INFO] Move 
+    Compiler v2:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[INFO] type checking
+[INFO] preparing module 0xbc::ProphecyBenchmark3Levels
+[INFO] generating verification conditions
+[INFO] 4 verification conditions
+[INFO] running solver
+[INFO] 0.04s build, 0.92s trafo, 0.03s gen, 78.95s 
+verify, total 79.93s
+error: verification out of resources/timeout (global 
+timeout set to 40s)
+    ΓöîΓöÇ sources\ConditionalBorrowChain.move:91:5
+    Γöé  
+ 91 Γöé Γò¡     public fun benchmark_from_scratch(
+ 92 Γöé Γöé         c3: u64, c2: u64, c1: u64
+ 93 Γöé Γöé     ): Node3 {
+ 94 Γöé Γöé         let root = new_node3();
+    ┬╖ Γöé
+108 Γöé Γöé         root
+109 Γöé Γöé     }
+    Γöé Γò░ΓöÇΓöÇΓöÇΓöÇΓöÇ^
+
+exiting with verification errors

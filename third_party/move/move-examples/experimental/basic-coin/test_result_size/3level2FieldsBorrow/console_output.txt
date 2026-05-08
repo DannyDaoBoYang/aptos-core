@@ -1,0 +1,20 @@
+﻿move-prover.exe : [INFO] Move Compiler v2
+At C:\Users\daobo\OneDrive\Documents\GitHub\aptos-cor
+e\third_party\move\move-examples\experimental\basic-c
+oin\run_prove_and_collect_smt_v2.ps1:80 char:15
++ ...   $output = & move-prover --generate-smt 
+--keep --named-addresses "Ba ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([INFO]  
+   Move Compiler v2:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[INFO] type checking
+[INFO] preparing module 
+0xbc::ProphecyBenchmark3Levels2Fields
+[INFO] generating verification conditions
+[INFO] 4 verification conditions
+[INFO] running solver
+[INFO] 0.01s build, 0.00s trafo, 0.01s gen, 3.05s 
+verify, total 3.07s
