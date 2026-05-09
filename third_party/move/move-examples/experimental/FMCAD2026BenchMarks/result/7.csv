@@ -1,0 +1,11 @@
+﻿run,build_s,trafo_s,gen_s,verify_s,total_s,raw_last_line
+1,0.06,0.02,0.01,2.52,2.60,"[INFO] 0.06s build, 0.02s trafo, 0.01s gen, 2.52s verify, total 2.60s"
+2,0.05,0.02,0.01,2.31,2.39,"[INFO] 0.05s build, 0.02s trafo, 0.01s gen, 2.31s verify, total 2.39s"
+3,0.05,0.02,0.01,2.22,2.30,"[INFO] 0.05s build, 0.02s trafo, 0.01s gen, 2.22s verify, total 2.30s"
+4,0.05,0.02,0.01,2.21,2.29,"[INFO] 0.05s build, 0.02s trafo, 0.01s gen, 2.21s verify, total 2.29s"
+5,0.05,0.02,0.01,2.37,2.44,"[INFO] 0.05s build, 0.02s trafo, 0.01s gen, 2.37s verify, total 2.44s"
+6,0.06,0.02,0.01,2.34,2.42,"[INFO] 0.06s build, 0.02s trafo, 0.01s gen, 2.34s verify, total 2.42s"
+7,0.05,0.02,0.01,2.47,2.55,"[INFO] 0.05s build, 0.02s trafo, 0.01s gen, 2.47s verify, total 2.55s"
+8,0.06,0.02,0.01,2.52,2.61,"[INFO] 0.06s build, 0.02s trafo, 0.01s gen, 2.52s verify, total 2.61s"
+9,0.05,0.02,0.01,2.25,2.33,"[INFO] 0.05s build, 0.02s trafo, 0.01s gen, 2.25s verify, total 2.33s"
+10,0.06,0.02,0.01,2.31,2.40,"[INFO] 0.06s build, 0.02s trafo, 0.01s gen, 2.31s verify, total 2.40s"
