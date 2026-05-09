@@ -1,0 +1,7 @@
+﻿[INFO] Move Compiler v2
+[INFO] type checking
+[INFO] preparing module 0xbc::BasicCoin
+[INFO] preparing module 0xbc::ProphecyBenchmark3Levels2Fields
+[INFO] generating verification conditions
+[INFO] 11 verification conditions
+[INFO] running solver

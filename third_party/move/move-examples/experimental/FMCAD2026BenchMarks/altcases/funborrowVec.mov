@@ -1,0 +1,23 @@
+module BasicCoin::collection_utils {
+    use std::vector;
+
+    /// Borrows a mutable reference to the element at index `i` in the vector.
+    public fun borrow_at(a: &mut vector<u64>, i: u64): &mut u64 {
+        let returned_val = vector::borrow_mut(a, i);
+        
+        // Dereference to mutate the value in place
+        *returned_val = *returned_val + 1;
+        returned_val
+    }
+
+    spec borrow_at {
+        // The Prover needs to know under what conditions this function will fail.
+        // vector::borrow_mut aborts if the index is out of bounds.
+        aborts_if i >= len(a);
+        
+        // Addition can overflow if a[i] is at max u64 value
+        aborts_if a[i] == max_u64();
+
+        ensures result == a[i];
+    }
+}
